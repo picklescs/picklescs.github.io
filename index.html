@@ -124,6 +124,34 @@ fetch("https://api.gamemonitoring.net/servers/168.100.161.99:2462")
         "<span class='status-offline'>OFFLINE</span>";
 });
 </script>
+<script>
+const ip = "168.100.161.99";
+const portsToTry = [2462, 2463]; // sometimes query port = game port + 1
 
+async function checkServer() {
+  for (const port of portsToTry) {
+    try {
+      const url = `https://gamedig-api.hexane.co/csgo/ip=${ip}&port=${port}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data && data.online) {
+        document.getElementById("status").innerHTML =
+          "<span class='status-online'>ONLINE</span>";
+        document.getElementById("players").innerText =
+          `Players: ${data.players.length}/${data.maxplayers}` + (data.map ? ` | Map: ${data.map}` : "");
+        return;
+      }
+    } catch (e) {}
+  }
+
+  document.getElementById("status").innerHTML =
+    "<span class='status-offline'>OFFLINE</span>";
+  document.getElementById("players").innerText =
+    "If you’re sure it’s online, your query port may be blocked.";
+}
+
+checkServer();
+</script>
 </body>
 </html>
