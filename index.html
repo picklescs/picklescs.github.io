@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pickle's Server</title>
 
-  <!-- Optional: add a favicon named favicon.png in repo root -->
-  <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
-
   <style>
     :root{
       --bg:#070A0A;
@@ -17,7 +14,7 @@
       --muted:#a7b5b0;
       --accent:#00ff88;
       --discord:#5865F2;
-      --shadow: 0 20px 60px rgba(0,0,0,0.55);
+      --shadow: 0 18px 55px rgba(0,0,0,0.55);
       --radius: 16px;
     }
 
@@ -26,14 +23,16 @@
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
-      background: radial-gradient(1000px 600px at 50% -10%, rgba(0,255,136,0.10), transparent 60%),
-                  radial-gradient(900px 700px at 10% 30%, rgba(88,101,242,0.08), transparent 60%),
-                  radial-gradient(900px 700px at 90% 60%, rgba(0,255,136,0.06), transparent 60%),
-                  var(--bg);
+      background:
+        radial-gradient(1000px 600px at 50% -10%, rgba(0,255,136,0.10), transparent 60%),
+        radial-gradient(900px 700px at 10% 30%, rgba(88,101,242,0.08), transparent 60%),
+        radial-gradient(900px 700px at 90% 60%, rgba(0,255,136,0.06), transparent 60%),
+        var(--bg);
       overflow-x:hidden;
+      min-height:100vh;
     }
 
-    /* moving “aurora” background */
+    /* subtle moving glow */
     .aurora{
       position: fixed;
       inset:-40%;
@@ -54,18 +53,18 @@
     }
 
     .wrap{
-      max-width: 980px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 28px 18px 60px;
+      padding: 22px 18px 60px;
     }
 
-    /* HERO */
+    /* HERO banner (landscape) */
     .hero{
       position: relative;
       border-radius: 22px;
       overflow: hidden;
       box-shadow: var(--shadow);
-      min-height: 320px;
+      min-height: 260px;
     }
     .hero::before{
       content:"";
@@ -77,26 +76,28 @@
     .hero::after{
       content:"";
       position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.70));
+      background: linear-gradient(180deg, rgba(0,0,0,0.20), rgba(0,0,0,0.78));
     }
 
     .heroInner{
       position: relative;
-      padding: 26px 22px 22px;
+      padding: 22px;
       display:flex;
-      gap:18px;
       align-items:flex-end;
-      min-height: 320px;
+      gap:16px;
+      min-height: 260px;
     }
 
     .brand{
       display:flex;
       gap:14px;
       align-items:center;
+      flex:1;
+      min-width: 240px;
     }
     .logo{
-      width:68px; height:68px;
-      border-radius: 18px;
+      width:64px; height:64px;
+      border-radius: 16px;
       background: rgba(0,0,0,0.35);
       border: 1px solid rgba(255,255,255,0.12);
       backdrop-filter: blur(10px);
@@ -105,29 +106,28 @@
       align-items:center;
       justify-content:center;
       overflow:hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
     }
     .logo img{ width:100%; height:100%; object-fit:cover; }
 
-    .titleBlock h1{
+    h1{
       margin:0;
-      font-size: 38px;
+      font-size: 42px;
       letter-spacing: 0.5px;
       text-shadow: 0 0 18px rgba(0,255,136,0.18);
     }
-    .titleBlock p{
+    .sub{
       margin:6px 0 0;
       color: var(--muted);
       font-size: 14px;
     }
 
     .heroRight{
-      margin-left:auto;
       display:flex;
       flex-direction:column;
       gap:10px;
       align-items:flex-end;
       text-align:right;
+      min-width: 260px;
     }
 
     .pill{
@@ -142,22 +142,28 @@
       -webkit-backdrop-filter: blur(10px);
       font-size: 13px;
       color: var(--muted);
+      max-width: 100%;
     }
     .dot{
       width:10px; height:10px; border-radius:999px;
       background: var(--accent);
       box-shadow: 0 0 14px rgba(0,255,136,0.55);
+      flex: 0 0 auto;
+    }
+    .pill span{
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
-    /* Cards grid */
+    /* LANDSCAPE grid layout */
     .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 16px;
-      margin-top: 18px;
+      margin-top: 16px;
     }
 
-    /* Glass card with animated border */
     .card{
       grid-column: span 12;
       background: var(--card);
@@ -193,9 +199,7 @@
       border-radius: calc(var(--radius) - 2px);
       z-index:1;
     }
-    @keyframes spin{
-      to{ transform: rotate(360deg); }
-    }
+    @keyframes spin{ to{ transform: rotate(360deg); } }
     .card > *{ position:relative; z-index:2; }
 
     .card h2{
@@ -218,7 +222,7 @@
       cursor:pointer;
       padding: 12px 14px;
       border-radius: 12px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.2px;
       transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
       text-decoration:none;
@@ -265,7 +269,7 @@
       border: 1px solid rgba(255,255,255,0.08);
     }
     .cmd code{
-      font-weight: 800;
+      font-weight: 900;
       color: var(--accent);
       background: rgba(0,255,136,0.08);
       padding: 4px 8px;
@@ -294,11 +298,23 @@
       display:block;
     }
 
-    @media (min-width: 760px){
-      .card.half{ grid-column: span 6; }
+    /* ✅ LANDSCAPE / DESKTOP: make it truly wide */
+    @media (min-width: 900px){
+      /* 3 cards across */
+      .card.third{ grid-column: span 4; }
+      /* screenshots in a row */
       .shot{ grid-column: span 4; }
       .shot img{ height: 200px; }
-      .titleBlock h1{ font-size: 44px; }
+      h1{ font-size: 48px; }
+      .hero{ min-height: 300px; }
+      .heroInner{ min-height: 300px; }
+    }
+
+    /* Small screens: stack nicely */
+    @media (max-width: 520px){
+      h1{ font-size: 34px; }
+      .heroRight{ display:none; } /* keeps it clean on small screens */
+      .btn{ width:100%; min-width: unset; }
     }
   </style>
 </head>
@@ -307,55 +323,60 @@
   <div class="aurora"></div>
 
   <div class="wrap">
+    <!-- HERO -->
     <section class="hero">
       <div class="heroInner">
         <div class="brand">
+          <!-- If you don't have a logo.png yet, you can remove this entire .logo div -->
           <div class="logo">
-            <img src="logo.png" alt="Server Logo">
+            <img src="logo.png" alt="CS:GO Server Logo">
           </div>
-          <div class="titleBlock">
+
+          <div>
             <h1>PICKLE'S SERVER</h1>
-            <p>CS:GO Community • Skins/Knives/Gloves</p>
+            <p class="sub">CS:GO Community • Skins / Knives / Gloves</p>
           </div>
         </div>
 
         <div class="heroRight">
-          <div class="pill">
-            <span class="dot"></span>
-            <span>Server: 168.100.161.99:2462</span>
-          </div>
-          <div class="pill">
-            <span class="muted">Tip:</span>
-            <span class="muted">Click “Copy Connect” then paste in CS console</span>
-          </div>
+          <div class="pill"><span class="dot"></span><span>Connect: 168.100.161.99:2462</span></div>
+          <div class="pill"><span>Tip: Copy connect → paste in console</span></div>
         </div>
       </div>
     </section>
 
+    <!-- LANDSCAPE ROW: Join / Commands / Discord -->
     <section class="grid">
-      <!-- JOIN FIRST -->
-      <div class="card glow half">
+      <div class="card glow third">
         <h2>Join</h2>
         <div class="btnRow">
-          <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect Command</button>
-          <a class="btn btnDiscord" href="https://discord.gg/YOURINVITE" target="_blank" rel="noopener">Join Discord</a>
+          <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect</button>
         </div>
-        <div class="copyHint" id="copyHint">Connect command: <b>connect 168.100.161.99:2462</b></div>
+        <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
       </div>
 
-      <div class="card half">
+      <div class="card third">
         <h2>Commands</h2>
         <div class="commands">
           <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
           <div class="cmd"><span>Knives</span><code>!knife</code></div>
           <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
         </div>
-        <p class="muted" style="margin:12px 0 0;">If chat commands don’t respond, type them in all-chat.</p>
+        <p class="muted" style="margin:12px 0 0;">Type commands in all-chat if needed.</p>
       </div>
 
+      <div class="card third">
+        <h2>Discord</h2>
+        <p class="muted">Announcements, updates, support.</p>
+        <div class="btnRow">
+          <a class="btn btnDiscord" href="https://discord.gg/YOURINVITE" target="_blank" rel="noopener">Join Discord</a>
+        </div>
+      </div>
+
+      <!-- Screenshots block (full width) -->
       <div class="card">
         <h2>Screenshots</h2>
-        <p class="muted">Upload your images as <b>shot1.jpg</b>, <b>shot2.jpg</b>, <b>shot3.jpg</b> in the repo root.</p>
+        <p class="muted">Upload images named <b>shot1.jpg</b>, <b>shot2.jpg</b>, <b>shot3.jpg</b> in the repo root.</p>
         <div class="gallery">
           <div class="shot"><img src="shot1.jpg" alt="Server screenshot 1"></div>
           <div class="shot"><img src="shot2.jpg" alt="Server screenshot 2"></div>
@@ -374,11 +395,11 @@
         const prev = btn.textContent;
 
         btn.textContent = "Copied!";
-        hint.textContent = "Copied to clipboard — paste into CS:GO console.";
+        hint.textContent = "Copied — paste into CS:GO console.";
 
         setTimeout(() => {
           btn.textContent = prev;
-          hint.innerHTML = 'Connect command: <b>' + cmd + '</b>';
+          hint.innerHTML = 'connect <b>168.100.161.99:2462</b>';
         }, 2000);
       });
     }
