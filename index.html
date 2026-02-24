@@ -1,120 +1,129 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PICKLE'S SERVER</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(-45deg, #0f0f0f, #111, #1a1a1a, #0f0f0f);
-      background-size: 400% 400%;
-      animation: gradient 10s ease infinite;
-      color: white;
-      text-align: center;
-    }
+<title>Pickle's Server</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    margin:0;
+    font-family:Arial, sans-serif;
+    background: radial-gradient(circle at center, #0f0f0f 0%, #000 100%);
+    color:white;
+    text-align:center;
+}
 
-    @keyframes gradient {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
+h1 {
+    margin-top:80px;
+    font-size:50px;
+    color:#00ff88;
+    text-shadow:0 0 10px #00ff88;
+    animation:pulse 2s infinite;
+}
 
-    h1 {
-      margin-top: 80px;
-      font-size: 50px;
-      color: #00ff88;
-      text-shadow: 0 0 20px #00ff88;
-    }
+@keyframes pulse {
+    0% { text-shadow:0 0 10px #00ff88; }
+    50% { text-shadow:0 0 25px #00ff88; }
+    100% { text-shadow:0 0 10px #00ff88; }
+}
 
-    .box {
-      background: rgba(255,255,255,0.05);
-      padding: 30px;
-      margin: 30px auto;
-      width: 80%;
-      max-width: 500px;
-      border-radius: 10px;
-    }
+.box {
+    background:rgba(255,255,255,0.05);
+    padding:30px;
+    margin:30px auto;
+    width:80%;
+    max-width:500px;
+    border-radius:12px;
+}
 
-    .button {
-      display: inline-block;
-      padding: 15px 30px;
-      margin: 10px;
-      background: #00ff88;
-      color: black;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 5px;
-      transition: 0.3s;
-    }
+.button {
+    display:inline-block;
+    padding:15px 30px;
+    margin:10px;
+    background:#00ff88;
+    color:black;
+    font-weight:bold;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.3s;
+}
 
-    .button:hover {
-      background: white;
-    }
+.button:hover {
+    transform:scale(1.05);
+}
 
-    .status-online {
-      color: #00ff88;
-    }
+.status-online { color:#00ff88; }
+.status-offline { color:red; }
 
-    .status-offline {
-      color: red;
-    }
-  </style>
+.small {
+    font-size:14px;
+    opacity:0.7;
+}
+</style>
 </head>
 <body>
 
 <h1>PICKLE'S SERVER</h1>
 
 <div class="box">
-  <h2>Server Status</h2>
-  <p id="status">Checking...</p>
+    <h2>Server Status</h2>
+    <p id="status">Checking...</p>
+    <p id="players" class="small"></p>
 </div>
 
 <div class="box">
-  <h2>Join Us</h2>
-<a class="button" onclick="copyIP()">
-    COPY CONNECT COMMAND
-</a>
-
-<p id="copied" style="display:none; color:#00ff88;">Copied to clipboard!</p>
+    <h2>Join Us</h2>
+    <div class="button" onclick="copyIP()" id="copyBtn">
+        COPY CONNECT COMMAND
+    </div>
+    <p id="copied" class="small" style="display:none;color:#00ff88;">Copied!</p>
 </div>
 
 <div class="box">
-  <h2>Commands</h2>
-  <p>!ws – Skins</p>
-  <p>!knife – Knives</p>
-  <p>!gloves – Gloves</p>
+    <h2>Commands</h2>
+    <p>!ws – Skins</p>
+    <p>!knife – Knives</p>
+    <p>!gloves – Gloves</p>
 </div>
 
 <div class="box">
-  <h2>Discord</h2>
-  <a class="button" href="https://discord.gg/YOURINVITE">
-    JOIN DISCORD
-  </a>
+    <h2>Discord</h2>
+    <a class="button" href="https://discord.gg/YOURINVITE">JOIN DISCORD</a>
 </div>
 
 <script>
-fetch("https://api.mcsrvstat.us/2/YOUR_IP:PORT")
-.then(response => response.json())
+const serverIP = "168.100.161.99:2462";
+
+function copyIP() {
+    const text = "connect " + serverIP;
+    navigator.clipboard.writeText(text);
+    const btn = document.getElementById("copyBtn");
+    btn.innerText = "COPIED!";
+    btn.style.background = "white";
+    setTimeout(() => {
+        btn.innerText = "COPY CONNECT COMMAND";
+        btn.style.background = "#00ff88";
+    }, 2000);
+}
+
+// Real CS:GO server status API
+fetch("https://api.gamemonitoring.net/servers/168.100.161.99:2462")
+.then(res => res.json())
 .then(data => {
-  if (data.online) {
+    if(data.status === "online") {
+        document.getElementById("status").innerHTML =
+            "<span class='status-online'>ONLINE</span>";
+        document.getElementById("players").innerText =
+            "Players: " + data.players + "/" + data.maxplayers;
+    } else {
+        document.getElementById("status").innerHTML =
+            "<span class='status-offline'>OFFLINE</span>";
+    }
+})
+.catch(() => {
     document.getElementById("status").innerHTML =
-      "<span class='status-online'>ONLINE</span><br>Players: " +
-      data.players.online + "/" + data.players.max;
-  } else {
-    document.getElementById("status").innerHTML =
-      "<span class='status-offline'>OFFLINE</span>";
-  }
+        "<span class='status-offline'>OFFLINE</span>";
 });
 </script>
-<script>
-function copyIP() {
-    const text = "connect 168.100.161.99:2462";
-    navigator.clipboard.writeText(text).then(function() {
-        document.getElementById("copied").style.display = "block";
-    });
-}
-</script>
+
 </body>
 </html>
