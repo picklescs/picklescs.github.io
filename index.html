@@ -5,8 +5,6 @@
 <title>Pickle's Server</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" type="image/png" href="favicon.png">
-
 <style>
 body {
     margin: 0;
@@ -14,34 +12,64 @@ body {
     background: #000;
     color: white;
     text-align: center;
-    overflow-x: hidden;
 }
 
-/* Animated subtle background */
-body::before {
-    content: "";
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center, #00ff88 0%, transparent 70%);
-    opacity: 0.05;
-    animation: moveBg 20s linear infinite;
-    z-index: -1;
+/* Header */
+h1 {
+    margin-top: 80px;
+    font-size: 48px;
+    color: #00ff88;
+    text-shadow: 0 0 20px #00ff88;
 }
 
-@keyframes moveBg {
-    0% { transform: translate(-25%, -25%); }
-    50% { transform: translate(0%, 0%); }
-    100% { transform: translate(-25%, -25%); }
+/* Box styling */
+.box {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    margin: 30px auto;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
 }
 
-/* Fade in animation */
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #00ff88;
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.button:hover {
+    box-shadow: 0 0 20px #00ff88;
+    transform: scale(1.05);
+}
+
+/* Discord button */
+.discord-btn {
+    background: #5865F2;
+    color: white;
+}
+
+.discord-btn:hover {
+    box-shadow: 0 0 20px #5865F2;
+}
+
+/* Fade animation */
 .fade-in {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 1s ease forwards;
 }
 
+.fade-in:nth-child(2) { animation-delay: 0.2s; }
+.fade-in:nth-child(3) { animation-delay: 0.4s; }
+.fade-in:nth-child(4) { animation-delay: 0.6s; }
 
 @keyframes fadeIn {
     to {
@@ -50,73 +78,48 @@ body::before {
     }
 }
 
-h1 {
-    margin-top: 80px;
-    font-size: 48px;
-    color: #00ff88;
-    text-shadow: 0 0 15px #00ff88;
+.small {
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: 0.7;
 }
-
-.box {
-    background: rgba(255,255,255,0.05);
-    padding: 30px;
-    margin: 30px auto;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
-}
-
-.button {
-    display: inline-block;
-    padding: 12px 25px;
-    background: #00ff88;
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.button:hover {
-    box-shadow: 0 0 20px #00ff88;
-    transform: scale(1.05);
-}
-.discord-btn {
-    background: #5865F2;
-    color: white;
-}
-
-.discord-btn:hover {
-    box-shadow: 0 0 20px #5865F2;
-    transform: scale(1.05);
-}    
 </style>
 </head>
 
 <body>
 
-<h1 class="fade-in" style="animation-delay: 0.2s;">PICKLE'S SERVER</h1>
+<h1 class="fade-in">PICKLE'S SERVER</h1>
 
-<div class="box fade-in" style="animation-delay: 0.3s;">
+<div class="box fade-in">
     <h2>Join Us</h2>
-    ...
+    <div class="button" id="copyBtn" onclick="copyIP()">
+        COPY CONNECT COMMAND
+    </div>
+    <div class="small">168.100.161.99:2463</div>
 </div>
 
-<div class="box fade-in" style="animation-delay: 0.6s;">
+<div class="box fade-in">
     <h2>Commands</h2>
-    ...
+    <p>!ws — Skins</p>
+    <p>!knife — Knives</p>
+    <p>!gloves — Gloves</p>
 </div>
 
-<div class="box fade-in" style="animation-delay: 0.9s;">
+<div class="box fade-in">
     <h2>Discord</h2>
-    ...
+    <a href="https://discord.gg/YOURINVITELINK" target="_blank" class="button discord-btn">
+        JOIN DISCORD
+    </a>
 </div>
+
 <script>
 function copyIP() {
     navigator.clipboard.writeText("connect 168.100.161.99:2463");
-    document.getElementById("copiedText").innerText = "Copied to clipboard!";
+    const btn = document.getElementById("copyBtn");
+    btn.innerText = "Copied!";
+    setTimeout(() => {
+        btn.innerText = "COPY CONNECT COMMAND";
+    }, 2000);
 }
 </script>
 
