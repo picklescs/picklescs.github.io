@@ -1,127 +1,387 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Pickle's Server</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pickle's Server</title>
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #000;
-    color: white;
-    text-align: center;
-}
+  <!-- Optional: add a favicon named favicon.png in repo root -->
+  <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
 
-/* Header */
-h1 {
-    margin-top: 80px;
-    font-size: 48px;
-    color: #00ff88;
-    text-shadow: 0 0 20px #00ff88;
-}
-
-/* Box styling */
-.box {
-    background: rgba(255,255,255,0.05);
-    padding: 30px;
-    margin: 30px auto;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
-}
-
-/* Buttons */
-.button {
-    display: inline-block;
-    padding: 12px 25px;
-    background: #00ff88;
-    color: black;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-    text-decoration: none;
-}
-
-.button:hover {
-    box-shadow: 0 0 20px #00ff88;
-    transform: scale(1.05);
-}
-
-/* Discord button */
-.discord-btn {
-    background: #5865F2;
-    color: white;
-}
-
-.discord-btn:hover {
-    box-shadow: 0 0 20px #5865F2;
-}
-
-/* Fade animation */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 1s ease forwards;
-}
-
-.fade-in:nth-child(2) { animation-delay: 0.2s; }
-.fade-in:nth-child(3) { animation-delay: 0.4s; }
-.fade-in:nth-child(4) { animation-delay: 0.6s; }
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
+  <style>
+    :root{
+      --bg:#070A0A;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.04);
+      --text:#e9f1ee;
+      --muted:#a7b5b0;
+      --accent:#00ff88;
+      --discord:#5865F2;
+      --shadow: 0 20px 60px rgba(0,0,0,0.55);
+      --radius: 16px;
     }
-}
 
-.small {
-    margin-top: 10px;
-    font-size: 14px;
-    opacity: 0.7;
-}
-</style>
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(1000px 600px at 50% -10%, rgba(0,255,136,0.10), transparent 60%),
+                  radial-gradient(900px 700px at 10% 30%, rgba(88,101,242,0.08), transparent 60%),
+                  radial-gradient(900px 700px at 90% 60%, rgba(0,255,136,0.06), transparent 60%),
+                  var(--bg);
+      overflow-x:hidden;
+    }
+
+    /* moving “aurora” background */
+    .aurora{
+      position: fixed;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(0,255,136,0.14), transparent 45%),
+        radial-gradient(circle at 70% 40%, rgba(88,101,242,0.10), transparent 48%),
+        radial-gradient(circle at 50% 70%, rgba(0,255,136,0.10), transparent 52%);
+      filter: blur(28px);
+      opacity: 0.85;
+      animation: drift 14s ease-in-out infinite;
+      z-index:-2;
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
+      50%{ transform: translate3d(3%, 2%, 0) scale(1.12); }
+      100%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    /* HERO */
+    .hero{
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      min-height: 320px;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background: url("hero.jpg") center/cover no-repeat;
+      filter: saturate(1.1) contrast(1.05);
+      transform: scale(1.03);
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.70));
+    }
+
+    .heroInner{
+      position: relative;
+      padding: 26px 22px 22px;
+      display:flex;
+      gap:18px;
+      align-items:flex-end;
+      min-height: 320px;
+    }
+
+    .brand{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .logo{
+      width:68px; height:68px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .logo img{ width:100%; height:100%; object-fit:cover; }
+
+    .titleBlock h1{
+      margin:0;
+      font-size: 38px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 18px rgba(0,255,136,0.18);
+    }
+    .titleBlock p{
+      margin:6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .heroRight{
+      margin-left:auto;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:flex-end;
+      text-align:right;
+    }
+
+    .pill{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.38);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(0,255,136,0.55);
+    }
+
+    /* Cards grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    /* Glass card with animated border */
+    .card{
+      grid-column: span 12;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      position: relative;
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .card.glow::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: conic-gradient(from 120deg,
+        rgba(0,255,136,0.0),
+        rgba(0,255,136,0.55),
+        rgba(88,101,242,0.45),
+        rgba(0,255,136,0.55),
+        rgba(0,255,136,0.0)
+      );
+      filter: blur(10px);
+      opacity: 0.55;
+      animation: spin 6s linear infinite;
+      z-index:0;
+    }
+    .card.glow::after{
+      content:"";
+      position:absolute; inset:1px;
+      background: var(--card2);
+      border-radius: calc(var(--radius) - 2px);
+      z-index:1;
+    }
+    @keyframes spin{
+      to{ transform: rotate(360deg); }
+    }
+    .card > *{ position:relative; z-index:2; }
+
+    .card h2{
+      margin:0 0 10px;
+      font-size: 18px;
+      letter-spacing: 0.3px;
+    }
+    .muted{ color: var(--muted); font-size: 14px; }
+
+    .btnRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-width: 190px;
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+    .btn:active{ transform: translateY(0px) scale(0.99); }
+
+    .btnPrimary{
+      background: var(--accent);
+      color:#00130A;
+      box-shadow: 0 10px 30px rgba(0,255,136,0.20);
+    }
+    .btnDiscord{
+      background: var(--discord);
+      color:#fff;
+      box-shadow: 0 10px 30px rgba(88,101,242,0.18);
+    }
+
+    .copyHint{
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .commands{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+      text-align:left;
+    }
+    .cmd{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .cmd code{
+      font-weight: 800;
+      color: var(--accent);
+      background: rgba(0,255,136,0.08);
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+
+    /* Gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .shot{
+      grid-column: span 12;
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      background: rgba(255,255,255,0.03);
+    }
+    .shot img{
+      width:100%;
+      height:220px;
+      object-fit: cover;
+      display:block;
+    }
+
+    @media (min-width: 760px){
+      .card.half{ grid-column: span 6; }
+      .shot{ grid-column: span 4; }
+      .shot img{ height: 200px; }
+      .titleBlock h1{ font-size: 44px; }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="aurora"></div>
 
-<h1 class="fade-in">PICKLE'S SERVER</h1>
+  <div class="wrap">
+    <section class="hero">
+      <div class="heroInner">
+        <div class="brand">
+          <div class="logo">
+            <img src="logo.png" alt="Server Logo">
+          </div>
+          <div class="titleBlock">
+            <h1>PICKLE'S SERVER</h1>
+            <p>CS:GO Community • Skins/Knives/Gloves</p>
+          </div>
+        </div>
 
-<div class="box fade-in">
-    <h2>Join Us</h2>
-    <div class="button" id="copyBtn" onclick="copyIP()">
-        COPY CONNECT COMMAND
-    </div>
-    <div class="small">168.100.161.99:2463</div>
-</div>
+        <div class="heroRight">
+          <div class="pill">
+            <span class="dot"></span>
+            <span>Server: 168.100.161.99:2462</span>
+          </div>
+          <div class="pill">
+            <span class="muted">Tip:</span>
+            <span class="muted">Click “Copy Connect” then paste in CS console</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="box fade-in">
-    <h2>Commands</h2>
-    <p>!ws — Skins</p>
-    <p>!knife — Knives</p>
-    <p>!gloves — Gloves</p>
-</div>
+    <section class="grid">
+      <!-- JOIN FIRST -->
+      <div class="card glow half">
+        <h2>Join</h2>
+        <div class="btnRow">
+          <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect Command</button>
+          <a class="btn btnDiscord" href="https://discord.gg/YOURINVITE" target="_blank" rel="noopener">Join Discord</a>
+        </div>
+        <div class="copyHint" id="copyHint">Connect command: <b>connect 168.100.161.99:2462</b></div>
+      </div>
 
-<div class="box fade-in">
-    <h2>Discord</h2>
-    <a href="https://discord.gg/YOURINVITELINK" target="_blank" class="button discord-btn">
-        JOIN DISCORD
-    </a>
-</div>
+      <div class="card half">
+        <h2>Commands</h2>
+        <div class="commands">
+          <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
+          <div class="cmd"><span>Knives</span><code>!knife</code></div>
+          <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
+        </div>
+        <p class="muted" style="margin:12px 0 0;">If chat commands don’t respond, type them in all-chat.</p>
+      </div>
 
-<script>
-function copyIP() {
-    navigator.clipboard.writeText("connect 168.100.161.99:2463");
-    const btn = document.getElementById("copyBtn");
-    btn.innerText = "Copied!";
-    setTimeout(() => {
-        btn.innerText = "COPY CONNECT COMMAND";
-    }, 2000);
-}
-</script>
+      <div class="card">
+        <h2>Screenshots</h2>
+        <p class="muted">Upload your images as <b>shot1.jpg</b>, <b>shot2.jpg</b>, <b>shot3.jpg</b> in the repo root.</p>
+        <div class="gallery">
+          <div class="shot"><img src="shot1.jpg" alt="Server screenshot 1"></div>
+          <div class="shot"><img src="shot2.jpg" alt="Server screenshot 2"></div>
+          <div class="shot"><img src="shot3.jpg" alt="Server screenshot 3"></div>
+        </div>
+      </div>
+    </section>
+  </div>
 
+  <script>
+    function copyConnect(){
+      const cmd = "connect 168.100.161.99:2462";
+      navigator.clipboard.writeText(cmd).then(() => {
+        const btn = document.getElementById("copyBtn");
+        const hint = document.getElementById("copyHint");
+        const prev = btn.textContent;
+
+        btn.textContent = "Copied!";
+        hint.textContent = "Copied to clipboard — paste into CS:GO console.";
+
+        setTimeout(() => {
+          btn.textContent = prev;
+          hint.innerHTML = 'Connect command: <b>' + cmd + '</b>';
+        }, 2000);
+      });
+    }
+  </script>
 </body>
 </html>
