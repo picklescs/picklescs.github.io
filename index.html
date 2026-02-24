@@ -125,9 +125,8 @@ fetch("https://api.gamemonitoring.net/servers/168.100.161.99:2462")
 });
 </script>
 <script>
-const CONNECT_ADDR = "168.100.161.99:2462"; // what players use
-const QUERY_IP = "168.100.161.99";
-const QUERY_PORT = 2463; // what status APIs use
+const CONNECT_ADDR = "168.100.161.99:2462"; // copy command uses this
+const QUERY_URL = "https://gamedig-api.hexane.co/csgo/ip=168.100.161.99&port=2463";
 
 function copyIP() {
   const text = "connect " + CONNECT_ADDR;
@@ -138,8 +137,11 @@ function copyIP() {
   });
 }
 
-fetch(`https://gamedig-api.hexane.co/csgo/ip=${QUERY_IP}&port=${QUERY_PORT}`)
-  .then(res => res.json())
+// CORS-safe fetch via proxy:
+const proxied = "https://api.allorigins.win/raw?url=" + encodeURIComponent(QUERY_URL);
+
+fetch(proxied)
+  .then(r => r.json())
   .then(data => {
     if (data && data.online) {
       document.getElementById("status").innerHTML =
@@ -152,11 +154,13 @@ fetch(`https://gamedig-api.hexane.co/csgo/ip=${QUERY_IP}&port=${QUERY_PORT}`)
       document.getElementById("players").innerText = "";
     }
   })
-  .catch(() => {
+  .catch(err => {
+    console.log("Status fetch failed:", err);
     document.getElementById("status").innerHTML =
       "<span class='status-offline'>OFFLINE</span>";
-    document.getElementById("players").innerText = "";
+    document.getElementById("players").innerText = "Status blocked by browser (CORS).";
   });
+</script>
 </script>
 </script>
 </body>
