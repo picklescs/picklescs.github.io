@@ -298,24 +298,18 @@
       display:block;
     }
 
-    /* ✅ LANDSCAPE / DESKTOP: make it truly wide */
-    @media (min-width: 900px){
-      /* 3 cards across */
-      .card.third{ grid-column: span 4; }
-      /* screenshots in a row */
-      .shot{ grid-column: span 4; }
-      .shot img{ height: 200px; }
-      h1{ font-size: 48px; }
-      .hero{ min-height: 300px; }
-      .heroInner{ min-height: 300px; }
-    }
+   /* FORCE PORTRAIT / STACKED LAYOUT EVEN ON DESKTOP */
+@media (min-width: 900px){
+  /* stack Join / Commands / Discord vertically */
+  .card.third{ grid-column: span 12; }
 
-    /* Small screens: stack nicely */
-    @media (max-width: 520px){
-      h1{ font-size: 34px; }
-      .heroRight{ display:none; } /* keeps it clean on small screens */
-      .btn{ width:100%; min-width: unset; }
-    }
+  /* screenshots: 1 per row (portrait feel) */
+  .shot{ grid-column: span 12; }
+  .shot img{ height: 240px; }
+
+  /* keep content centered and narrower */
+  .wrap{ max-width: 760px; }
+}
   </style>
 </head>
 
