@@ -53,10 +53,11 @@
     }
 
     .wrap{
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 22px 18px 60px;
-    }
+  max-width: 1400px;   /* wider */
+  width: 95%;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
 
     /* HERO banner (landscape) */
     .hero{
@@ -300,15 +301,8 @@
 
    /* FORCE PORTRAIT / STACKED LAYOUT EVEN ON DESKTOP */
 @media (min-width: 900px){
-  /* stack Join / Commands / Discord vertically */
-  .card.third{ grid-column: span 12; }
-
-  /* screenshots: 1 per row (portrait feel) */
-  .shot{ grid-column: span 12; }
-  .shot img{ height: 240px; }
-
-  /* keep content centered and narrower */
-  .wrap{ max-width: 760px; }
+  .card.third{ grid-column: span 4; }   /* 3 cards per row */
+  .shot{ grid-column: span 4; }         /* 3 screenshots per row */
 }
   </style>
 </head>
