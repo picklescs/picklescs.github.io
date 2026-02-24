@@ -42,9 +42,6 @@ body::before {
     animation: fadeIn 1s ease forwards;
 }
 
-.fade-in:nth-child(1) { animation-delay: 0.2s; }
-.fade-in:nth-child(2) { animation-delay: 0.4s; }
-.fade-in:nth-child(3) { animation-delay: 0.6s; }
 
 @keyframes fadeIn {
     to {
@@ -100,26 +97,21 @@ h1 {
 
 <body>
 
-<h1 class="fade-in">PICKLE'S SERVER</h1>
+<h1 class="fade-in" style="animation-delay: 0.2s;">PICKLE'S SERVER</h1>
 
-<div class="box fade-in">
+<div class="box fade-in" style="animation-delay: 0.3s;">
     <h2>Join Us</h2>
-    <div class="button" onclick="copyIP()">COPY CONNECT COMMAND</div>
-    <p id="copiedText"></p>
+    ...
 </div>
 
-<div class="box fade-in">
+<div class="box fade-in" style="animation-delay: 0.6s;">
     <h2>Commands</h2>
-    <p>!ws – Skins</p>
-    <p>!knife – Knives</p>
-    <p>!gloves – Gloves</p>
+    ...
 </div>
-    
-<div class="box fade-in">
+
+<div class="box fade-in" style="animation-delay: 0.9s;">
     <h2>Discord</h2>
-    <a href="https://discord.gg/YOURINVITELINK" target="_blank" class="button discord-btn">
-        JOIN DISCORD
-    </a>
+    ...
 </div>
 <script>
 function copyIP() {
