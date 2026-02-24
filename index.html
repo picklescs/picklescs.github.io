@@ -126,7 +126,7 @@ fetch("https://api.gamemonitoring.net/servers/168.100.161.99:2462")
 </script>
 <script>
 const ip = "168.100.161.99";
-const portsToTry = [2462, 2463]; // sometimes query port = game port + 1
+const portsToTry = [2463]; // sometimes query port = game port + 1
 
 async function checkServer() {
   for (const port of portsToTry) {
