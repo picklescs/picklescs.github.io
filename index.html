@@ -346,13 +346,27 @@
     <!-- CONTENT -->
     <section class="content">
       <div class="grid">
-        <div class="card third" id="joinCard">
-          <h2>Join</h2>
-          <div class="btnRow">
-            <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect</button>
-          </div>
-          <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
-        </div>
+        <div class="card third glow" id="joinCard">
+  <h2>Join</h2>
+
+  <div class="btnRow">
+    <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect</button>
+    <a class="btn btnPrimary" href="steam://connect/168.100.161.99:2462" style="background:rgba(0,255,136,0.18); color:var(--text); border:1px solid rgba(0,255,136,0.35);">
+      Open in CS:GO
+    </a>
+  </div>
+
+  <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
+
+  <div class="joinInfo">
+    <div class="infoRow"><span class="infoDot"></span><span><b>128 tick</b> • low-latency</span></div>
+    <div class="infoRow"><span class="infoDot"></span><span><b>Slots:</b> 10</span></div>
+    <div class="infoRow"><span class="infoDot"></span><span><b>Features:</b> Skins / Knives / Gloves</span></div>
+    <div class="infoRow"><span class="infoDot"></span><span><b>Commands:</b> !ws • !knife • !gloves • !rtv</span></div>
+  </div>
+
+  <p class="muted" style="margin:14px 0 0;">Tip: paste the connect line into your CS:GO console.</p>
+</div>
 
         <div class="card third">
           <h2>Commands</h2>
