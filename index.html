@@ -430,78 +430,64 @@
 
     <!-- CONTENT -->
     <section class="content">
-     <div class="grid">
+  <div class="grid">
 
-  <div class="card third" id="joinCard">
-    ...
-  </div>
-
-  <div class="card third">
-    ...
-  </div>
-
-  <div class="card third">
-    ...
-  </div>
-
-</div>
-
-  <div class="btnRow joinBtns">
-    <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect</button>
-  </div>
-
-  <div class="joinMeta">
-    <span class="chip">EU</span>
-    <span class="chip">128 tick</span>
-    <span class="chip">10 slots</span>
-    <span class="chip">Skins/Knives/Gloves</span>
-  </div>
-
-  <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
-</div>
-
-  <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
-
-  <div class="joinInfo">
-    <div class="infoRow"><span class="infoDot"></span><span><b>128 tick</b> • low-latency</span></div>
-    <div class="infoRow"><span class="infoDot"></span><span><b>Slots:</b> 10</span></div>
-    <div class="infoRow"><span class="infoDot"></span><span><b>Features:</b> Skins / Knives / Gloves</span></div>
-    <div class="infoRow"><span class="infoDot"></span><span><b>Commands:</b> !ws • !knife • !gloves</span></div>
-  </div>
-
-  <p class="muted" style="margin:14px 0 0;">Tip: paste the connect line into your CS:GO console.</p>
-</div>
-
-        <div class="card third">
-          <h2>Commands</h2>
-          <div class="commands">
-            <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
-            <div class="cmd"><span>Knives</span><code>!knife</code></div>
-            <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
-            <div class="cmd"><span>Nominate Map</span><code>!nominate de_map</code></div>   
-            <div class="cmd"><span>RockTheVote</span><code>rtv</code></div> 
-          </div>
-          <p class="muted" style="margin:12px 0 0;">Type commands in chat.</p>
-        </div>
-
-        <div class="card third">
-          <h2>Discord</h2>
-          <p class="muted">Announcements, updates, support.</p>
-          <div class="btnRow">
-            <a class="btn btnDiscord" href="https://discord.gg/YOURINVITE" target="_blank" rel="noopener">Join Discord</a>
-          </div>
-        </div>
-
-        <div class="card" style="grid-column: span 12;">
-          <h2>Screenshots</h2>
-          <div class="gallery">
-            <div class="shot"><img src="shot1.jpg" alt="Server screenshot 1"></div>
-            <div class="shot"><img src="shot2.jpg" alt="Server screenshot 2"></div>
-            <div class="shot"><img src="shot3.jpg" alt="Server screenshot 3"></div>
-          </div>
-        </div>
+    <!-- JOIN CARD -->
+    <div class="card third glow joinCard" id="joinCard">
+      <div class="joinTop">
+        <h2>Join</h2>
+        <div class="joinIp">168.100.161.99:2462</div>
       </div>
-    </section>
+
+      <div class="btnRow joinBtns">
+        <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect</button>
+        <a class="btn btnGhost" href="steam://connect/168.100.161.99:2462">Open in CS:GO</a>
+      </div>
+
+      <div class="joinMeta">
+        <span class="chip">EU</span>
+        <span class="chip">128 tick</span>
+        <span class="chip">10 slots</span>
+        <span class="chip">Skins/Knives/Gloves</span>
+      </div>
+
+      <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
+    </div>
+
+    <!-- COMMANDS CARD -->
+    <div class="card third">
+      <h2>Commands</h2>
+      <div class="commands">
+        <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
+        <div class="cmd"><span>Knives</span><code>!knife</code></div>
+        <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
+        <div class="cmd"><span>Nominate Map</span><code>!nominate</code></div>
+        <div class="cmd"><span>RockTheVote</span><code>!rtv</code></div>
+      </div>
+      <p class="muted" style="margin:12px 0 0;">Type commands in chat.</p>
+    </div>
+
+    <!-- DISCORD CARD -->
+    <div class="card third">
+      <h2>Discord</h2>
+      <p class="muted">Announcements, updates, support.</p>
+      <div class="btnRow">
+        <a class="btn btnDiscord" href="https://discord.gg/YOURINVITE" target="_blank" rel="noopener">Join Discord</a>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS (FULL WIDTH) -->
+    <div class="card" style="grid-column: span 12;">
+      <h2>Screenshots</h2>
+      <div class="gallery">
+        <div class="shot"><img src="shot1.jpg" alt="Server screenshot 1"></div>
+        <div class="shot"><img src="shot2.jpg" alt="Server screenshot 2"></div>
+        <div class="shot"><img src="shot3.jpg" alt="Server screenshot 3"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
   </div>
 
   <script>
