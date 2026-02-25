@@ -351,6 +351,61 @@
   box-shadow: 0 0 10px rgba(0,255,136,0.45);
   flex: 0 0 auto;
 }
+    /* Cleaner Join card */
+.joinCard{ padding: 18px; }
+
+.joinTop{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.joinTop h2{ margin:0; }
+
+.joinIp{
+  font-size:12px;
+  color: var(--muted);
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.25);
+  white-space:nowrap;
+}
+
+.joinBtns .btn{
+  min-width: 0;
+  flex: 1 1 200px;
+}
+
+.btnGhost{
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: none;
+}
+
+.btnGhost:hover{ filter: brightness(1.06); }
+
+.joinMeta{
+  margin-top: 12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.chip{
+  font-size:12px;
+  color: var(--muted);
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.18);
+}
+
+/* Tone down the animated glow on Join card only */
+#joinCard.glow::before{ opacity: 0.35; filter: blur(14px); }
   </style>
 </head>
 
@@ -376,15 +431,26 @@
     <!-- CONTENT -->
     <section class="content">
       <div class="grid">
-        <div class="card third glow" id="joinCard">
-  <h2>Join</h2>
-
-  <div class="btnRow">
-    <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect</button>
-    <a class="btn btnPrimary" href="steam://connect/168.100.161.99:2462" style="background:rgba(0,255,136,0.18); color:var(--text); border:1px solid rgba(0,255,136,0.35);">
-      Open in CS:GO
-    </a>
+       <div class="card third glow joinCard" id="joinCard">
+  <div class="joinTop">
+    <h2>Join</h2>
+    <div class="joinIp">168.100.161.99:2462</div>
   </div>
+
+  <div class="btnRow joinBtns">
+    <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect</button>
+    <a class="btn btnGhost" href="steam://connect/168.100.161.99:2462">Open in CS:GO</a>
+  </div>
+
+  <div class="joinMeta">
+    <span class="chip">EU</span>
+    <span class="chip">128 tick</span>
+    <span class="chip">10 slots</span>
+    <span class="chip">Skins/Knives/Gloves</span>
+  </div>
+
+  <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
+</div>
 
   <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
 
