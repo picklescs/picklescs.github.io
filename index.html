@@ -67,12 +67,18 @@
       min-height: 420px;
       overflow:hidden;
     }
-  .hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: rgba(0,0,0,0.25); /* 0.15–0.35 is good */
-  pointer-events:none;
+  .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.25); /* small dark tint */
+  pointer-events: none;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
 }
 .hero {
   position: relative;
