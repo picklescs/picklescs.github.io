@@ -302,11 +302,18 @@
     }
 
     /* Desktop: 3 cards across + 3 screenshots across */
-    @media (min-width: 980px){
-      .third{ grid-column: span 4; }
-      .shot{ grid-column: span 4; }
-      .shot img{ height: 220px; }
-    }
+   @media (min-width: 980px){
+  #joinCard, .commandsCard, .discordCard{
+    max-height: 210px;
+  }
+
+  /* only scroll the commands list if needed */
+  .commandsCard .commands{
+    max-height: 130px;
+    overflow: auto;
+    padding-right: 6px;
+  }
+}
 
     /* Mobile */
     @media (max-width: 650px){
@@ -467,7 +474,7 @@
     </section>
 
     <!-- CONTENT -->
-    <section class="content">
+  <section class="content">
   <div class="grid">
 
     <!-- JOIN CARD -->
@@ -487,39 +494,43 @@
         <span class="chip">10 slots</span>
         <span class="chip">Skins/Knives/Gloves</span>
       </div>
-     
+
       <div class="status">
-  <span class="dot"></span> Server Online
-</div>
+        <span class="dot"></span> Server Online
+      </div>
 
       <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
     </div>
 
     <!-- COMMANDS CARD -->
-    <div class="card third">
+    <div class="card third commandsCard">
       <h2>Commands</h2>
-      <div class="card third commandsCard">
+
+      <div class="commands">
         <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
         <div class="cmd"><span>Knives</span><code>!knife</code></div>
         <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
         <div class="cmd"><span>Nominate Map</span><code>!nominate</code></div>
         <div class="cmd"><span>RockTheVote</span><code>!rtv</code></div>
       </div>
+
       <p class="muted" style="margin:12px 0 0;">Type commands in chat.</p>
     </div>
 
     <!-- DISCORD CARD -->
-    <div class="card third">
+    <div class="card third discordCard">
       <h2>Discord</h2>
-      <div class="card third discordCard">
       <p class="muted">Announcements, updates, support.</p>
+
       <div class="btnRow">
-        <a class="btn btnDiscord" href="https://discord.gg/YOURINVITE" target="_blank" rel="noopener">Join Discord</a>
+        <a class="btn btnDiscord" href="https://discord.gg/YOURINVITE" target="_blank" rel="noopener">
+          Join Discord
+        </a>
       </div>
     </div>
 
     <!-- SCREENSHOTS (FULL WIDTH) -->
-    <div class="card" style="grid-column: span 12;">
+    <div class="card screenshotsCard">
       <h2>Screenshots</h2>
       <div class="gallery">
         <div class="shot"><img src="shot1.jpg" alt="Server screenshot 1"></div>
