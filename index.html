@@ -1,565 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PICKLE'S Community Server</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PICKLE'S Community Server</title>
 
-  <style>
-    :root{
-      --bg:#070A0A;
-      --card: rgba(255,255,255,0.07);
-      --card2: rgba(255,255,255,0.05);
-      --text:#e9f1ee;
-      --muted:#a7b5b0;
-      --accent:#00ff88;
-      --discord:#5865F2;
-      --border: rgba(255,255,255,0.10);
-      --shadow: 0 14px 44px rgba(0,0,0,0.55);
-      --r: 16px;
-    }
-
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1000px 600px at 50% -10%, rgba(0,255,136,0.10), transparent 60%),
-        radial-gradient(900px 700px at 10% 30%, rgba(88,101,242,0.08), transparent 60%),
-        radial-gradient(900px 700px at 90% 60%, rgba(0,255,136,0.06), transparent 60%),
-        var(--bg);
-      overflow-x:hidden;
-      min-height:100vh;
-    }
-
-    /* Subtle moving glow */
-    .aurora{
-      position: fixed;
-      inset:-40%;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(0,255,136,0.14), transparent 45%),
-        radial-gradient(circle at 70% 40%, rgba(88,101,242,0.10), transparent 48%),
-        radial-gradient(circle at 50% 70%, rgba(0,255,136,0.10), transparent 52%);
-      filter: blur(28px);
-      opacity: 0.85;
-      animation: drift 14s ease-in-out infinite;
-      z-index:-2;
-      pointer-events:none;
-    }
-    @keyframes drift{
-      0%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
-      50%{ transform: translate3d(3%, 2%, 0) scale(1.12); }
-      100%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
-    }
-
-    /* FULL WIDTH wrapper */
-    .wrap{
-      width:100%;
-      margin:0;
-      padding:0;
-    }
-
-    /* ================= HERO ================= */
-    .hero{
-      position: relative;
-      width: 100%;
-      min-height: 420px;
-      overflow: hidden;
-
-      /* IMPORTANT: hero.jpg must be in the same folder as index.html */
-      background: url("hero.jpg") center center / cover no-repeat;
-    }
-
-    /* dark overlay */
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: rgba(0,0,0,0.35);
-      pointer-events:none;
-      z-index:0;
-    }
-
-    /* gradient overlay */
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.40) 55%, rgba(0,0,0,0.85) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.75));
-      pointer-events:none;
-      z-index:0;
-    }
-
-    .heroInner{
-      position: relative;
-      min-height: 420px;
-      padding: 28px clamp(16px, 4vw, 48px);
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:18px;
-      z-index:1;
-    }
-
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-
-    .hero h1{
-      margin:0;
-      font-size: clamp(36px, 4vw, 56px);
-      font-weight:800;
-      color:#fff;
-      text-shadow:
-        0 2px 0 rgba(0,0,0,0.6),
-        0 0 22px rgba(0,255,136,0.45),
-        0 0 60px rgba(0,255,136,0.20);
-    }
-
-    .sub{
-      margin:0;
-      color: var(--muted);
-      font-size:14px;
-    }
-
-    .heroRight{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      align-items:flex-end;
-      text-align:right;
-      min-width:260px;
-    }
-
-    .pill{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      padding:10px 12px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.38);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      font-size: 13px;
-      color: var(--muted);
-      max-width: 100%;
-    }
-
-    .dot{
-      width:10px; height:10px; border-radius:999px;
-      background: var(--accent);
-      box-shadow: 0 0 14px rgba(0,255,136,0.55);
-      flex: 0 0 auto;
-    }
-
-    /* FULL WIDTH content area */
-    .content{
-      width:100%;
-      padding: 18px clamp(16px, 4vw, 48px) 60px;
-    }
-
-    /* Full width grid */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-    }
-
-    .card{
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 18px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      position: relative;
-      overflow:hidden;
-    }
-
-    .card.glow::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: conic-gradient(from 120deg,
-        rgba(0,255,136,0.0),
-        rgba(0,255,136,0.55),
-        rgba(88,101,242,0.45),
-        rgba(0,255,136,0.55),
-        rgba(0,255,136,0.0)
-      );
-      filter: blur(10px);
-      opacity: 0.55;
-      animation: spin 6s linear infinite;
-      z-index:0;
-    }
-    .card.glow::after{
-      content:"";
-      position:absolute; inset:1px;
-      background: var(--card2);
-      border-radius: calc(var(--r) - 2px);
-      z-index:1;
-    }
-    @keyframes spin{ to{ transform: rotate(360deg); } }
-    .card > *{ position:relative; z-index:2; }
-
-    .card h2{
-      margin:0 0 10px;
-      font-size: 18px;
-      letter-spacing: 0.3px;
-    }
-    .muted{ color: var(--muted); font-size: 14px; }
-
-    .btnRow{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .btn{
-      appearance:none;
-      border:0;
-      cursor:pointer;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-weight: 900;
-      letter-spacing: 0.2px;
-      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width: 200px;
-    }
-    .btn:hover{ transform: translateY(-1px); filter: brightness(1.03); }
-    .btn:active{ transform: translateY(0px) scale(0.99); }
-
-    .btnPrimary{
-      background: var(--accent);
-      color:#00130A;
-      box-shadow: 0 10px 30px rgba(0,255,136,0.20);
-    }
-    .btnDiscord{
-      background: var(--discord);
-      color:#fff;
-      box-shadow: 0 10px 30px rgba(88,101,242,0.18);
-    }
-
-    .copyHint{
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .commands{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: 10px;
-      text-align:left;
-    }
-    .cmd{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .cmd code{
-      font-weight: 900;
-      color: var(--accent);
-      background: rgba(0,255,136,0.08);
-      padding: 4px 8px;
-      border-radius: 999px;
-    }
-
-    /* Screenshots */
-    .gallery{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .shot{
-      grid-column: span 12;
-      border-radius: 16px;
-      overflow:hidden;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-    }
-    .shot img{
-      width:100%;
-      height: 230px;
-      object-fit: cover;
-      display:block;
-    }
-
-    /* Desktop: 3 cards across + 3 screenshots across */
-   @media (min-width: 980px){
-  #joinCard, .commandsCard, .discordCard{
-    max-height: 210px;
-  }
-
-  /* only scroll the commands list if needed */
-  .commandsCard .commands{
-    max-height: 130px;
-    overflow: auto;
-    padding-right: 6px;
-  }
+<style>
+:root{
+  --bg:#070A0A;
+  --card: rgba(255,255,255,0.07);
+  --text:#e9f1ee;
+  --muted:#a7b5b0;
+  --accent:#00ff88;
+  --discord:#5865F2;
+  --border: rgba(255,255,255,0.10);
+  --shadow: 0 14px 44px rgba(0,0,0,0.55);
+  --r:16px;
 }
 
-    /* Mobile */
-    @media (max-width: 650px){
-      .heroInner{
-        flex-direction:column;
-        align-items:flex-start;
-        justify-content:flex-end;
-      }
-      .heroRight{
-        align-items:flex-start;
-        text-align:left;
-      }
-      .btn{ width:100%; min-width: unset; }
-    }
-    .joinInfo{
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255,255,255,0.10);
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1000px 600px at 50% -10%, rgba(0,255,136,0.10), transparent 60%),
+    radial-gradient(900px 700px at 10% 30%, rgba(88,101,242,0.08), transparent 60%),
+    radial-gradient(900px 700px at 90% 60%, rgba(0,255,136,0.06), transparent 60%),
+    var(--bg);
+  min-height:100vh;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:420px;
+  background:url("hero.jpg") center/cover no-repeat;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+}
+
+.heroInner{
+  position:relative;
+  min-height:420px;
+  padding:40px;
   display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.infoRow{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.infoRow b{
-  color: var(--text);
-  font-weight: 800;
-}
-
-.infoDot{
-  width:8px;
-  height:8px;
-  border-radius:999px;
-  background: var(--accent);
-  box-shadow: 0 0 10px rgba(0,255,136,0.45);
-  flex: 0 0 auto;
-}
-    /* Cleaner Join card */
-.joinCard{ padding: 18px; }
-
-.joinTop{
-  display:flex;
-  align-items:flex-start;
+  align-items:flex-end;
   justify-content:space-between;
-  gap:12px;
-  margin-bottom:10px;
 }
 
-.joinTop h2{ margin:0; }
+.hero h1{
+  margin:0;
+  font-size:clamp(36px,4vw,56px);
+  font-weight:800;
+  text-shadow:
+    0 2px 0 rgba(0,0,0,0.6),
+    0 0 25px rgba(0,255,136,0.5);
+}
 
-.joinIp{
-  font-size:12px;
-  color: var(--muted);
-  padding:6px 10px;
+.sub{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.pill{
+  padding:10px 14px;
   border-radius:999px;
-  border:1px solid rgba(255,255,255,0.10);
-  background: rgba(0,0,0,0.25);
-  white-space:nowrap;
+  background:rgba(0,0,0,0.4);
+  border:1px solid var(--border);
+  font-size:13px;
 }
 
-.joinBtns .btn{
-  min-width: 0;
-  flex: 1 1 200px;
+/* CONTENT */
+.content{
+  padding:40px;
 }
 
-.btnGhost{
-  background: rgba(255,255,255,0.06);
-  color: var(--text);
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: none;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:20px;
 }
 
-.btnGhost:hover{ filter: brightness(1.06); }
+/* Cards */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:20px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
+}
 
+.third{
+  grid-column:span 4;
+}
+
+.full{
+  grid-column:1 / -1;
+}
+
+.card h2{
+  margin:0 0 12px;
+}
+
+/* Join Card */
 .joinMeta{
-  margin-top: 12px;
   display:flex;
   flex-wrap:wrap;
   gap:8px;
+  margin-top:10px;
 }
 
 .chip{
   font-size:12px;
-  color: var(--muted);
   padding:6px 10px;
   border-radius:999px;
-  border:1px solid rgba(255,255,255,0.10);
-  background: rgba(0,0,0,0.18);
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  color:var(--muted);
 }
 
-/* Tone down the animated glow on Join card only */
-#joinCard.glow::before{ opacity: 0.35; filter: blur(14px); }
-    .status{
-  margin-top:12px;
+.status{
+  margin-top:10px;
   font-size:14px;
   color:var(--muted);
+}
+
+.btn{
+  border:0;
+  padding:12px;
+  border-radius:12px;
+  font-weight:800;
+  cursor:pointer;
+  width:100%;
+  margin-top:12px;
+}
+
+.btnPrimary{
+  background:var(--accent);
+  color:#00130A;
+}
+
+.btnDiscord{
+  background:var(--discord);
+  color:white;
+}
+
+/* Commands */
+.cmd{
   display:flex;
-  align-items:center;
-  gap:8px;
-}
-    #joinCard{
-  position: relative;
+  justify-content:space-between;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  margin-bottom:8px;
 }
 
-#joinCard::after{
-  content:"";
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  height:2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity:0.3;
+.cmd code{
+  background:rgba(0,255,136,0.1);
+  padding:4px 8px;
+  border-radius:999px;
+  color:var(--accent);
+  font-weight:700;
 }
-    /* Make the top row cards not stretch tall */
-.grid { align-items: start; }
 
-/* Limit height of the 3 top cards */
-@media (min-width: 980px){
-  #joinCard,
-  .commandsCard,
-  .discordCard{
-    max-height: 210px;        /* change this number */
-    overflow: hidden;
-  }
+/* Screenshots */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
 }
-    /* Make the Screenshots card span the full width of the grid */
-.screenshotsCard{
-  grid-column: 1 / -1;
+
+.gallery img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:14px;
+  border:1px solid var(--border);
 }
-  </style>
+
+/* Responsive */
+@media(max-width:1000px){
+  .third{ grid-column:span 12; }
+  .gallery{ grid-template-columns:1fr; }
+}
+</style>
 </head>
 
 <body>
-  <div class="aurora"></div>
 
-  <div class="wrap">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="heroInner">
-        <div class="brand">
-          <h1>PICKLE'S SERVER</h1>
-          <p class="sub">• CS:GO Community Server</p>
-        </div>
+<section class="hero">
+  <div class="heroInner">
+    <div>
+      <h1>PICKLE'S SERVER</h1>
+      <p class="sub">CS:GO Community Server</p>
+    </div>
+    <div class="pill">Connect: 168.100.161.99:2462</div>
+  </div>
+</section>
 
-        <div class="heroRight">
-          <div class="pill"><span class="dot"></span><span>Connect: 168.100.161.99:2462</span></div>
-          <div class="pill"><span>Tip: Copy connect → paste in console</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTENT -->
-  <section class="content">
+<section class="content">
   <div class="grid">
 
-    <!-- JOIN CARD -->
-    <div class="card third joinCard" id="joinCard">
-      <div class="joinTop">
-        <h2>Join</h2>
-        <div class="joinIp">168.100.161.99:2462</div>
-      </div>
-
-      <div class="btnRow joinBtns">
-        <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect</button>
-      </div>
+    <!-- JOIN -->
+    <div class="card third">
+      <h2>Join</h2>
+      <button class="btn btnPrimary" onclick="copyConnect()">Copy Connect</button>
 
       <div class="joinMeta">
         <span class="chip">EU</span>
         <span class="chip">128 tick</span>
         <span class="chip">10 slots</span>
-        <span class="chip">Skins/Knives/Gloves</span>
+        <span class="chip">Skins / Knives / Gloves</span>
       </div>
 
-      <div class="status">
-        <span class="dot"></span> Server Online
-      </div>
-
-      <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
+      <div class="status">🟢 Server Online</div>
+      <div class="sub">connect 168.100.161.99:2462</div>
     </div>
 
-    <!-- COMMANDS CARD -->
-    <div class="card third commandsCard">
+    <!-- COMMANDS -->
+    <div class="card third">
       <h2>Commands</h2>
-
-      <div class="commands">
-        <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
-        <div class="cmd"><span>Knives</span><code>!knife</code></div>
-        <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
-        <div class="cmd"><span>Nominate Map</span><code>!nominate</code></div>
-        <div class="cmd"><span>RockTheVote</span><code>!rtv</code></div>
-      </div>
-
-      <p class="muted" style="margin:12px 0 0;">Type commands in chat.</p>
+      <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
+      <div class="cmd"><span>Knives</span><code>!knife</code></div>
+      <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
+      <div class="cmd"><span>Nominate Map</span><code>!nominate</code></div>
+      <div class="cmd"><span>RockTheVote</span><code>!rtv</code></div>
     </div>
 
-    <!-- DISCORD CARD -->
-    <div class="card third discordCard">
+    <!-- DISCORD -->
+    <div class="card third">
       <h2>Discord</h2>
-      <p class="muted">Announcements, updates, support.</p>
-
-      <div class="btnRow">
-        <a class="btn btnDiscord" href="https://discord.gg/YOURINVITE" target="_blank" rel="noopener">
-          Join Discord
-        </a>
-      </div>
+      <p class="sub">Announcements, updates, support.</p>
+      <a href="https://discord.gg/YOURINVITE" target="_blank">
+        <button class="btn btnDiscord">Join Discord</button>
+      </a>
     </div>
 
-    <!-- SCREENSHOTS (FULL WIDTH) -->
-    <div class="card screenshotsCard">
+    <!-- SCREENSHOTS -->
+    <div class="card full">
       <h2>Screenshots</h2>
       <div class="gallery">
-        <div class="shot"><img src="shot1.jpg" alt="Server screenshot 1"></div>
-        <div class="shot"><img src="shot2.jpg" alt="Server screenshot 2"></div>
-        <div class="shot"><img src="shot3.jpg" alt="Server screenshot 3"></div>
+        <img src="shot1.jpg">
+        <img src="shot2.jpg">
+        <img src="shot3.jpg">
       </div>
     </div>
 
   </div>
 </section>
-  </div>
 
-  <script>
-    function copyConnect(){
-      const cmd = "connect 168.100.161.99:2462";
-      navigator.clipboard.writeText(cmd).then(() => {
-        const btn = document.getElementById("copyBtn");
-        const hint = document.getElementById("copyHint");
-        const prev = btn.textContent;
+<script>
+function copyConnect(){
+  navigator.clipboard.writeText("connect 168.100.161.99:2462");
+  alert("Copied! Paste into CS:GO console.");
+}
+</script>
 
-        btn.textContent = "Copied!";
-        hint.textContent = "Copied — paste into CS:GO console.";
-
-        setTimeout(() => {
-          btn.textContent = prev;
-          hint.innerHTML = 'connect <b>168.100.161.99:2462</b>';
-        }, 2000);
-      });
-    }
-  </script>
 </body>
 </html>
