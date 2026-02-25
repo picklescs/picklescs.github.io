@@ -74,7 +74,13 @@
   background: rgba(0,0,0,0.25); /* 0.15–0.35 is good */
   pointer-events:none;
 }
-.hero > *{ position: relative; z-index: 1; }
+.hero {
+  position: relative;
+  background-image: url("./assets/hero.jpg"); /* <-- FIX THIS PATH */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
   );
 }
     }
