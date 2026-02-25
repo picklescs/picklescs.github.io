@@ -428,6 +428,18 @@
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
   opacity:0.3;
 }
+    /* Make the top row cards not stretch tall */
+.grid { align-items: start; }
+
+/* Limit height of the 3 top cards */
+@media (min-width: 980px){
+  #joinCard,
+  .commandsCard,
+  .discordCard{
+    max-height: 210px;        /* change this number */
+    overflow: hidden;
+  }
+}
   </style>
 </head>
 
@@ -482,7 +494,7 @@
     <!-- COMMANDS CARD -->
     <div class="card third">
       <h2>Commands</h2>
-      <div class="commands">
+      <div class="card third commandsCard">
         <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
         <div class="cmd"><span>Knives</span><code>!knife</code></div>
         <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
@@ -495,6 +507,7 @@
     <!-- DISCORD CARD -->
     <div class="card third">
       <h2>Discord</h2>
+      <div class="card third discordCard">
       <p class="muted">Announcements, updates, support.</p>
       <div class="btnRow">
         <a class="btn btnDiscord" href="https://discord.gg/YOURINVITE" target="_blank" rel="noopener">Join Discord</a>
