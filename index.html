@@ -333,6 +333,53 @@
       }
       .btn{ width:100%; min-width: unset; }
     }
+    /* ================= MOBILE OPTIMISATION ================= */
+@media (max-width: 650px){
+
+  /* Stack top cards vertically */
+  .third{
+    grid-column: span 12 !important;
+  }
+
+  /* Screenshots full width */
+  .screenshotsCard{
+    grid-column: span 12 !important;
+  }
+
+  /* Buttons full width */
+  .btn{
+    width:100%;
+    min-width:unset;
+  }
+
+  /* Hero smaller on mobile */
+  .hero,
+  .heroInner{
+    min-height:320px;
+  }
+
+  /* Hero layout stacked */
+  .heroInner{
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:flex-end;
+  }
+
+  .heroRight{
+    align-items:flex-start;
+    text-align:left;
+  }
+
+  /* Screenshot layout */
+  .shot{
+    grid-column: span 12;
+  }
+
+  .shot img{
+    height:190px;
+  }
+
+}
   </style>
 </head>
 
