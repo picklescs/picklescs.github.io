@@ -136,14 +136,9 @@
 }
 
 /* Center content inside hero while banner stays full width */
-.heroInner{
-  position: relative;
-  min-height: 420px;
-  padding: 28px clamp(16px, 4vw, 48px);
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:18px;
+..heroInner{
+  align-items: center;
+  justify-content: flex-start;
 }
 
    .brand{
@@ -185,13 +180,9 @@
     }
 
     .heroRight{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      align-items:flex-end;
-      text-align:right;
-      min-width: 280px;
-    }
+  align-items: flex-start;
+  text-align: left;
+}
     .pill{
       display:inline-flex;
       gap:10px;
