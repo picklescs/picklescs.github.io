@@ -17,11 +17,34 @@
 }
 
 *{box-sizing:border-box;}
+
 body{
   margin:0;
   font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background:var(--bg);
   color:white;
+}
+
+/* ================= AURORA GLOW ================= */
+
+.aurora{
+  position:fixed;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0,255,136,0.14), transparent 45%),
+    radial-gradient(circle at 70% 40%, rgba(88,101,242,0.10), transparent 48%),
+    radial-gradient(circle at 50% 70%, rgba(0,255,136,0.10), transparent 52%);
+  filter:blur(28px);
+  opacity:0.85;
+  animation:drift 14s ease-in-out infinite;
+  z-index:-2;
+  pointer-events:none;
+}
+
+@keyframes drift{
+  0%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
+  50%{ transform: translate3d(3%, 2%, 0) scale(1.12); }
+  100%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
 }
 
 /* ================= HERO ================= */
@@ -165,6 +188,7 @@ body{
 </head>
 
 <body>
+  <div class="aurora"></div>
 
 <section class="hero">
   <div class="heroInner">
@@ -228,4 +252,5 @@ function copyConnect(){
 </script>
 
 </body>
+  
 </html>
