@@ -380,6 +380,21 @@
   }
 
 }
+    #serversCard h3{
+  margin: 0;
+  font-size: 18px;
+}
+
+.serverBlock{
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.serverBlock + .serverBlock{
+  margin-top: 14px;
+}
   </style>
 </head>
 
@@ -418,28 +433,59 @@
           <p class="muted" style="margin:12px 0 0;">Type commands in chat.</p>
         </div>
 
-       <div class="card third">
-  <div class="joinTop">
-    <h2>Join Retakes</h2>
-    <div class="joinIp">168.100.161.99:2463</div>
+       <div class="card third" id="serversCard">
+  <h2>Servers</h2>
+
+  <div class="serverBlock">
+    <div class="joinTop">
+      <h3>Server 1</h3>
+      <div class="joinIp">168.100.161.99:2462</div>
+    </div>
+
+    <div class="btnRow">
+      <button class="btn btnPrimary"
+        id="copyBtn1"
+        onclick="copyConnect('168.100.161.99:2462','copyBtn1','copyHint1')">
+        Copy Connect
+      </button>
+    </div>
+
+    <div class="joinMeta">
+      <span class="chip">EU</span>
+      <span class="chip">128 tick</span>
+      <span class="chip">10 slots</span>
+      <span class="chip">Skins/Knives/Gloves</span>
+    </div>
+
+    <div class="copyHint" id="copyHint1">
+      connect <b>168.100.161.99:2462</b>
+    </div>
   </div>
 
-  <div class="btnRow">
-    <button class="btn btnPrimary"
-      id="copyBtn2"
-      onclick="copyConnect('168.100.161.99:2463','copyBtn2','copyHint2')">
-      Copy Connect
-    </button>
-  </div>
+  <div class="serverBlock">
+    <div class="joinTop">
+      <h3>Server 2</h3>
+      <div class="joinIp">64.40.9.85:2480</div>
+    </div>
 
-  <div class="joinMeta">
-    <span class="chip">EU</span>
-    <span class="chip">128 tick</span>
-    <span class="chip">Retakes</span>
-  </div>
+    <div class="btnRow">
+      <button class="btn btnPrimary"
+        id="copyBtn2"
+        onclick="copyConnect('64.40.9.85:2480','copyBtn2','copyHint2')">
+        Copy Connect
+      </button>
+    </div>
 
-  <div class="copyHint" id="copyHint2">
-    connect <b>64.40.9.85:2480</b>
+    <div class="joinMeta">
+      <span class="chip">EU</span>
+      <span class="chip">128 tick</span>
+      <span class="chip">10 slots</span>
+      <span class="chip">Skins/Knives/Gloves</span>
+    </div>
+
+    <div class="copyHint" id="copyHint2">
+      connect <b>64.40.9.85:2480</b>
+    </div>
   </div>
 </div>
 
@@ -475,23 +521,23 @@
   </div>
 
   <script>
-    function copyConnect(ip, btnId, hintId){
-  const cmd = "connect " + ip;
+  function copyConnect(ip, btnId, hintId){
+    const cmd = "connect " + ip;
 
-  navigator.clipboard.writeText(cmd).then(() => {
-    const btn = document.getElementById(btnId);
-    const hint = document.getElementById(hintId);
-    const prev = btn.textContent;
+    navigator.clipboard.writeText(cmd).then(() => {
+      const btn = document.getElementById(btnId);
+      const hint = document.getElementById(hintId);
+      const prev = btn.textContent;
 
-    btn.textContent = "Copied!";
-    hint.textContent = "Copied — paste into CS console.";
+      btn.textContent = "Copied!";
+      hint.textContent = "Copied — paste into CS console.";
 
-    setTimeout(() => {
-      btn.textContent = prev;
-      hint.innerHTML = "connect <b>" + ip + "</b>";
-    }, 2000);
-  });
-}
-  </script>
+      setTimeout(() => {
+        btn.textContent = prev;
+        hint.innerHTML = "connect <b>" + ip + "</b>";
+      }, 2000);
+    });
+  }
+</script>
 </body>
 </html>
