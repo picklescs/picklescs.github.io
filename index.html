@@ -418,25 +418,30 @@
           <p class="muted" style="margin:12px 0 0;">Type commands in chat.</p>
         </div>
 
-        <div class="card third" id="joinCard">
-          <div class="joinTop">
-            <h2>Join</h2>
-            <div class="joinIp">168.100.161.99:2462</div>
-          </div>
+       <div class="card third">
+  <div class="joinTop">
+    <h2>Join Retakes</h2>
+    <div class="joinIp">168.100.161.99:2463</div>
+  </div>
 
-          <div class="btnRow">
-            <button class="btn btnPrimary" id="copyBtn" onclick="copyConnect()">Copy Connect</button>
-          </div>
+  <div class="btnRow">
+    <button class="btn btnPrimary"
+      id="copyBtn2"
+      onclick="copyConnect('168.100.161.99:2463','copyBtn2','copyHint2')">
+      Copy Connect
+    </button>
+  </div>
 
-          <div class="joinMeta">
-            <span class="chip">EU</span>
-            <span class="chip">128 tick</span>
-            <span class="chip">10 slots</span>
-            <span class="chip">Skins/Knives/Gloves</span>
-          </div>
+  <div class="joinMeta">
+    <span class="chip">EU</span>
+    <span class="chip">128 tick</span>
+    <span class="chip">Retakes</span>
+  </div>
 
-          <div class="copyHint" id="copyHint">connect <b>168.100.161.99:2462</b></div>
-        </div>
+  <div class="copyHint" id="copyHint2">
+    connect <b>64.40.9.85:2480</b>
+  </div>
+</div>
 
         <div class="card third" id="discordCard">
           <h2>Discord</h2>
@@ -470,22 +475,23 @@
   </div>
 
   <script>
-    function copyConnect(){
-      const cmd = "connect 168.100.161.99:2462";
-      navigator.clipboard.writeText(cmd).then(() => {
-        const btn = document.getElementById("copyBtn");
-        const hint = document.getElementById("copyHint");
-        const prev = btn.textContent;
+    function copyConnect(ip, btnId, hintId){
+  const cmd = "connect " + ip;
 
-        btn.textContent = "Copied!";
-        hint.textContent = "Copied — paste into CS:GO console.";
+  navigator.clipboard.writeText(cmd).then(() => {
+    const btn = document.getElementById(btnId);
+    const hint = document.getElementById(hintId);
+    const prev = btn.textContent;
 
-        setTimeout(() => {
-          btn.textContent = prev;
-          hint.innerHTML = 'connect <b>168.100.161.99:2462</b>';
-        }, 2000);
-      });
-    }
+    btn.textContent = "Copied!";
+    hint.textContent = "Copied — paste into CS console.";
+
+    setTimeout(() => {
+      btn.textContent = prev;
+      hint.innerHTML = "connect <b>" + ip + "</b>";
+    }, 2000);
+  });
+}
   </script>
 </body>
 </html>
