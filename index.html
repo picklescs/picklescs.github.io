@@ -154,12 +154,16 @@
     }
 
     .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-      align-items:start;
-    }
-
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+  align-items:stretch;
+}
+    .third{
+  display:flex;
+  flex-direction:column;
+}
+ 
     .card{
       background: var(--card);
       border: 1px solid var(--border);
