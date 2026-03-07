@@ -8,18 +8,19 @@
   <style>
     :root{
       --bg:#070A0A;
-      --card: rgba(255,255,255,0.07);
-      --card2: rgba(255,255,255,0.05);
+      --card: rgba(255,255,255,0.09);
+      --card2: rgba(255,255,255,0.06);
       --text:#e9f1ee;
       --muted:#a7b5b0;
       --accent:#00ff88;
       --discord:#5865F2;
-      --border: rgba(255,255,255,0.10);
+      --border: rgba(255,255,255,0.14);
       --shadow: 0 14px 44px rgba(0,0,0,0.55);
-      --r: 16px;
+      --r: 18px;
     }
 
     *{ box-sizing:border-box; }
+
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -33,7 +34,6 @@
       min-height:100vh;
     }
 
-    /* Subtle moving glow */
     .aurora{
       position: fixed;
       inset:-40%;
@@ -47,15 +47,20 @@
       z-index:-2;
       pointer-events:none;
     }
+
     @keyframes drift{
       0%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
       50%{ transform: translate3d(3%, 2%, 0) scale(1.12); }
       100%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
     }
 
-    .wrap{ width:100%; margin:0; padding:0; }
+    .wrap{
+      width:100%;
+      margin:0;
+      padding:0;
+    }
 
-    /* ================= HERO ================= */
+    /* HERO */
     .hero{
       position: relative;
       width: 100%;
@@ -63,21 +68,23 @@
       overflow: hidden;
       background: url("hero.jpg") center center / cover no-repeat;
     }
+
     .hero::before{
       content:"";
       position:absolute;
       inset:0;
-      background: rgba(0,0,0,0.35);
+      background: rgba(0,0,0,0.25);
       pointer-events:none;
       z-index:0;
     }
+
     .hero::after{
       content:"";
       position:absolute;
       inset:0;
       background:
-        linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.40) 55%, rgba(0,0,0,0.85) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.75));
+        linear-gradient(90deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.32) 55%, rgba(0,0,0,0.78) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.68));
       pointer-events:none;
       z-index:0;
     }
@@ -130,45 +137,53 @@
       gap:10px;
       align-items:center;
       padding:10px 12px;
-      border-radius: 999px;
+      border-radius:999px;
       background: rgba(0,0,0,0.38);
       border: 1px solid var(--border);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      font-size: 13px;
+      font-size:13px;
       color: var(--muted);
-      max-width: 100%;
+      max-width:100%;
     }
 
     .dot{
-      width:10px; height:10px; border-radius:999px;
+      width:10px;
+      height:10px;
+      border-radius:999px;
       background: var(--accent);
       box-shadow: 0 0 14px rgba(0,255,136,0.55);
-      flex: 0 0 auto;
+      flex:0 0 auto;
     }
 
-    /* ================= CONTENT ================= */
+    /* CONTENT */
     .content{
       width:100%;
-      padding: 18px clamp(16px, 4vw, 48px) 60px;
+      padding: 20px clamp(16px, 4vw, 48px) 60px;
     }
 
     .grid{
-  display:grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 16px;
-  align-items:stretch;
-}
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:20px;
+      align-items:start;
+    }
+
     .third{
-  display:flex;
-  flex-direction:column;
-}
- 
+      display:flex;
+      flex-direction:column;
+      grid-column: span 12;
+    }
+
+    .wide{
+      grid-column: 1 / -1;
+    }
+
     .card{
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--r);
-      padding: 18px;
+      padding: 22px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -176,63 +191,52 @@
       overflow:hidden;
     }
 
-    .card.glow::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: conic-gradient(from 120deg,
-        rgba(0,255,136,0.0),
-        rgba(0,255,136,0.55),
-        rgba(88,101,242,0.45),
-        rgba(0,255,136,0.55),
-        rgba(0,255,136,0.0)
-      );
-      filter: blur(10px);
-      opacity: 0.55;
-      animation: spin 6s linear infinite;
-      z-index:0;
-    }
-    .card.glow::after{
-      content:"";
-      position:absolute; inset:1px;
-      background: var(--card2);
-      border-radius: calc(var(--r) - 2px);
-      z-index:1;
-    }
-    @keyframes spin{ to{ transform: rotate(360deg); } }
-    .card > *{ position:relative; z-index:2; }
-
     .card h2{
-      margin:0 0 10px;
-      font-size: 18px;
-      letter-spacing: 0.3px;
+      margin:0 0 14px;
+      font-size:22px;
+      font-weight:800;
+      letter-spacing:0.2px;
+      color:#fff;
     }
 
-    .muted{ color: var(--muted); font-size: 14px; }
+    .muted{
+      color: var(--muted);
+      font-size:14px;
+    }
 
-    .btnRow{ display:flex; gap:10px; margin-top: 12px; }
+    .btnRow{
+      display:flex;
+      gap:10px;
+      margin-top: 12px;
+    }
+
     .btn{
       appearance:none;
       border:0;
       cursor:pointer;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-weight: 900;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-weight: 800;
       letter-spacing: 0.2px;
       transition: transform .15s ease, filter .15s ease;
       text-decoration:none;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width: 200px;
-      flex:1;
+      width:100%;
     }
-    .btn:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+
+    .btn:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
 
     .btnPrimary{
       background: var(--accent);
       color:#00130A;
       box-shadow: 0 10px 30px rgba(0,255,136,0.20);
     }
+
     .btnDiscord{
       background: var(--discord);
       color:#fff;
@@ -240,21 +244,29 @@
     }
 
     .copyHint{
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--muted);
+      margin-top: 12px;
+      font-size: 12px;
+      color: #93a39d;
     }
 
-    .commands{ display:grid; gap: 10px; margin-top: 10px; text-align:left; }
+    /* COMMANDS */
+    .commands{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+      text-align:left;
+    }
+
     .cmd{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      padding: 10px 12px;
-      border-radius: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
     }
+
     .cmd code{
       font-weight: 900;
       color: var(--accent);
@@ -263,14 +275,35 @@
       border-radius: 999px;
     }
 
-    /* Join card small chips */
+    /* SERVERS */
+    .serversCard{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .serverBlock{
+      padding:18px;
+      border-radius:16px;
+      background: rgba(255,255,255,0.035);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .serverBlock h3{
+      margin:0;
+      font-size:20px;
+      font-weight:700;
+      color:#fff;
+    }
+
     .joinTop{
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
       gap:12px;
-      margin-bottom:10px;
+      margin-bottom:12px;
     }
+
     .joinIp{
       font-size:12px;
       color: var(--muted);
@@ -280,12 +313,14 @@
       background: rgba(0,0,0,0.25);
       white-space:nowrap;
     }
+
     .joinMeta{
       margin-top: 12px;
       display:flex;
       flex-wrap:wrap;
       gap:8px;
     }
+
     .chip{
       font-size:12px;
       color: var(--muted);
@@ -295,110 +330,115 @@
       background: rgba(0,0,0,0.18);
     }
 
-    /* Screenshots */
+    /* RIGHT COLUMN */
+    .rightColumn{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      grid-column: span 12;
+    }
+
+    #rulesCard{
+      padding-top:18px;
+      padding-bottom:18px;
+    }
+
+    .rulesList{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .rulesList li::marker{
+      color: var(--accent);
+    }
+
+    /* MAPS */
+    .screenshotsCard{
+      margin-top: 4px;
+    }
+
     .gallery{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-      margin-top: 12px;
+      gap:12px;
+      margin-top:12px;
     }
+
     .shot{
       grid-column: span 12;
-      border-radius: 16px;
+      border-radius: 18px;
       overflow:hidden;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.03);
     }
+
     .shot img{
       width:100%;
-      height: 230px;
-      object-fit: cover;
+      height:230px;
+      object-fit:cover;
       display:block;
     }
 
-    /* Desktop layout */
+    /* DESKTOP */
     @media (min-width: 980px){
-      .third{ grid-column: span 4; }
-      .shot{ grid-column: span 4; }
-      .shot img{ height: 220px; }
-      .screenshotsCard{ grid-column: 1 / -1; }
+      .third{
+        grid-column: span 4;
+      }
+
+      .rightColumn{
+        grid-column: span 4;
+      }
+
+      .shot{
+        grid-column: span 4;
+      }
+
+      .shot img{
+        height:220px;
+      }
+
+      .screenshotsCard{
+        grid-column: 1 / -1;
+      }
     }
 
-    /* Mobile */
+    /* MOBILE */
     @media (max-width: 650px){
+      .hero,
+      .heroInner{
+        min-height:320px;
+      }
+
       .heroInner{
         flex-direction:column;
         align-items:flex-start;
         justify-content:flex-end;
       }
+
       .heroRight{
         align-items:flex-start;
         text-align:left;
       }
-      .btn{ width:100%; min-width: unset; }
+
+      .btn{
+        width:100%;
+      }
+
+      .shot{
+        grid-column: span 12;
+      }
+
+      .shot img{
+        height:190px;
+      }
+
+      .card{
+        padding:18px;
+      }
     }
-    /* ================= MOBILE OPTIMISATION ================= */
-@media (max-width: 650px){
-
-  /* Stack top cards vertically */
-  .third{
-    grid-column: span 12 !important;
-  }
-
-  /* Screenshots full width */
-  .screenshotsCard{
-    grid-column: span 12 !important;
-  }
-
-  /* Buttons full width */
-  .btn{
-    width:100%;
-    min-width:unset;
-  }
-
-  /* Hero smaller on mobile */
-  .hero,
-  .heroInner{
-    min-height:320px;
-  }
-
-  /* Hero layout stacked */
-  .heroInner{
-    flex-direction:column;
-    align-items:flex-start;
-    justify-content:flex-end;
-  }
-
-  .heroRight{
-    align-items:flex-start;
-    text-align:left;
-  }
-
-  /* Screenshot layout */
-  .shot{
-    grid-column: span 12;
-  }
-
-  .shot img{
-    height:190px;
-  }
-
-}
-    #serversCard h3{
-  margin: 0;
-  font-size: 18px;
-}
-
-.serverBlock{
-  padding: 14px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.serverBlock + .serverBlock{
-  margin-top: 14px;
-}
   </style>
 </head>
 
@@ -406,7 +446,6 @@
   <div class="aurora"></div>
 
   <div class="wrap">
-
     <section class="hero">
       <div class="heroInner">
         <div class="brand">
@@ -415,116 +454,132 @@
         </div>
 
         <div class="heroRight">
-          <div class="pill"><span class="dot"></span><span>Connect: 168.100.161.99:2462</span></div>
-          <div class="pill"><span>Tip: Copy connect → paste in console</span></div>
+          <div class="pill">
+            <span class="dot"></span>
+            <span>Connect: 168.100.161.99:2462</span>
+          </div>
+          <div class="pill">
+            <span>Tip: Copy connect → paste in console</span>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="content">
       <div class="grid">
-
-        <!-- TOP ROW: Commands (left) | Join (middle) | Discord (right) -->
+        <!-- COMMANDS -->
         <div class="card third" id="commandsCard">
           <h2>Commands</h2>
+
           <div class="commands">
             <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
             <div class="cmd"><span>Knives</span><code>!knife</code></div>
             <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
             <div class="cmd"><span>Agents</span><code>!agents</code></div>
             <div class="cmd"><span>Nominate Map</span><code>!nominate de_map</code></div>
-            <div class="cmd"><span>RockTheVote</span><code>rtv</code></div>
+            <div class="cmd"><span>RockTheVote</span><code>!rtv</code></div>
           </div>
-          <p class="muted" style="margin:12px 0 0;">Type commands in chat.</p>
+
+          <p class="muted" style="margin:14px 0 0;">Type commands in chat.</p>
         </div>
 
-       <div class="card third" id="serversCard">
-  <h2>Servers</h2>
+        <!-- SERVERS -->
+        <div class="card third" id="serversCard">
+          <h2>Servers</h2>
 
-  <div class="serverBlock">
-    <div class="joinTop">
-      <h3>Server 1</h3>
-      <div class="joinIp">168.100.161.99:2462</div>
-    </div>
+          <div class="serversCard">
+            <div class="serverBlock">
+              <div class="joinTop">
+                <h3>Server 1</h3>
+                <div class="joinIp">168.100.161.99:2462</div>
+              </div>
 
-    <div class="btnRow">
-      <button class="btn btnPrimary"
-        id="copyBtn1"
-        onclick="copyConnect('168.100.161.99:2462','copyBtn1','copyHint1')">
-        Copy Connect
-      </button>
-    </div>
+              <div class="btnRow">
+                <button
+                  class="btn btnPrimary"
+                  id="copyBtn1"
+                  onclick="copyConnect('168.100.161.99:2462', 'copyBtn1', 'copyHint1')"
+                >
+                  Copy Connect
+                </button>
+              </div>
 
-    <div class="joinMeta">
-      <span class="chip">EU</span>
-      <span class="chip">128 tick</span>
-      <span class="chip">10 slots</span>
-      <span class="chip">Skins/Knives/Gloves</span>
-    </div>
+              <div class="joinMeta">
+                <span class="chip">EU</span>
+                <span class="chip">128 tick</span>
+                <span class="chip">10 slots</span>
+                <span class="chip">Skins/Knives/Gloves</span>
+              </div>
 
-    <div class="copyHint" id="copyHint1">
-      connect <b>168.100.161.99:2462</b>
-    </div>
-  </div>
+              <div class="copyHint" id="copyHint1">
+                connect <b>168.100.161.99:2462</b>
+              </div>
+            </div>
 
-  <div class="serverBlock">
-    <div class="joinTop">
-      <h3>Server 2</h3>
-      <div class="joinIp">64.40.9.85:2480</div>
-    </div>
+            <div class="serverBlock">
+              <div class="joinTop">
+                <h3>Server 2</h3>
+                <div class="joinIp">64.40.9.85:2480</div>
+              </div>
 
-    <div class="btnRow">
-      <button class="btn btnPrimary"
-        id="copyBtn2"
-        onclick="copyConnect('64.40.9.85:2480','copyBtn2','copyHint2')">
-        Copy Connect
-      </button>
-    </div>
+              <div class="btnRow">
+                <button
+                  class="btn btnPrimary"
+                  id="copyBtn2"
+                  onclick="copyConnect('64.40.9.85:2480', 'copyBtn2', 'copyHint2')"
+                >
+                  Copy Connect
+                </button>
+              </div>
 
-    <div class="joinMeta">
-      <span class="chip">EU</span>
-      <span class="chip">128 tick</span>
-      <span class="chip">10 slots</span>
-      <span class="chip">Skins/Knives/Gloves</span>
-    </div>
+              <div class="joinMeta">
+                <span class="chip">EU</span>
+                <span class="chip">128 tick</span>
+                <span class="chip">10 slots</span>
+                <span class="chip">Skins/Knives/Gloves</span>
+              </div>
 
-    <div class="copyHint" id="copyHint2">
-      connect <b>64.40.9.85:2480</b>
-    </div>
-  </div>
-</div>
+              <div class="copyHint" id="copyHint2">
+                connect <b>64.40.9.85:2480</b>
+              </div>
+            </div>
+          </div>
+        </div>
 
-       <div class="third rightColumn">
+        <!-- RIGHT COLUMN -->
+        <div class="rightColumn">
+          <div class="card" id="discordCard">
+            <h2>Discord</h2>
+            <p class="muted">Announcements, updates, support.</p>
 
-  <div class="card" id="discordCard">
-    <h2>Discord</h2>
-    <p class="muted">Announcements, updates, support.</p>
+            <div class="btnRow">
+              <a
+                class="btn btnDiscord"
+                href="https://discord.gg/kJKVhaW4Fr"
+                target="_blank"
+                rel="noopener"
+              >
+                Join Discord
+              </a>
+            </div>
+          </div>
 
-    <div class="btnRow">
-      <a class="btn btnDiscord"
-        href="https://discord.gg/kJKVhaW4Fr"
-        target="_blank"
-        rel="noopener">
-        Join Discord
-      </a>
-    </div>
-  </div>
+          <div class="card" id="rulesCard">
+            <h2>Rules</h2>
+            <ul class="rulesList">
+              <li>No cheating</li>
+              <li>No racism or hate speech</li>
+              <li>No mic spam</li>
+              <li>Respect other players</li>
+              <li>Have fun</li>
+            </ul>
+          </div>
+        </div>
 
-  <div class="card" id="rulesCard">
-    <h2>Rules</h2>
-    <p class="muted">
-      • No cheating<br>
-      • No racism or hate speech<br>
-      • No mic spams<br>
-      • Have fun!
-    </p>
-  </div>
-
-</div>
-
-        <!-- SCREENSHOTS (FULL WIDTH) -->
-        <div class="card screenshotsCard">
+        <!-- MAPS -->
+        <div class="card screenshotsCard wide">
           <h2>Maps</h2>
+
           <div class="gallery">
             <div class="shot"><img src="shot1.jpg" alt="Server screenshot 1"></div>
             <div class="shot"><img src="shot2.jpg" alt="Server screenshot 2"></div>
@@ -539,30 +594,32 @@
             <div class="shot"><img src="shot11.jpg" alt="Server screenshot 11"></div>
           </div>
         </div>
-
       </div>
     </section>
-
   </div>
 
   <script>
-  function copyConnect(ip, btnId, hintId){
-    const cmd = "connect " + ip;
-
-    navigator.clipboard.writeText(cmd).then(() => {
+    function copyConnect(ip, btnId, hintId) {
+      const cmd = "connect " + ip;
       const btn = document.getElementById(btnId);
       const hint = document.getElementById(hintId);
-      const prev = btn.textContent;
 
-      btn.textContent = "Copied!";
-      hint.textContent = "Copied — paste into CS console.";
+      if (!btn || !hint) return;
 
-      setTimeout(() => {
-        btn.textContent = prev;
-        hint.innerHTML = "connect <b>" + ip + "</b>";
-      }, 2000);
-    });
-  }
-</script>
+      navigator.clipboard.writeText(cmd).then(() => {
+        const previousText = btn.textContent;
+
+        btn.textContent = "Copied!";
+        hint.textContent = "Copied — paste into CS:GO console.";
+
+        setTimeout(() => {
+          btn.textContent = previousText;
+          hint.innerHTML = "connect <b>" + ip + "</b>";
+        }, 2000);
+      }).catch(() => {
+        hint.textContent = "Copy failed — manually copy the command below.";
+      });
+    }
+  </script>
 </body>
 </html>
