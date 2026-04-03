@@ -381,6 +381,42 @@
       object-fit:cover;
       display:block;
     }
+    .imageCard{
+  padding: 0; /* remove padding so image fills card */
+}
+
+.image-panel{
+  position: relative;
+  width: 100%;
+  height: 140px;
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.image-panel img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* subtle dark gradient overlay for readability */
+.image-panel::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.1));
+}
+
+.image-overlay{
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  font-weight: 800;
+  font-size: 14px;
+  color: #fff;
+  z-index: 2;
+}
 
     /* DESKTOP */
     @media (min-width: 980px){
@@ -577,6 +613,12 @@
             </ul>
           </div>
         </div>
+        <div class="PICKLES">
+  <div class="shot">
+    <img src="shot12.jpg" alt="Server preview">
+    <div class="image-overlay">Server Preview</div>
+  </div>
+</div>
 
         <!-- MAPS -->
         <div class="card screenshotsCard wide">
