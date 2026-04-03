@@ -155,6 +155,35 @@
       box-shadow: 0 0 14px rgba(0,255,136,0.55);
       flex:0 0 auto;
     }
+    .image-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.image-overlay {
+  z-index: 3; /* force above everything */
+}
+    .card {
+  position: relative;
+  z-index: 0;
+}
+    .heroRight {
+  position: relative;
+  z-index: 2;
+}
+    .image-overlay {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  right: 16px; /* prevents cutoff */
+  font-weight: 800;
+  font-size: 16px;
+  color: #fff;
+  z-index: 3;
+}
+    .imageCard {
+  overflow: visible; /* instead of hidden */
+}
 
     /* CONTENT */
     .content{
