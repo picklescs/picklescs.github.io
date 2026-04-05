@@ -397,19 +397,24 @@
     }
 
     .shot{
-      grid-column: span 12;
-      border-radius: 18px;
-      overflow:hidden;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-    }
+  grid-column: span 12;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
 
-    .shot img{
-      width:100%;
-      height:230px;
-      object-fit:cover;
-      display:block;
-    }
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shot img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
     .imageCard{
   padding: 0; /* remove padding so image fills card */
 }
@@ -478,10 +483,6 @@
         grid-column: span 4;
       }
 
-      .shot img{
-        height:220px;
-      }
-
       .screenshotsCard{
         grid-column: 1 / -1;
       }
@@ -511,10 +512,6 @@
 
       .shot{
         grid-column: span 12;
-      }
-
-      .shot img{
-        height:190px;
       }
 
       .card{
