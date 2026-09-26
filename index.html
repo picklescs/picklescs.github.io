@@ -538,18 +538,84 @@
     .liveLinks { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
     .liveLinks a { flex:1 1 140px; }
     .liveNote { color:var(--muted); font-size:12px; margin-top:12px; }
+
+/* PICKLE'S — editorial dark redesign */
+:root { --bg:#101414; --card:#191f1e; --card2:#202725; --text:#f0f2ee; --muted:#a4ada7; --accent:#a5df67; --border:#343d37; --shadow:none; --r:9px; --discord:#5865f2; }
+html { scroll-behavior:smooth; }
+body { background:#101414; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif; line-height:1.5; }
+.aurora { display:none; }
+.site-nav { height:68px; padding:0 clamp(22px,5vw,88px); display:flex; align-items:center; justify-content:space-between; gap:18px; background:#101414; border-bottom:1px solid #303a34; }
+.site-logo { display:flex; align-items:center; gap:10px; font-size:12px; font-weight:850; letter-spacing:.15em; color:#f0f2ee; text-decoration:none; }
+.site-logo:first-letter { font-size:20px; } .logo-dot { color:var(--accent); }
+.site-nav nav { display:flex; gap:clamp(12px,2.7vw,34px); flex-wrap:wrap; }
+.site-nav nav a { color:#bbc4bd; text-decoration:none; font-size:12px; font-weight:600; }
+.site-nav nav a:hover { color:var(--accent); }
+.hero { min-height:340px; background-position:center 43%; }
+.hero::before { background:rgba(0,0,0,.22); }
+.hero::after { background:linear-gradient(90deg,rgba(10,15,13,.95) 0%,rgba(10,15,13,.62) 50%,rgba(10,15,13,.25) 100%),linear-gradient(0deg,#101414 0%,transparent 32%); }
+.heroInner { min-height:340px; padding:55px clamp(22px,5vw,88px) 52px; align-items:center; }
+.hero h1 { font-size:clamp(42px,5.2vw,75px); line-height:1.03; font-weight:850; letter-spacing:-.055em; text-shadow:none; max-width:690px; }
+.hero-eyebrow { font-size:11px; font-weight:800; letter-spacing:.23em; color:var(--accent); margin-bottom:15px; }
+.sub { margin-top:19px; font-size:14px; color:#d2d8d1; }
+.heroRight { align-items:flex-end; min-width:0; }
+.pill { background:rgba(12,19,16,.85); backdrop-filter:none; border:1px solid #536254; border-radius:6px; font-size:12px; }
+.dot { width:7px; height:7px; box-shadow:none; }
+.content { max-width:1480px; margin:auto; padding:32px clamp(22px,5vw,65px) 85px; }
+.grid { gap:18px; }
+.card { background:#191f1e; border:1px solid #343d37; box-shadow:none; backdrop-filter:none; border-radius:9px; padding:26px; }
+.card h2 { font-size:clamp(21px,2vw,29px); letter-spacing:-.035em; font-weight:760; margin-bottom:12px; }
+.section-kicker { color:var(--accent); font-size:10px; font-weight:800; letter-spacing:.18em; margin-bottom:8px; }
+.muted { color:var(--muted); }
+.liveStats { background:transparent; border:0; padding:10px 0 14px; overflow:visible; }
+.liveStats > .muted { margin:0 0 25px; }
+.liveGrid { gap:16px; }
+.liveServer { background:#1a211e; border:1px solid #3b493d; border-radius:9px; padding:23px; }
+.liveServer h3 { font-size:18px; letter-spacing:-.025em; }
+.liveServer > p { font-size:12px; color:#aeb9ae; margin:5px 0 17px; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+.apiStatus { min-height:0; background:transparent; border:0; border-top:1px solid #36413a; border-radius:0; padding:17px 0 0; }
+.apiBadge { background:#263e2b; color:#b6ee9b; border-radius:4px; padding:5px 9px; font-size:10px; letter-spacing:.04em; }
+.apiNumbers { gap:0; margin:21px 0 16px; border-top:1px solid #354139; border-bottom:1px solid #354139; }
+.apiNumbers div { background:transparent; border-radius:0; padding:14px 10px 14px 0; }
+.apiNumbers div + div { border-left:1px solid #354139; padding-left:20px; }
+.apiNumbers strong { font-size:27px; font-weight:750; letter-spacing:-.045em; }
+.apiStatus details summary { font-size:12px; }
+.apiPlayers { max-height:230px; }
+.liveLinks { gap:9px; }
+.btn, button.btn { border-radius:5px; box-shadow:none; text-transform:none; font-weight:700; transition:background .15s ease,border-color .15s ease; }
+.btnPrimary, .btn.btnPrimary { background:var(--accent); color:#152116; border:1px solid var(--accent); }
+.btnPrimary:hover { background:#c0f28b; }
+.liveLinks .btn { flex:1 1 135px; }
+.liveLinks .btn:first-child { background:transparent; color:#dce5d9; border:1px solid #566557; }
+.liveLinks .btn:first-child:hover { background:#2c382e; }
+.liveNote { color:#8f9d92; font-size:11px; margin-top:18px; }
+#commandsCard { grid-column:span 6; }
+#serversCard { grid-column:span 6; }
+.rightColumn { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.rightColumn .card { min-width:0; }
+.cmd { border-color:#354139; }
+.cmd code { background:#2b3a2e; color:#c0eea2; border-radius:4px; }
+.serverBlock { background:#222b26; border-color:#3b483e; border-radius:7px; }
+.chip { background:#2d3830; }
+.screenshotsCard { margin-top:14px; }
+.gallery { gap:10px; }
+.shot { border-radius:5px; background:#111715; }
+.shot img { object-fit:cover; }
+@media(min-width:980px) { #commandsCard,#serversCard { grid-column:span 6; } .rightColumn { grid-column:1/-1; } .shot { grid-column:span 4; } }
+@media(max-width:760px) { .site-nav { padding:0 18px; } .site-nav nav { gap:12px; } .site-nav nav a { font-size:11px; } .hero,.heroInner { min-height:320px; } .heroInner { padding:38px 22px; align-items:flex-start; justify-content:flex-end; } .heroRight { display:none; } #commandsCard,#serversCard,.rightColumn { grid-column:1/-1; } .rightColumn { grid-template-columns:1fr; } .content { padding:22px 16px 60px; } .card { padding:21px; } .liveStats { padding:10px 0; } }
+@media(max-width:420px) { .site-nav nav a:last-child { display:none; } .hero h1 { font-size:44px; } }
+
   </style>
 </head>
 
 <body>
-  <div class="aurora"></div>
+  <header class="site-nav"><a class="site-logo" href="#top">P<span class="logo-dot">.</span> <span>PICKLE'S</span></a><nav aria-label="Main navigation"><a href="#live-stats">Servers</a><a href="#commandsCard">Commands</a><a href="#discordCard">Discord</a><a href="#gallery">Gallery</a></nav></header>
 
   <div class="wrap">
-    <section class="hero">
+    <section class="hero" id="top">
       <div class="heroInner">
         <div class="brand">
-          <h1>PICKLE'S SERVER</h1>
-          <p class="sub">• CS:GO Community Server • Skins / Knives / Gloves • EU • 128 Tick</p>
+          <div class="hero-eyebrow">THE COMMUNITY</div><h1>Good games.<br>Good people.</h1>
+          <p class="sub">PICKLE'S CS:GO · EU community servers</p>
         </div>
 
         <div class="heroRight">
@@ -566,9 +632,39 @@
 
     <section class="content">
       <div class="grid">
+        <!-- LIVE SERVER STATS: GitHub Actions generates local JSON -->
+        <section class="card liveStats" id="live-stats" aria-label="Server statistics">
+          <div class="section-kicker">01 / SERVERS</div><h2>Find your server.</h2>
+          <p class="muted">Current maps, player counts and who's playing. Updated around every five minutes.</p>
+          <div class="liveGrid">
+            <article class="liveServer">
+              <h3>Server #1</h3><p>168.100.161.99:2462</p>
+              <div class="apiStatus" aria-live="polite">
+                <span class="apiBadge" id="server1Badge">Waiting for first update…</span>
+                <div class="apiNumbers"><div><span class="muted">Players</span><strong id="server1Players">—</strong></div><div><span class="muted">Current map</span><strong id="server1Map">—</strong></div></div>
+                <div class="muted" id="server1Updated">No data yet</div>
+                <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--accent);font-weight:700">View player list</summary><ul class="apiPlayers" id="server1PlayerList"><li>Waiting for data…</li></ul></details>
+              </div>
+              <div class="liveLinks"><button class="btn btnPrimary" onclick="loadAllServers()">Refresh display</button><button class="btn btnPrimary" onclick="copyServerConnect('168.100.161.99:2462',this)">Copy connect</button></div>
+            </article>
+            <article class="liveServer">
+              <h3>Server #2</h3><p>168.100.161.119:27065</p>
+              <div class="apiStatus" aria-live="polite">
+                <span class="apiBadge" id="server2Badge">Waiting for first update…</span>
+                <div class="apiNumbers"><div><span class="muted">Players</span><strong id="server2Players">—</strong></div><div><span class="muted">Current map</span><strong id="server2Map">—</strong></div></div>
+                <div class="muted" id="server2Updated">No data yet</div>
+                <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--accent);font-weight:700">View player list</summary><ul class="apiPlayers" id="server2PlayerList"><li>Waiting for data…</li></ul></details>
+              </div>
+              <div class="liveLinks"><button class="btn btnPrimary" onclick="loadAllServers()">Refresh display</button><button class="btn btnPrimary" onclick="copyServerConnect('168.100.161.119:27065',this)">Copy connect</button></div>
+            </article>
+          </div>
+          <p class="liveNote">Statistics may be delayed if GitHub Actions or the game-server API is unavailable. Refresh display reads the latest saved data; it does not query the game server.</p>
+        </section>
+
+
         <!-- COMMANDS -->
         <div class="card third" id="commandsCard">
-          <h2>Commands</h2>
+          <div class="section-kicker">02 / QUICK REFERENCE</div><h2>Commands</h2>
 
           <div class="commands">
             <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
@@ -588,7 +684,7 @@
 
         <!-- SERVERS -->
         <div class="card third" id="serversCard">
-          <h2>Servers</h2>
+          <div class="section-kicker">03 / JOIN</div><h2>Connect</h2>
 
           <div class="serversCard">
             <div class="serverBlock">
@@ -650,35 +746,6 @@
         </div>
 
 
-        <!-- LIVE SERVER STATS: GitHub Actions generates local JSON -->
-        <section class="card liveStats" id="live-stats" aria-label="Server statistics">
-          <h2>Server Statistics</h2>
-          <p class="muted">Automatically checked approximately every five minutes.</p>
-          <div class="liveGrid">
-            <article class="liveServer">
-              <h3>Server #1</h3><p>168.100.161.99:2462</p>
-              <div class="apiStatus" aria-live="polite">
-                <span class="apiBadge" id="server1Badge">Waiting for first update…</span>
-                <div class="apiNumbers"><div><span class="muted">Players</span><strong id="server1Players">—</strong></div><div><span class="muted">Current map</span><strong id="server1Map">—</strong></div></div>
-                <div class="muted" id="server1Updated">No data yet</div>
-                <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--accent);font-weight:700">View player list</summary><ul class="apiPlayers" id="server1PlayerList"><li>Waiting for data…</li></ul></details>
-              </div>
-              <div class="liveLinks"><button class="btn btnPrimary" onclick="loadAllServers()">Refresh display</button><button class="btn btnPrimary" onclick="copyServerConnect('168.100.161.99:2462',this)">Copy connect</button></div>
-            </article>
-            <article class="liveServer">
-              <h3>Server #2</h3><p>168.100.161.119:27065</p>
-              <div class="apiStatus" aria-live="polite">
-                <span class="apiBadge" id="server2Badge">Waiting for first update…</span>
-                <div class="apiNumbers"><div><span class="muted">Players</span><strong id="server2Players">—</strong></div><div><span class="muted">Current map</span><strong id="server2Map">—</strong></div></div>
-                <div class="muted" id="server2Updated">No data yet</div>
-                <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--accent);font-weight:700">View player list</summary><ul class="apiPlayers" id="server2PlayerList"><li>Waiting for data…</li></ul></details>
-              </div>
-              <div class="liveLinks"><button class="btn btnPrimary" onclick="loadAllServers()">Refresh display</button><button class="btn btnPrimary" onclick="copyServerConnect('168.100.161.119:27065',this)">Copy connect</button></div>
-            </article>
-          </div>
-          <p class="liveNote">Statistics may be delayed if GitHub Actions or the game-server API is unavailable. Refresh display reads the latest saved data; it does not query the game server.</p>
-        </section>
-
         <!-- RIGHT COLUMN -->
         <div class="rightColumn">
           <div class="card" id="discordCard">
@@ -708,8 +775,8 @@
             </ul>
           </div>
         </div>
-       <div class="card screenshotsCard wide">
-  <h2>Blya & PICKLES being active admins</h2>
+       <div class="card screenshotsCard wide" id="gallery">
+  <div class="section-kicker">04 / COMMUNITY</div><h2>From the server</h2>
 
   <div class="gallery">
     <div class="shot"><img src="shot12.jpg" alt="ss 1"></div>
@@ -728,7 +795,7 @@
 
         <!-- MAPS -->
         <div class="card screenshotsCard wide">
-          <h2>Maps</h2>
+          <div class="section-kicker">05 / MAPS</div><h2>Maps</h2>
 
           <div class="gallery">
             <div class="shot"><img src="shot1.jpg" alt="Server screenshot 1"></div>
