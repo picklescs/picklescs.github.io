@@ -519,6 +519,25 @@
         padding:18px;
       }
     }
+
+    /* LIVE SERVER STATISTICS */
+    .liveStats { grid-column:1 / -1; }
+    .liveGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:18px; }
+    .liveServer { background:rgba(255,255,255,.035); border:1px solid var(--border); border-radius:16px; padding:18px; min-width:0; }
+    .liveServer h3 { margin:0 0 5px; }
+    .liveServer p { color:var(--muted); font-size:13px; overflow-wrap:anywhere; }
+    .apiStatus { min-height:245px; padding:18px; background:#111b19; border:1px solid var(--border); border-radius:12px; }
+    .apiBadge { display:inline-block; padding:5px 10px; border-radius:20px; background:rgba(0,255,136,.13); color:var(--accent); font-size:12px; font-weight:800; }
+    .apiNumbers { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:15px 0; }
+    .apiNumbers div { padding:12px; border-radius:12px; background:rgba(255,255,255,.05); }
+    .apiNumbers strong { display:block; margin-top:5px; font-size:21px; overflow-wrap:anywhere; }
+    .apiPlayers { margin:10px 0 0; padding:0; list-style:none; max-height:175px; overflow:auto; }
+    .apiPlayers li { display:flex; justify-content:space-between; gap:10px; border-bottom:1px solid var(--border); padding:7px 0; font-size:13px; }
+    .apiPlayers li span { overflow-wrap:anywhere; }
+    .liveFrame { display:block; width:100%; height:245px; border:1px solid var(--border); border-radius:12px; background:#111b19; }
+    .liveLinks { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .liveLinks a { flex:1 1 140px; }
+    .liveNote { color:var(--muted); font-size:12px; margin-top:12px; }
   </style>
 </head>
 
@@ -630,6 +649,36 @@
           </div>
         </div>
 
+
+        <!-- LIVE SERVER STATS: GitHub Actions generates local JSON -->
+        <section class="card liveStats" id="live-stats" aria-label="Server statistics">
+          <h2>Server Statistics</h2>
+          <p class="muted">Automatically checked approximately every five minutes.</p>
+          <div class="liveGrid">
+            <article class="liveServer">
+              <h3>Server #1</h3><p>168.100.161.99:2462</p>
+              <div class="apiStatus" aria-live="polite">
+                <span class="apiBadge" id="server1Badge">Waiting for first update…</span>
+                <div class="apiNumbers"><div><span class="muted">Players</span><strong id="server1Players">—</strong></div><div><span class="muted">Current map</span><strong id="server1Map">—</strong></div></div>
+                <div class="muted" id="server1Updated">No data yet</div>
+                <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--accent);font-weight:700">View player list</summary><ul class="apiPlayers" id="server1PlayerList"><li>Waiting for data…</li></ul></details>
+              </div>
+              <div class="liveLinks"><button class="btn btnPrimary" onclick="loadAllServers()">Refresh display</button><button class="btn btnPrimary" onclick="copyServerConnect('168.100.161.99:2462',this)">Copy connect</button></div>
+            </article>
+            <article class="liveServer">
+              <h3>Server #2</h3><p>168.100.161.119:27065</p>
+              <div class="apiStatus" aria-live="polite">
+                <span class="apiBadge" id="server2Badge">Waiting for first update…</span>
+                <div class="apiNumbers"><div><span class="muted">Players</span><strong id="server2Players">—</strong></div><div><span class="muted">Current map</span><strong id="server2Map">—</strong></div></div>
+                <div class="muted" id="server2Updated">No data yet</div>
+                <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--accent);font-weight:700">View player list</summary><ul class="apiPlayers" id="server2PlayerList"><li>Waiting for data…</li></ul></details>
+              </div>
+              <div class="liveLinks"><button class="btn btnPrimary" onclick="loadAllServers()">Refresh display</button><button class="btn btnPrimary" onclick="copyServerConnect('168.100.161.119:27065',this)">Copy connect</button></div>
+            </article>
+          </div>
+          <p class="liveNote">Statistics may be delayed if GitHub Actions or the game-server API is unavailable. Refresh display reads the latest saved data; it does not query the game server.</p>
+        </section>
+
         <!-- RIGHT COLUMN -->
         <div class="rightColumn">
           <div class="card" id="discordCard">
@@ -721,6 +770,48 @@
         hint.textContent = "Copy failed — manually copy the command below.";
       });
     }
+
+    async function copyServerConnect(ip, button) {
+      try {
+        await navigator.clipboard.writeText('connect ' + ip);
+        const old = button.textContent; button.textContent = 'Copied!';
+        setTimeout(() => { button.textContent = old; }, 2000);
+      } catch (_) { window.prompt('Copy this command:', 'connect ' + ip); }
+    }
+    async function loadServer(number) {
+      const prefix = 'server' + number;
+      const badge = document.getElementById(prefix + 'Badge');
+      const updated = document.getElementById(prefix + 'Updated');
+      try {
+        const response = await fetch('./data/' + prefix + '.json?t=' + Date.now(), {cache:'no-store'});
+        if (!response.ok) throw new Error('Data not generated yet (HTTP ' + response.status + ')');
+        const data = await response.json();
+        if (!data.online) throw new Error(data.error || 'Server could not be queried');
+        const checked = new Date(data.checked_at);
+        const ageMinutes = (Date.now() - checked.getTime()) / 60000;
+        badge.textContent = ageMinutes > 20 ? '● DATA OUTDATED' : '● ONLINE AT LAST CHECK';
+        document.getElementById(prefix + 'Players').textContent =
+          (data.numplayers ?? '—') + ' / ' + (data.maxplayers ?? '—');
+        document.getElementById(prefix + 'Map').textContent = data.map || 'Unknown';
+        updated.textContent = 'Last checked ' + (Number.isNaN(checked.getTime()) ? 'unknown' : checked.toLocaleString());
+        const list = document.getElementById(prefix + 'PlayerList');
+        list.replaceChildren();
+        for (const player of data.players || []) {
+          const li = document.createElement('li');
+          const name = document.createElement('span'); name.textContent = player.name || 'Unnamed player';
+          const score = document.createElement('span');
+          score.textContent = typeof player.score === 'number' ? 'Score: ' + player.score : '';
+          li.append(name, score); list.appendChild(li);
+        }
+        if (!list.children.length) { const li=document.createElement('li'); li.textContent='No players reported'; list.appendChild(li); }
+      } catch (err) {
+        badge.textContent = 'Status unavailable';
+        updated.textContent = err.message;
+      }
+    }
+    function loadAllServers() { loadServer(1); loadServer(2); }
+    loadAllServers();
+    setInterval(loadAllServers, 60000);
   </script>
 </body>
 </html>
