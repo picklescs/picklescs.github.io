@@ -1,884 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PICKLE'S Community Server</title>
-
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   Pickles Community Server
+  </title>
   <style>
-    :root{
-      --bg:#070A0A;
-      --card: rgba(255,255,255,0.09);
-      --card2: rgba(255,255,255,0.06);
-      --text:#e9f1ee;
-      --muted:#a7b5b0;
-      --accent:#00ff88;
-      --discord:#5865F2;
-      --border: rgba(255,255,255,0.14);
-      --shadow: 0 14px 44px rgba(0,0,0,0.55);
-      --r: 18px;
-    }
-
-    *{ box-sizing:border-box; }
-
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1000px 600px at 50% -10%, rgba(0,255,136,0.10), transparent 60%),
-        radial-gradient(900px 700px at 10% 30%, rgba(88,101,242,0.08), transparent 60%),
-        radial-gradient(900px 700px at 90% 60%, rgba(0,255,136,0.06), transparent 60%),
-        var(--bg);
-      overflow-x:hidden;
-      min-height:100vh;
-    }
-
-    .aurora{
-      position: fixed;
-      inset:-40%;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(0,255,136,0.14), transparent 45%),
-        radial-gradient(circle at 70% 40%, rgba(88,101,242,0.10), transparent 48%),
-        radial-gradient(circle at 50% 70%, rgba(0,255,136,0.10), transparent 52%);
-      filter: blur(28px);
-      opacity: 0.85;
-      animation: drift 14s ease-in-out infinite;
-      z-index:-2;
-      pointer-events:none;
-    }
-
-    @keyframes drift{
-      0%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
-      50%{ transform: translate3d(3%, 2%, 0) scale(1.12); }
-      100%{ transform: translate3d(-3%, -2%, 0) scale(1.05); }
-    }
-
-    .wrap{
-      width:100%;
-      margin:0;
-      padding:0;
-    }
-
-    /* HERO */
-    .hero{
-      position: relative;
-      width: 100%;
-      min-height: 420px;
-      overflow: hidden;
-      background: url("hero.jpg") center center / cover no-repeat;
-    }
-
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: rgba(0,0,0,0.25);
-      pointer-events:none;
-      z-index:0;
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.32) 55%, rgba(0,0,0,0.78) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.68));
-      pointer-events:none;
-      z-index:0;
-    }
-
-    .heroInner{
-      position: relative;
-      min-height: 420px;
-      padding: 28px clamp(16px, 4vw, 48px);
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:18px;
-      z-index:1;
-    }
-
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-
-    .hero h1{
-      margin:0;
-      font-size: clamp(36px, 4vw, 56px);
-      font-weight:800;
-      color:#fff;
-      text-shadow:
-        0 2px 0 rgba(0,0,0,0.6),
-        0 0 22px rgba(0,255,136,0.45),
-        0 0 60px rgba(0,255,136,0.20);
-    }
-
-    .sub{
-      margin:0;
-      color: var(--muted);
-      font-size:14px;
-    }
-
-    .heroRight{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      align-items:flex-end;
-      text-align:right;
-      min-width:260px;
-    }
-
-    .pill{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      padding:10px 12px;
-      border-radius:999px;
-      background: rgba(0,0,0,0.38);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      font-size:13px;
-      color: var(--muted);
-      max-width:100%;
-    }
-
-    .dot{
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      background: var(--accent);
-      box-shadow: 0 0 14px rgba(0,255,136,0.55);
-      flex:0 0 auto;
-    }
-    .image-panel {
-  position: relative;
-  z-index: 1;
-}
-
-.image-overlay {
-  z-index: 3; /* force above everything */
-}
-    .card {
-  position: relative;
-  z-index: 0;
-}
-    .heroRight {
-  position: relative;
-  z-index: 2;
-}
-    .image-overlay {
-  position: absolute;
-  bottom: 14px;
-  left: 16px;
-  right: 16px; /* prevents cutoff */
-  font-weight: 800;
-  font-size: 16px;
-  color: #fff;
-  z-index: 3;
-}
-    .imageCard {
-  overflow: visible; /* instead of hidden */
-}
-
-    /* CONTENT */
-    .content{
-      width:100%;
-      padding: 20px clamp(16px, 4vw, 48px) 60px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:20px;
-      align-items:start;
-    }
-
-    .third{
-      display:flex;
-      flex-direction:column;
-      grid-column: span 12;
-    }
-
-    .wide{
-      grid-column: 1 / -1;
-    }
-
-    .card{
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 22px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      position: relative;
-      overflow:hidden;
-    }
-
-    .card h2{
-      margin:0 0 14px;
-      font-size:22px;
-      font-weight:800;
-      letter-spacing:0.2px;
-      color:#fff;
-    }
-
-    .muted{
-      color: var(--muted);
-      font-size:14px;
-    }
-
-    .btnRow{
-      display:flex;
-      gap:10px;
-      margin-top: 12px;
-    }
-
-    .btn{
-      appearance:none;
-      border:0;
-      cursor:pointer;
-      padding: 14px 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      transition: transform .15s ease, filter .15s ease;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width:100%;
-    }
-
-    .btn:hover{
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-    }
-
-    .btnPrimary{
-      background: var(--accent);
-      color:#00130A;
-      box-shadow: 0 10px 30px rgba(0,255,136,0.20);
-    }
-
-    .btnDiscord{
-      background: var(--discord);
-      color:#fff;
-      box-shadow: 0 10px 30px rgba(88,101,242,0.18);
-    }
-
-    .copyHint{
-      margin-top: 12px;
-      font-size: 12px;
-      color: #93a39d;
-    }
-
-    /* COMMANDS */
-    .commands{
-      display:grid;
-      gap:10px;
-      margin-top:10px;
-      text-align:left;
-    }
-
-    .cmd{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .cmd code{
-      font-weight: 900;
-      color: var(--accent);
-      background: rgba(0,255,136,0.08);
-      padding: 4px 8px;
-      border-radius: 999px;
-    }
-
-    /* SERVERS */
-    .serversCard{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
-
-    .serverBlock{
-      padding:18px;
-      border-radius:16px;
-      background: rgba(255,255,255,0.035);
-      border:1px solid rgba(255,255,255,0.08);
-    }
-
-    .serverBlock h3{
-      margin:0;
-      font-size:20px;
-      font-weight:700;
-      color:#fff;
-    }
-
-    .joinTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:12px;
-    }
-
-    .joinIp{
-      font-size:12px;
-      color: var(--muted);
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.25);
-      white-space:nowrap;
-    }
-
-    .joinMeta{
-      margin-top: 12px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-
-    .chip{
-      font-size:12px;
-      color: var(--muted);
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.18);
-    }
-
-    /* RIGHT COLUMN */
-    .rightColumn{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-      grid-column: span 12;
-    }
-
-    #rulesCard{
-      padding-top:18px;
-      padding-bottom:18px;
-    }
-
-    .rulesList{
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 14px;
-    }
-
-    .rulesList li::marker{
-      color: var(--accent);
-    }
-
-    /* MAPS */
-    .screenshotsCard{
-      margin-top: 4px;
-    }
-
-    .gallery{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-      margin-top:12px;
-    }
-
-    .shot{
-  grid-column: span 12;
-  border-radius: 18px;
-  overflow: hidden;
-
-  border: none;
-  background: none; /* THIS is the key fix */
-
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-    
-.shot img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-    .imageCard{
-  padding: 0; /* remove padding so image fills card */
-}
-
-.image-panel{
-  position: relative;
-  width: 100%;
-  height: 140px;
-  border-radius: var(--r);
-  overflow: hidden;
-}
-
-.image-panel img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-/* subtle dark gradient overlay for readability */
-.image-panel::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.1));
-}
-
-.image-overlay{
-  position: absolute;
-  bottom: 12px;
-  left: 14px;
-  font-weight: 800;
-  font-size: 14px;
-  color: #fff;
-  z-index: 2;
-}
-    .image-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  
-  font-weight: 900;
-  font-size: 18px;
-  color: #fff;
-
-  z-index: 3;
-
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(6px);
-  padding: 8px 14px;
-  border-radius: 12px;
-}
-
-    /* DESKTOP */
-    @media (min-width: 980px){
-      .third{
-        grid-column: span 4;
-      }
-
-      .rightColumn{
-        grid-column: span 4;
-      }
-
-      .shot{
-        grid-column: span 4;
-      }
-
-      .screenshotsCard{
-        grid-column: 1 / -1;
-      }
-    }
-
-    /* MOBILE */
-    @media (max-width: 650px){
-      .hero,
-      .heroInner{
-        min-height:320px;
-      }
-
-      .heroInner{
-        flex-direction:column;
-        align-items:flex-start;
-        justify-content:flex-end;
-      }
-
-      .heroRight{
-        align-items:flex-start;
-        text-align:left;
-      }
-
-      .btn{
-        width:100%;
-      }
-
-      .shot{
-        grid-column: span 12;
-      }
-
-      .card{
-        padding:18px;
-      }
-    }
-
-    /* LIVE SERVER STATISTICS */
-    .liveStats { grid-column:1 / -1; }
-    .liveGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:18px; }
-    .liveServer { background:rgba(255,255,255,.035); border:1px solid var(--border); border-radius:16px; padding:18px; min-width:0; }
-    .liveServer h3 { margin:0 0 5px; }
-    .liveServer p { color:var(--muted); font-size:13px; overflow-wrap:anywhere; }
-    .apiStatus { min-height:245px; padding:18px; background:#111b19; border:1px solid var(--border); border-radius:12px; }
-    .apiBadge { display:inline-block; padding:5px 10px; border-radius:20px; background:rgba(0,255,136,.13); color:var(--accent); font-size:12px; font-weight:800; }
-    .apiNumbers { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:15px 0; }
-    .apiNumbers div { padding:12px; border-radius:12px; background:rgba(255,255,255,.05); }
-    .apiNumbers strong { display:block; margin-top:5px; font-size:21px; overflow-wrap:anywhere; }
-    .apiPlayers { margin:10px 0 0; padding:0; list-style:none; max-height:175px; overflow:auto; }
-    .apiPlayers li { display:flex; justify-content:space-between; gap:10px; border-bottom:1px solid var(--border); padding:7px 0; font-size:13px; }
-    .apiPlayers li span { overflow-wrap:anywhere; }
-    .liveFrame { display:block; width:100%; height:245px; border:1px solid var(--border); border-radius:12px; background:#111b19; }
-    .liveLinks { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
-    .liveLinks a { flex:1 1 140px; }
-    .liveNote { color:var(--muted); font-size:12px; margin-top:12px; }
-
-/* PICKLE'S — editorial dark redesign */
-:root { --bg:#101414; --card:#191f1e; --card2:#202725; --text:#f0f2ee; --muted:#a4ada7; --accent:#a5df67; --border:#343d37; --shadow:none; --r:9px; --discord:#5865f2; }
-html { scroll-behavior:smooth; }
-body { background:#101414; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif; line-height:1.5; }
-.aurora { display:none; }
-.site-nav { height:68px; padding:0 clamp(22px,5vw,88px); display:flex; align-items:center; justify-content:space-between; gap:18px; background:#101414; border-bottom:1px solid #303a34; }
-.site-logo { display:flex; align-items:center; gap:10px; font-size:12px; font-weight:850; letter-spacing:.15em; color:#f0f2ee; text-decoration:none; }
-.site-logo:first-letter { font-size:20px; } .logo-dot { color:var(--accent); }
-.site-nav nav { display:flex; gap:clamp(12px,2.7vw,34px); flex-wrap:wrap; }
-.site-nav nav a { color:#bbc4bd; text-decoration:none; font-size:12px; font-weight:600; }
-.site-nav nav a:hover { color:var(--accent); }
-.hero { min-height:340px; background-position:center 43%; }
-.hero::before { background:rgba(0,0,0,.22); }
-.hero::after { background:linear-gradient(90deg,rgba(10,15,13,.95) 0%,rgba(10,15,13,.62) 50%,rgba(10,15,13,.25) 100%),linear-gradient(0deg,#101414 0%,transparent 32%); }
-.heroInner { min-height:340px; padding:55px clamp(22px,5vw,88px) 52px; align-items:center; }
-.hero h1 { font-size:clamp(42px,5.2vw,75px); line-height:1.03; font-weight:850; letter-spacing:-.055em; text-shadow:none; max-width:690px; }
-.hero-eyebrow { font-size:11px; font-weight:800; letter-spacing:.23em; color:var(--accent); margin-bottom:15px; }
-.sub { margin-top:19px; font-size:14px; color:#d2d8d1; }
-.heroRight { align-items:flex-end; min-width:0; }
-.pill { background:rgba(12,19,16,.85); backdrop-filter:none; border:1px solid #536254; border-radius:6px; font-size:12px; }
-.dot { width:7px; height:7px; box-shadow:none; }
-.content { max-width:1480px; margin:auto; padding:32px clamp(22px,5vw,65px) 85px; }
-.grid { gap:18px; }
-.card { background:#191f1e; border:1px solid #343d37; box-shadow:none; backdrop-filter:none; border-radius:9px; padding:26px; }
-.card h2 { font-size:clamp(21px,2vw,29px); letter-spacing:-.035em; font-weight:760; margin-bottom:12px; }
-.section-kicker { color:var(--accent); font-size:10px; font-weight:800; letter-spacing:.18em; margin-bottom:8px; }
-.muted { color:var(--muted); }
-.liveStats { background:transparent; border:0; padding:10px 0 14px; overflow:visible; }
-.liveStats > .muted { margin:0 0 25px; }
-.liveGrid { gap:16px; }
-.liveServer { background:#1a211e; border:1px solid #3b493d; border-radius:9px; padding:23px; }
-.liveServer h3 { font-size:18px; letter-spacing:-.025em; }
-.liveServer > p { font-size:12px; color:#aeb9ae; margin:5px 0 17px; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
-.apiStatus { min-height:0; background:transparent; border:0; border-top:1px solid #36413a; border-radius:0; padding:17px 0 0; }
-.apiBadge { background:#263e2b; color:#b6ee9b; border-radius:4px; padding:5px 9px; font-size:10px; letter-spacing:.04em; }
-.apiNumbers { gap:0; margin:21px 0 16px; border-top:1px solid #354139; border-bottom:1px solid #354139; }
-.apiNumbers div { background:transparent; border-radius:0; padding:14px 10px 14px 0; }
-.apiNumbers div + div { border-left:1px solid #354139; padding-left:20px; }
-.apiNumbers strong { font-size:27px; font-weight:750; letter-spacing:-.045em; }
-.apiStatus details summary { font-size:12px; }
-.apiPlayers { max-height:230px; }
-.liveLinks { gap:9px; }
-.btn, button.btn { border-radius:5px; box-shadow:none; text-transform:none; font-weight:700; transition:background .15s ease,border-color .15s ease; }
-.btnPrimary, .btn.btnPrimary { background:var(--accent); color:#152116; border:1px solid var(--accent); }
-.btnPrimary:hover { background:#c0f28b; }
-.liveLinks .btn { flex:1 1 135px; }
-.liveLinks .btn:first-child { background:transparent; color:#dce5d9; border:1px solid #566557; }
-.liveLinks .btn:first-child:hover { background:#2c382e; }
-.liveNote { color:#8f9d92; font-size:11px; margin-top:18px; }
-#commandsCard { grid-column:span 6; }
-#serversCard { grid-column:span 6; }
-.rightColumn { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-.rightColumn .card { min-width:0; }
-.cmd { border-color:#354139; }
-.cmd code { background:#2b3a2e; color:#c0eea2; border-radius:4px; }
-.serverBlock { background:#222b26; border-color:#3b483e; border-radius:7px; }
-.chip { background:#2d3830; }
-.screenshotsCard { margin-top:14px; }
-.gallery { gap:10px; }
-.shot { border-radius:5px; background:#111715; }
-.shot img { object-fit:cover; }
-@media(min-width:980px) { #commandsCard,#serversCard { grid-column:span 6; } .rightColumn { grid-column:1/-1; } .shot { grid-column:span 4; } }
-@media(max-width:760px) { .site-nav { padding:0 18px; } .site-nav nav { gap:12px; } .site-nav nav a { font-size:11px; } .hero,.heroInner { min-height:320px; } .heroInner { padding:38px 22px; align-items:flex-start; justify-content:flex-end; } .heroRight { display:none; } #commandsCard,#serversCard,.rightColumn { grid-column:1/-1; } .rightColumn { grid-template-columns:1fr; } .content { padding:22px 16px 60px; } .card { padding:21px; } .liveStats { padding:10px 0; } }
-@media(max-width:420px) { .site-nav nav a:last-child { display:none; } .hero h1 { font-size:44px; } }
-
+   :root{--bg:#101714;--panel:#18211d;--line:#354139;--muted:#a9b5ac;--lime:#a3e568}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#f7f9f5;font:15px/1.55 Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}.top{height:66px;background:#101815;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,5vw);border-bottom:1px solid #344037}.brand{font-weight:900;letter-spacing:2px;font-size:14px}.dot{color:var(--lime)}nav{display:flex;gap:28px;font-size:13px}nav a:hover{color:var(--lime)}.hero{height:350px;background:linear-gradient(90deg,rgba(5,12,9,.52),rgba(5,12,9,.12) 55%,rgba(5,12,9,.7)),url('hero.jpg') center/cover,#202a23;display:flex;align-items:center;justify-content:flex-end;padding:30px max(22px,5vw)}.hero-info{display:grid;gap:12px}.hero-pill{background:#111c18e8;border:1px solid #475649;border-radius:7px;padding:14px 18px;font-size:13px}.hero-pill span{color:var(--lime)}main{max-width:1120px;margin:auto;padding:40px 20px 80px}.eyebrow{font-size:11px;font-weight:800;color:var(--lime);letter-spacing:2px}.heading{font-size:27px;margin:8px 0}.muted{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.server-grid{margin-top:20px}.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px}.card h3{margin:0;font-size:18px}.ip{font:12px monospace;color:var(--muted);margin:4px 0 16px}.rule{border-top:1px solid var(--line);margin:14px 0}.status{display:inline-block;font-size:11px;font-weight:bold;border-radius:4px;padding:3px 8px;background:#29452f;color:#b4f48d}.status.off{background:#40362b;color:#efc694}.numbers{display:grid;grid-template-columns:1fr 1fr;margin-top:14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.numbers>div{padding:12px 0}.numbers>div+div{border-left:1px solid var(--line);padding-left:14px}.numbers small{display:block;color:var(--muted)}.numbers strong{font-size:19px}.check{font-size:11px;color:var(--muted);margin-top:12px}.players{margin:12px 0;padding:0;list-style:none}.players li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;gap:10px}.toggle{background:none;border:0;color:var(--lime);padding:10px 0;font-size:13px}.actions{display:flex;gap:8px;margin-top:10px}.btn{border-radius:5px;border:1px solid #4a5a4b;background:transparent;color:white;padding:11px 14px;text-align:center;flex:1;font-weight:bold;font-size:13px}.btn.primary{background:var(--lime);border-color:var(--lime);color:#142015}.btn:hover{filter:brightness(1.1)}.bottom{margin-top:36px}.command{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:#232e27;border-radius:5px;margin:6px 0;font-size:13px}.command code{color:var(--lime)}.community-link{display:flex;justify-content:space-between;padding:13px;margin-top:10px;border:1px solid var(--line);border-radius:5px;font-weight:bold}.community-link.discord{background:#5267e9;border-color:#5267e9}.rules{color:var(--muted);padding-left:19px;font-size:13px}.rules li{padding:3px 0}.rules li::marker{color:var(--lime)}footer{text-align:center;border-top:1px solid var(--line);padding:25px;color:var(--muted);font-size:12px}@media(max-width:720px){.top{padding:0 18px}.brand{font-size:11px}nav{gap:10px;font-size:11px}.hero{height:260px;padding:18px}.grid{grid-template-columns:1fr}main{padding:30px 15px}.card{padding:17px}.hero-pill{font-size:11px}}
+.gallery-block{margin:18px 0 34px}.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.photo-grid img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:9px;border:1px solid var(--line)}
   </style>
-</head>
-
-<body>
-  <header class="site-nav"><a class="site-logo" href="#top">P<span class="logo-dot">.</span> <span>PICKLE'S</span></a><nav aria-label="Main navigation"><a href="#live-stats">Servers</a><a href="#commandsCard">Commands</a><a href="#discordCard">Discord</a><a href="#gallery">Gallery</a></nav></header>
-
-  <div class="wrap">
-    <section class="hero" id="top">
-      <div class="heroInner">
-        <div class="brand">
-          <div class="hero-eyebrow">THE COMMUNITY</div><h1>Good games.<br>Good people.</h1>
-          <p class="sub">PICKLE'S CS:GO · EU community servers</p>
-        </div>
-
-        <div class="heroRight">
-          <div class="pill">
-            <span class="dot"></span>
-            <span>Connect: 168.100.161.99:2462</span>
-          </div>
-          <div class="pill">
-            <span>Tip: Copy connect → paste in console</span>
-          </div>
-        </div>
-      </div>
+ </head>
+ <body>
+  <header class="top">
+   <a class="brand" href="#">
+    <span class="dot">
+     ●
+    </span>
+    PICKLES COMMUNITY SERVER
+   </a>
+   <nav>
+    <a href="#servers">
+     Servers
+    </a>
+    <a href="#commands">
+     Commands
+    </a>
+    <a href="#discord">
+     Discord
+    </a>
+    <a href="#gallery">
+     Gallery
+    </a>
+   </nav>
+  </header>
+  <section class="hero">
+   <div class="hero-info">
+    <button class="hero-pill" onclick="copyConnect('168.100.161.99:2462')">
+     <span>
+      ●
+     </span>
+     Connect: 168.100.161.99:2462
+    </button>
+    <div class="hero-pill">
+     EU · 128 tick · 10 slots
+     <br/>
+     Skins · Knives · Gloves
+    </div>
+   </div>
+  </section>
+  <main>
+   <section id="servers">
+    <div class="eyebrow">
+     01 / SERVERS
+    </div>
+    <h1 class="heading">
+     Find your server.
+    </h1>
+    <p class="muted">
+     Current maps, player counts and who's playing. Automatically refreshes every 30 seconds.
+    </p>
+    <div class="grid server-grid" id="server-grid">
+    </div>
+    <p class="muted">
+     Automatically refreshes every 30 seconds. Game-server data is collected separately by GitHub Actions, so updates may be delayed.
+    </p>
+   </section>
+   <div class="grid bottom">
+    <section class="card" id="commands">
+     <div class="eyebrow">
+      02 / QUICK REFERENCE
+     </div>
+     <h2>
+      Commands
+     </h2>
+     <div id="commands-list">
+     </div>
+     <p class="muted">
+      Type these commands in game chat.
+     </p>
     </section>
-
-    <section class="content">
-      <div class="grid">
-        <!-- LIVE SERVER STATS: GitHub Actions generates local JSON -->
-        <section class="card liveStats" id="live-stats" aria-label="Server statistics">
-          <div class="section-kicker">01 / SERVERS</div><h2>Find your server.</h2>
-          <p class="muted">Current maps, player counts and who's playing. Updated around every five minutes.</p>
-          <div class="liveGrid">
-            <article class="liveServer">
-              <h3>Server #1</h3><p>168.100.161.99:2462</p>
-              <div class="apiStatus" aria-live="polite">
-                <span class="apiBadge" id="server1Badge">Waiting for first update…</span>
-                <div class="apiNumbers"><div><span class="muted">Players</span><strong id="server1Players">—</strong></div><div><span class="muted">Current map</span><strong id="server1Map">—</strong></div></div>
-                <div class="muted" id="server1Updated">No data yet</div>
-                <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--accent);font-weight:700">View player list</summary><ul class="apiPlayers" id="server1PlayerList"><li>Waiting for data…</li></ul></details>
-              </div>
-              <div class="liveLinks"><button class="btn btnPrimary" onclick="loadAllServers()">Refresh display</button><button class="btn btnPrimary" onclick="copyServerConnect('168.100.161.99:2462',this)">Copy connect</button></div>
-            </article>
-            <article class="liveServer">
-              <h3>Server #2</h3><p>168.100.161.119:27065</p>
-              <div class="apiStatus" aria-live="polite">
-                <span class="apiBadge" id="server2Badge">Waiting for first update…</span>
-                <div class="apiNumbers"><div><span class="muted">Players</span><strong id="server2Players">—</strong></div><div><span class="muted">Current map</span><strong id="server2Map">—</strong></div></div>
-                <div class="muted" id="server2Updated">No data yet</div>
-                <details style="margin-top:12px"><summary style="cursor:pointer;color:var(--accent);font-weight:700">View player list</summary><ul class="apiPlayers" id="server2PlayerList"><li>Waiting for data…</li></ul></details>
-              </div>
-              <div class="liveLinks"><button class="btn btnPrimary" onclick="loadAllServers()">Refresh display</button><button class="btn btnPrimary" onclick="copyServerConnect('168.100.161.119:27065',this)">Copy connect</button></div>
-            </article>
-          </div>
-          <p class="liveNote">Statistics may be delayed if GitHub Actions or the game-server API is unavailable. Refresh display reads the latest saved data; it does not query the game server.</p>
-        </section>
-
-
-        <!-- COMMANDS -->
-        <div class="card third" id="commandsCard">
-          <div class="section-kicker">02 / QUICK REFERENCE</div><h2>Commands</h2>
-
-          <div class="commands">
-            <div class="cmd"><span>Weapon Skins</span><code>!ws</code></div>
-            <div class="cmd"><span>Knives</span><code>!knife</code></div>
-            <div class="cmd"><span>Gloves</span><code>!gloves</code></div>
-            <div class="cmd"><span>Agents</span><code>!agents</code></div>
-            <div class="cmd"><span>Stickers</span><code>!stickers</code></div>
-            <div class="cmd"><span>Music Kits</span><code>!music</code></div>
-             <div class="cmd"><span>Refund</span><code>!sell</code></div>
-            <div class="cmd"><span>Inventory Preferences</span><code>!inventory</code></div>
-            <div class="cmd"><span>Nominate Map</span><code>!nominate de_map</code></div>
-            <div class="cmd"><span>RockTheVote</span><code>rtv</code></div>
-          </div>
-
-          <p class="muted" style="margin:14px 0 0;">Type commands in chat.</p>
-        </div>
-
-        <!-- SERVERS -->
-        <div class="card third" id="serversCard">
-          <div class="section-kicker">03 / JOIN</div><h2>Connect</h2>
-
-          <div class="serversCard">
-            <div class="serverBlock">
-              <div class="joinTop">
-                <h3>Server 1</h3>
-                <div class="joinIp">168.100.161.99:2462</div>
-              </div>
-
-              <div class="btnRow">
-                <button
-                  class="btn btnPrimary"
-                  id="copyBtn1"
-                  onclick="copyConnect('168.100.161.99:2462', 'copyBtn1', 'copyHint1')"
-                >
-                  Copy Connect
-                </button>
-              </div>
-
-              <div class="joinMeta">
-                <span class="chip">EU</span>
-                <span class="chip">128 tick</span>
-                <span class="chip">10 slots</span>
-                <span class="chip">Skins/Knives/Gloves</span>
-              </div>
-
-              <div class="copyHint" id="copyHint1">
-                connect <b>168.100.161.99:2462</b>
-              </div>
-            </div>
-
-            <div class="serverBlock">
-              <div class="joinTop">
-                <h3>Server 2</h3>
-                <div class="joinIp">168.100.161.119:27065</div>
-              </div>
-
-              <div class="btnRow">
-                <button
-                  class="btn btnPrimary"
-                  id="copyBtn2"
-                  onclick="copyConnect('168.100.161.119:27065', 'copyBtn2', 'copyHint2')"
-                >
-                  Copy Connect
-                </button>
-              </div>
-
-              <div class="joinMeta">
-                <span class="chip">EU</span>
-                <span class="chip">128 tick</span>
-                <span class="chip">10 slots</span>
-                <span class="chip">Skins/Knives/Gloves</span>
-              </div>
-
-              <div class="copyHint" id="copyHint2">
-                connect <b>168.100.161.119:27065</b>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- RIGHT COLUMN -->
-        <div class="rightColumn">
-          <div class="card" id="discordCard">
-            <h2>Discord</h2>
-            <p class="muted">Announcements, updates, support.</p>
-
-            <div class="btnRow">
-              <a
-                class="btn btnDiscord"
-                href="https://discord.gg/kJKVhaW4Fr"
-                target="_blank"
-                rel="noopener"
-              >
-                Join Discord
-              </a>
-            </div>
-          </div>
-
-          <div class="card" id="rulesCard">
-            <h2>Rules</h2>
-            <ul class="rulesList">
-              <li>No cheating</li>
-              <li>No racism or hate speech</li>
-              <li>No mic spam</li>
-              <li>Respect other players</li>
-              <li>Have fun!</li>
-            </ul>
-          </div>
-        </div>
-       <div class="card screenshotsCard wide" id="gallery">
-  <div class="section-kicker">04 / COMMUNITY</div><h2>From the server</h2>
-
-  <div class="gallery">
-    <div class="shot"><img src="shot12.jpg" alt="ss 1"></div>
-    <div class="shot"><img src="shot20.jpg" alt="ss 2"></div>
-    <div class="shot"><img src="shot21.jpg" alt="ss 3"></div>
-    <div class="shot"><img src="shot13.jpg" alt="ss 4"></div>
-    <div class="shot"><img src="shot14.jpg" alt="ss 5"></div>
-    <div class="shot"><img src="shot15.jpg" alt="ss 6"></div>
-    <div class="shot"><img src="shot16.jpg" alt="ss 7"></div>
-    <div class="shot"><img src="shot17.jpg" alt="ss 8"></div>
-    <div class="shot"><img src="shot18.jpg" alt="ss 9"></div>
-    <div class="shot"><img src="shot19.jpg" alt="ss 10"></div>
-    <div class="shot"><img src="shot22.jpg" alt="ss 11"></div>
-  </div>
-</div>
-
-        <!-- MAPS -->
-        <div class="card screenshotsCard wide">
-          <div class="section-kicker">05 / MAPS</div><h2>Maps</h2>
-
-          <div class="gallery">
-            <div class="shot"><img src="shot1.jpg" alt="Server screenshot 1"></div>
-            <div class="shot"><img src="shot2.jpg" alt="Server screenshot 2"></div>
-            <div class="shot"><img src="shot3.jpg" alt="Server screenshot 3"></div>
-            <div class="shot"><img src="shot4.jpg" alt="Server screenshot 4"></div>
-            <div class="shot"><img src="shot5.jpg" alt="Server screenshot 5"></div>
-            <div class="shot"><img src="shot6.jpg" alt="Server screenshot 6"></div>
-            <div class="shot"><img src="shot7.jpg" alt="Server screenshot 7"></div>
-            <div class="shot"><img src="shot8.jpg" alt="Server screenshot 8"></div>
-            <div class="shot"><img src="shot9.jpg" alt="Server screenshot 9"></div>
-            <div class="shot"><img src="shot10.jpg" alt="Server screenshot 10"></div>
-            <div class="shot"><img src="shot11.jpg" alt="Server screenshot 11"></div>
-          </div>
-        </div>
-      </div>
+    <section class="card" id="discord">
+     <div class="eyebrow">
+      COMMUNITY
+     </div>
+     <h2>
+      Discord & rules
+     </h2>
+     <a class="community-link discord" href="https://discord.gg/kJKVhaW4Fr" rel="noopener" target="_blank">
+      Join our Discord
+      <span>
+       ↗
+      </span>
+     </a>
+     <h3 style="margin-top:25px">
+      Server rules
+     </h3>
+     <ul class="rules">
+      <li>
+       No cheating
+      </li>
+      <li>
+       No racism or hate speech
+      </li>
+      <li>
+       No mic spam
+      </li>
+      <li>
+       Respect other players
+      </li>
+      <li>
+       Have fun!
+      </li>
+     </ul>
     </section>
-  </div>
-
+   </div>
+   <section id="gallery" style="margin-top:36px">
+    <div class="eyebrow">
+     GALLERY
+    </div>
+    <div class="gallery-block">
+     <h2>
+      Community moments
+     </h2>
+     <div class="photo-grid">
+      <img alt="Community moments screenshot 1" loading="lazy" onerror="this.style.display='none'" src="shot12.jpg"/>
+      <img alt="Community moments screenshot 2" loading="lazy" onerror="this.style.display='none'" src="shot20.jpg"/>
+      <img alt="Community moments screenshot 3" loading="lazy" onerror="this.style.display='none'" src="shot21.jpg"/>
+      <img alt="Community moments screenshot 4" loading="lazy" onerror="this.style.display='none'" src="shot13.jpg"/>
+      <img alt="Community moments screenshot 5" loading="lazy" onerror="this.style.display='none'" src="shot14.jpg"/>
+      <img alt="Community moments screenshot 6" loading="lazy" onerror="this.style.display='none'" src="shot15.jpg"/>
+      <img alt="Community moments screenshot 7" loading="lazy" onerror="this.style.display='none'" src="shot16.jpg"/>
+      <img alt="Community moments screenshot 8" loading="lazy" onerror="this.style.display='none'" src="shot17.jpg"/>
+      <img alt="Community moments screenshot 9" loading="lazy" onerror="this.style.display='none'" src="shot18.jpg"/>
+      <img alt="Community moments screenshot 10" loading="lazy" onerror="this.style.display='none'" src="shot19.jpg"/>
+      <img alt="Community moments screenshot 11" loading="lazy" onerror="this.style.display='none'" src="shot22.jpg"/>
+     </div>
+    </div>
+    <div class="gallery-block">
+     <h2>
+      Maps
+     </h2>
+     <div class="photo-grid">
+      <img alt="Maps screenshot 1" loading="lazy" onerror="this.style.display='none'" src="shot1.jpg"/>
+      <img alt="Maps screenshot 2" loading="lazy" onerror="this.style.display='none'" src="shot2.jpg"/>
+      <img alt="Maps screenshot 3" loading="lazy" onerror="this.style.display='none'" src="shot3.jpg"/>
+      <img alt="Maps screenshot 4" loading="lazy" onerror="this.style.display='none'" src="shot4.jpg"/>
+      <img alt="Maps screenshot 5" loading="lazy" onerror="this.style.display='none'" src="shot5.jpg"/>
+      <img alt="Maps screenshot 6" loading="lazy" onerror="this.style.display='none'" src="shot6.jpg"/>
+      <img alt="Maps screenshot 7" loading="lazy" onerror="this.style.display='none'" src="shot7.jpg"/>
+      <img alt="Maps screenshot 8" loading="lazy" onerror="this.style.display='none'" src="shot8.jpg"/>
+      <img alt="Maps screenshot 9" loading="lazy" onerror="this.style.display='none'" src="shot9.jpg"/>
+      <img alt="Maps screenshot 10" loading="lazy" onerror="this.style.display='none'" src="shot10.jpg"/>
+      <img alt="Maps screenshot 11" loading="lazy" onerror="this.style.display='none'" src="shot11.jpg"/>
+     </div>
+    </div>
+   </section>
+  </main>
+  <footer>
+   © PICKLES COMMUNITY SERVER
+  </footer>
   <script>
-    function copyConnect(ip, btnId, hintId) {
-      const cmd = "connect " + ip;
-      const btn = document.getElementById(btnId);
-      const hint = document.getElementById(hintId);
-
-      if (!btn || !hint) return;
-
-      navigator.clipboard.writeText(cmd).then(() => {
-        const previousText = btn.textContent;
-
-        btn.textContent = "Copied!";
-        hint.textContent = "Copied — paste into CS:GO console.";
-
-        setTimeout(() => {
-          btn.textContent = previousText;
-          hint.innerHTML = "connect <b>" + ip + "</b>";
-        }, 2000);
-      }).catch(() => {
-        hint.textContent = "Copy failed — manually copy the command below.";
-      });
-    }
-
-    async function copyServerConnect(ip, button) {
-      try {
-        await navigator.clipboard.writeText('connect ' + ip);
-        const old = button.textContent; button.textContent = 'Copied!';
-        setTimeout(() => { button.textContent = old; }, 2000);
-      } catch (_) { window.prompt('Copy this command:', 'connect ' + ip); }
-    }
-    async function loadServer(number) {
-      const prefix = 'server' + number;
-      const badge = document.getElementById(prefix + 'Badge');
-      const updated = document.getElementById(prefix + 'Updated');
-      try {
-        const response = await fetch('./data/' + prefix + '.json?t=' + Date.now(), {cache:'no-store'});
-        if (!response.ok) throw new Error('Data not generated yet (HTTP ' + response.status + ')');
-        const data = await response.json();
-        if (!data.online) throw new Error(data.error || 'Server could not be queried');
-        const checked = new Date(data.checked_at);
-        const ageMinutes = (Date.now() - checked.getTime()) / 60000;
-        badge.textContent = ageMinutes > 20 ? '● DATA OUTDATED' : '● ONLINE AT LAST CHECK';
-        document.getElementById(prefix + 'Players').textContent =
-          (data.numplayers ?? '—') + ' / ' + (data.maxplayers ?? '—');
-        document.getElementById(prefix + 'Map').textContent = data.map || 'Unknown';
-        updated.textContent = 'Last checked ' + (Number.isNaN(checked.getTime()) ? 'unknown' : checked.toLocaleString());
-        const list = document.getElementById(prefix + 'PlayerList');
-        list.replaceChildren();
-        for (const player of data.players || []) {
-          const li = document.createElement('li');
-          const name = document.createElement('span'); name.textContent = player.name || 'Unnamed player';
-          const score = document.createElement('span');
-          score.textContent = typeof player.score === 'number' ? 'Score: ' + player.score : '';
-          li.append(name, score); list.appendChild(li);
-        }
-        if (!list.children.length) { const li=document.createElement('li'); li.textContent='No players reported'; list.appendChild(li); }
-      } catch (err) {
-        badge.textContent = 'Status unavailable';
-        updated.textContent = err.message;
-      }
-    }
-    function loadAllServers() { loadServer(1); loadServer(2); }
-    loadAllServers();
-    setInterval(loadAllServers, 60000);
+   const SERVERS=[{id:1,ip:'168.100.161.99:2462'},{id:2,ip:'168.100.161.119:27065'}];
+const COMMANDS=[['Weapon skins','!ws'],['Knives','!knife'],['Gloves','!gloves'],['Agents','!agents'],['Stickers','!stickers'],['Music kits','!music'],['Refund','!sell'],['Inventory preferences','!inventory'],['Nominate map','!nominate de_map'],['RockTheVote','rtv']];
+document.getElementById('commands-list').innerHTML=COMMANDS.map(([name,cmd])=>`<div class="command"><span>${name}</span><code>${cmd}</code></div>`).join('');
+function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function copyConnect(ip){const command='connect '+ip;try{await navigator.clipboard.writeText(command);alert('Copied: '+command)}catch{prompt('Copy this command:',command)}}
+function renderCard(s){return `<article class="card" id="server-${s.id}"><h3>Server #${s.id}</h3><div class="ip">${s.ip}</div><div class="rule"></div><span class="status off" id="status-${s.id}">LOADING</span><div class="numbers"><div><small>Players</small><strong id="count-${s.id}">—</strong></div><div><small>Current map</small><strong id="map-${s.id}">—</strong></div></div><div class="check" id="check-${s.id}">Loading latest data…</div><div class="check" id="fresh-${s.id}" aria-live="polite"></div><button class="toggle" id="toggle-${s.id}" onclick="togglePlayers(${s.id})">▸ View player list</button><ul class="players" id="players-${s.id}" hidden></ul><div class="actions"><button class="btn" onclick="loadServer(${s.id})">Refresh display</button><button class="btn primary" onclick="copyConnect('${s.ip}')">Copy connect</button></div></article>`}
+document.getElementById('server-grid').innerHTML=SERVERS.map(renderCard).join('');
+function togglePlayers(id){const el=document.getElementById('players-'+id);el.hidden=!el.hidden;document.getElementById('toggle-'+id).textContent=(el.hidden?'▸':'▾')+' View player list'}
+async function loadServer(id){const status=document.getElementById('status-'+id),check=document.getElementById('check-'+id);try{const r=await fetch(`data/server${id}.json?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw Error('Could not load stats');const d=await r.json();status.textContent=d.online?'● ONLINE':'● OFFLINE';status.className='status'+(d.online?'':' off');document.getElementById('count-'+id).textContent=d.online?`${d.numplayers??0} / ${d.maxplayers??'?'}`:'—';document.getElementById('map-'+id).textContent=d.online?safe(d.map||'Unknown'):'—';check.textContent=d.checked_at?'Last checked: '+new Date(d.checked_at).toLocaleString():(d.error||'No update time');const age=d.checked_at?(Date.now()-new Date(d.checked_at).getTime()):NaN;document.getElementById('fresh-'+id).textContent=Number.isFinite(age)?(age>600000?'⚠ Data delayed ('+Math.floor(age/60000)+' min old)':'Auto-refresh on · data '+Math.max(0,Math.floor(age/60000))+' min old'):'Auto-refresh on · update time unavailable';document.getElementById('players-'+id).innerHTML=(d.players||[]).map(p=>`<li><span>${safe(p.name)}</span><strong>${safe(p.score??0)}</strong></li>`).join('')||'<li>No player data available</li>'}catch(e){status.textContent='STATUS UNAVAILABLE';status.className='status off';check.textContent='Could not load saved stats. Check data/server'+id+'.json';document.getElementById('fresh-'+id).textContent='Will retry automatically';}}
+SERVERS.forEach(s=>loadServer(s.id));setInterval(()=>SERVERS.forEach(s=>loadServer(s.id)),30000);
   </script>
-</body>
+ </body>
 </html>
