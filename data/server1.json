@@ -1,22 +1,22 @@
 {
   "online": true,
-  "checked_at": "2026-09-26T23:02:12.135052+00:00",
+  "checked_at": "2026-09-26T23:39:28.697430+00:00",
   "name": "#1 PICKLE'S SERVER !ws !knife !gloves !inventory",
-  "map": "de_dust2",
+  "map": "de_cbble",
   "numplayers": 3,
   "maxplayers": 10,
   "players": [
     {
       "name": "Rux",
-      "score": 9
-    },
-    {
-      "name": "Angela",
-      "score": 47
+      "score": 57
     },
     {
       "name": "läskiboju",
-      "score": 17
+      "score": 14
+    },
+    {
+      "name": "𝙨𝙩𝙚𝙫𝙑𝙖𝙣",
+      "score": 16
     }
   ]
 }
