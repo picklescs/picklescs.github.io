@@ -25,6 +25,43 @@
 .photo-lightbox button{position:absolute;right:20px;top:15px;background:#26352d;color:white;border:1px solid #627365;border-radius:5px;padding:7px 13px}
 @media(min-width:900px){.bottom{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}}
 
+
+/* Cleaner full-width layout and photo gallery */
+.top { padding-left: clamp(18px, 3vw, 52px); padding-right: clamp(18px, 3vw, 52px); }
+.hero { padding-right: clamp(18px, 3vw, 52px); background-position: center center; }
+.hero-info { width: min(280px, 100%); }
+.hero-pill { min-width: 0; width: 100%; text-align: left; }
+main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px; }
+/* Photos retain their original proportions, so portraits aren't surrounded by blank bars. */
+#gallery .gallery-block:first-of-type .photo-grid {
+  display: block; columns: 4 240px; column-gap: 14px;
+}
+#gallery .gallery-block:first-of-type .photo-grid img {
+  width: 100%; height: auto; aspect-ratio: auto; object-fit: initial;
+  display: block; margin: 0 0 14px; break-inside: avoid;
+  background: transparent;
+}
+/* Maps benefit from consistent wide thumbnails rather than portrait-style letterboxing. */
+#gallery .gallery-block:nth-of-type(2) .photo-grid {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;
+}
+#gallery .gallery-block:nth-of-type(2) .photo-grid img {
+  width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover;
+  background: transparent;
+}
+.gallery-block { margin-bottom: 28px; }
+@media (max-width: 900px) {
+  #gallery .gallery-block:first-of-type .photo-grid { columns: 3 180px; }
+  #gallery .gallery-block:nth-of-type(2) .photo-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+@media (max-width: 600px) {
+  main { width: calc(100% - 30px); }
+  .hero { height: 240px; }
+  #gallery .gallery-block:first-of-type .photo-grid { columns: 2 130px; column-gap: 10px; }
+  #gallery .gallery-block:first-of-type .photo-grid img { margin-bottom: 10px; }
+  #gallery .gallery-block:nth-of-type(2) .photo-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+}
+
 </style>
  </head>
  <body>
@@ -181,7 +218,7 @@
 const COMMANDS=[['Weapon skins','!ws'],['Knives','!knife'],['Gloves','!gloves'],['Agents','!agents'],['Stickers','!stickers'],['Music kits','!music'],['Refund','!sell'],['Inventory preferences','!inventory'],['Nominate map','!nominate de_map'],['RockTheVote','rtv']];
 document.getElementById('commands-list').innerHTML=COMMANDS.map(([name,cmd])=>`<div class="command"><span>${name}</span><code>${cmd}</code></div>`).join('');
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-async function copyConnect(ip){const command='connect '+ip;try{await navigator.clipboard.writeText(command);alert('Copied: '+command)}catch{prompt('Copy this command:',command)}}
+async function copyConnect(ip){const command='connect '+ip;try{await navigator.clipboard.writeText(command)}catch(e){const field=document.createElement('textarea');field.value=command;field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();try{document.execCommand('copy')}finally{field.remove()}}}
 function renderCard(s){return `<article class="card" id="server-${s.id}"><h3>Server #${s.id}</h3><div class="ip">${s.ip}</div><div class="rule"></div><span class="status off" id="status-${s.id}">LOADING</span><div class="numbers"><div><small>Players</small><strong id="count-${s.id}">—</strong></div><div><small>Current map</small><strong id="map-${s.id}">—</strong></div></div><div class="check" id="check-${s.id}">Loading latest data…</div><div class="check" id="fresh-${s.id}" aria-live="polite"></div><button class="toggle" id="toggle-${s.id}" onclick="togglePlayers(${s.id})">▸ View player list</button><ul class="players" id="players-${s.id}" hidden></ul><div class="actions"><button class="btn" onclick="loadServer(${s.id})">Refresh display</button><button class="btn primary" onclick="copyConnect('${s.ip}')">Copy connect</button></div></article>`}
 document.getElementById('server-grid').innerHTML=SERVERS.map(renderCard).join('');
 function togglePlayers(id){const el=document.getElementById('players-'+id);el.hidden=!el.hidden;document.getElementById('toggle-'+id).textContent=(el.hidden?'▸':'▾')+' View player list'}
