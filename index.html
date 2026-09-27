@@ -88,6 +88,11 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
  #gallery .gallery-block:nth-of-type(1) .photo-grid{grid-template-columns:1fr;gap:12px;}
  #gallery .gallery-block:nth-of-type(2) .photo-grid{columns:2 135px;}
 }
+/* Secret gallery is hidden until the small footer pickle is clicked. */
+#community-secret[hidden] { display:none !important; }
+.secret-trigger { border:0; background:none; color:#617769; cursor:pointer; font-size:15px; padding:4px 9px; opacity:.55; transition:opacity .2s,color .2s; vertical-align:middle; }
+.secret-trigger:hover,.secret-trigger:focus-visible { opacity:1; color:var(--lime); }
+#community-secret { scroll-margin-top:25px; }
 </style></head>
 <body>
 <header class="top">
@@ -202,7 +207,7 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
 <img alt="Maps screenshot 10" loading="lazy" onerror="this.style.display='none'" src="shot10.jpg"/>
 <img alt="Maps screenshot 11" loading="lazy" onerror="this.style.display='none'" src="shot11.jpg"/>
 </div>
-</div><div class="gallery-block">
+</div><div class="gallery-block" id="community-secret" hidden>
 <h2>
       Community moments
      </h2>
@@ -224,7 +229,7 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
 </section>
 </main>
 <footer>
-   © PICKLES COMMUNITY SERVER
+   © PICKLES COMMUNITY SERVER <button type="button" class="secret-trigger" id="secret-trigger" aria-label="Reveal secret community gallery" aria-controls="community-secret" aria-expanded="false" title="?">✦</button>
   </footer>
 <script>
    const SERVERS=[{id:1,ip:'168.100.161.99:2462'},{id:2,ip:'168.100.161.119:27065'}];
@@ -240,5 +245,16 @@ SERVERS.forEach(s=>loadServer(s.id));setInterval(()=>SERVERS.forEach(s=>loadServ
   </script>
 <div class="photo-lightbox" id="photo-lightbox" onclick="this.classList.remove('open')"><button aria-label="Close enlarged image" type="button">Close ✕</button><img alt="Enlarged gallery image" id="enlarged-photo"/></div>
 <script>document.querySelectorAll('.photo-grid img').forEach(img=>img.addEventListener('click',()=>{document.getElementById('enlarged-photo').src=img.src;document.getElementById('photo-lightbox').classList.add('open')}));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('photo-lightbox').classList.remove('open')});</script>
+<script>
+const secretTrigger=document.getElementById('secret-trigger');
+const secretGallery=document.getElementById('community-secret');
+secretTrigger.addEventListener('click',()=>{
+  const reveal=secretGallery.hidden;
+  secretGallery.hidden=!reveal;
+  secretTrigger.setAttribute('aria-expanded',String(reveal));
+  secretTrigger.setAttribute('aria-label',reveal?'Hide secret community gallery':'Reveal secret community gallery');
+  if(reveal)secretGallery.scrollIntoView({behavior:'smooth',block:'start'});
+});
+</script>
 </body>
 </html>
