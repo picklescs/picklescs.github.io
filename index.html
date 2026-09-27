@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width,initial-scale=1" name="viewport"/>
-  <title>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>
    Pickles Community Server
   </title>
-  <style>
+<style>
    :root{--bg:#101714;--panel:#18211d;--line:#354139;--muted:#a9b5ac;--lime:#a3e568}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#f7f9f5;font:15px/1.55 Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}.top{height:66px;background:#101815;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,5vw);border-bottom:1px solid #344037}.brand{font-weight:900;letter-spacing:2px;font-size:14px}.dot{color:var(--lime)}nav{display:flex;gap:28px;font-size:13px}nav a:hover{color:var(--lime)}.hero{height:350px;background:linear-gradient(90deg,rgba(5,12,9,.52),rgba(5,12,9,.12) 55%,rgba(5,12,9,.7)),url('hero.jpg') center/cover,#202a23;display:flex;align-items:center;justify-content:flex-end;padding:30px max(22px,5vw)}.hero-info{display:grid;gap:12px}.hero-pill{background:#111c18e8;border:1px solid #475649;border-radius:7px;padding:14px 18px;font-size:13px}.hero-pill span{color:var(--lime)}main{max-width:1520px;margin:auto;padding:40px 20px 80px}.eyebrow{font-size:11px;font-weight:800;color:var(--lime);letter-spacing:2px}.heading{font-size:27px;margin:8px 0}.muted{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.server-grid{margin-top:20px}.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px}.card h3{margin:0;font-size:18px}.ip{font:12px monospace;color:var(--muted);margin:4px 0 16px}.rule{border-top:1px solid var(--line);margin:14px 0}.status{display:inline-block;font-size:11px;font-weight:bold;border-radius:4px;padding:3px 8px;background:#29452f;color:#b4f48d}.status.off{background:#40362b;color:#efc694}.numbers{display:grid;grid-template-columns:1fr 1fr;margin-top:14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.numbers>div{padding:12px 0}.numbers>div+div{border-left:1px solid var(--line);padding-left:14px}.numbers small{display:block;color:var(--muted)}.numbers strong{font-size:19px}.check{font-size:11px;color:var(--muted);margin-top:12px}.players{margin:12px 0;padding:0;list-style:none}.players li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;gap:10px}.toggle{background:none;border:0;color:var(--lime);padding:10px 0;font-size:13px}.actions{display:flex;gap:8px;margin-top:10px}.btn{border-radius:5px;border:1px solid #4a5a4b;background:transparent;color:white;padding:11px 14px;text-align:center;flex:1;font-weight:bold;font-size:13px}.btn.primary{background:var(--lime);border-color:var(--lime);color:#ffffff}.btn:hover{filter:brightness(1.1)}.bottom{margin-top:36px}.command{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:#232e27;border-radius:5px;margin:6px 0;font-size:13px}.command code{color:var(--lime)}.community-link{display:flex;justify-content:space-between;padding:13px;margin-top:10px;border:1px solid var(--line);border-radius:5px;font-weight:bold}.community-link.discord{background:#5267e9;border-color:#5267e9}.rules{color:var(--muted);padding-left:19px;font-size:13px}.rules li{padding:3px 0}.rules li::marker{color:var(--lime)}footer{text-align:center;border-top:1px solid var(--line);padding:25px;color:var(--muted);font-size:12px}@media(max-width:720px){.top{padding:0 18px}.brand{font-size:11px}nav{gap:10px;font-size:11px}.hero{height:260px;padding:18px}.grid{grid-template-columns:1fr}main{padding:30px 15px}.card{padding:17px}.hero-pill{font-size:11px}}
 .gallery-block{margin:18px 0 34px}.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.photo-grid img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:9px;border:1px solid var(--line)}
   
@@ -63,169 +64,181 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
 }
 
 </style>
- </head>
- <body>
-  <header class="top">
-   <a class="brand" href="#">
-    <span class="dot">
+<style>
+/* Map showcase: large readable previews; community gallery below */
+.hero { justify-content: center; }
+#gallery .gallery-block { margin: 0 0 46px; }
+#gallery .gallery-block:nth-of-type(1) .photo-grid {
+ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px;
+}
+#gallery .gallery-block:nth-of-type(1) .photo-grid img {
+ display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:cover;
+ border-radius:10px; cursor:zoom-in;
+}
+#gallery .gallery-block:nth-of-type(2) .photo-grid {
+ display:block; columns:4 210px; column-gap:14px;
+}
+#gallery .gallery-block:nth-of-type(2) .photo-grid img {
+ display:block; width:100%; height:auto; aspect-ratio:auto; object-fit:contain;
+ margin:0 0 14px; break-inside:avoid; cursor:zoom-in;
+}
+.server-features {display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 2px;}
+.server-features span {font-size:11px;color:#d5e6d4;border:1px solid #425547;border-radius:4px;padding:3px 7px;}
+@media(max-width:720px){
+ #gallery .gallery-block:nth-of-type(1) .photo-grid{grid-template-columns:1fr;gap:12px;}
+ #gallery .gallery-block:nth-of-type(2) .photo-grid{columns:2 135px;}
+}
+</style></head>
+<body>
+<header class="top">
+<a class="brand" href="#">
+<span class="dot">
      ●
     </span>
     PICKLES COMMUNITY SERVER
    </a>
-   <nav>
-    <a href="#servers">
+<nav>
+<a href="#servers">
      Servers
     </a>
-    <a href="#commands">
+<a href="#commands">
      Commands
     </a>
-    <a href="#discord">
+<a href="#discord">
      Discord
     </a>
-    <a href="#gallery">
+<a href="#gallery">
      Gallery
     </a>
-   </nav>
-  </header>
-  <section class="hero">
-   <div class="hero-info">
-    <button class="hero-pill" onclick="copyConnect('168.100.161.99:2462')">
-     <span>
-      ●
-     </span>
-     Connect: 168.100.161.99:2462
-    </button>
-    <div class="hero-pill">
-     EU · 128 tick · 10 slots
-     <br/>
-     Skins · Knives · Gloves
-    </div>
-   </div>
-  </section>
-  <main>
-   <section id="servers">
-    <div class="eyebrow">
+</nav>
+</header>
+<section class="hero">
+
+</section>
+<main>
+<section id="servers">
+<div class="eyebrow">
      01 / SERVERS
     </div>
-    <h1 class="heading">
+<h1 class="heading">
      Find your server.
     </h1>
-    <p class="muted">
+<p class="muted">
      Current maps, player counts and who's playing. Display checks for new server data every 30 seconds.
     </p>
-    <div class="grid server-grid" id="server-grid">
-    </div>
-    <p class="muted">
+<div class="grid server-grid" id="server-grid">
+</div>
+<p class="muted">
      Display checks for new server data every 30 seconds. Game-server data is collected separately by GitHub Actions, so updates may be delayed.
     </p>
-   </section>
-   <div class="grid bottom">
-    <section class="card" id="commands">
-     <div class="eyebrow">
+</section>
+<div class="grid bottom">
+<section class="card" id="commands">
+<div class="eyebrow">
       02 / QUICK REFERENCE
      </div>
-     <h2>
+<h2>
       Commands
      </h2>
-     <div id="commands-list">
-     </div>
-     <p class="muted">
+<div id="commands-list">
+</div>
+<p class="muted">
       Type these commands in game chat.
      </p>
-    </section>
-    <section class="card" id="discord">
-     <div class="eyebrow">
+</section>
+<section class="card" id="discord">
+<div class="eyebrow">
       COMMUNITY
      </div>
-     <h2>
-      Discord & rules
+<h2>
+      Discord &amp; rules
      </h2>
-     <a class="community-link discord" href="https://discord.gg/kJKVhaW4Fr" rel="noopener" target="_blank">
+<a class="community-link discord" href="https://discord.gg/kJKVhaW4Fr" rel="noopener" target="_blank">
       Join our Discord
       <span>
        ↗
       </span>
-     </a>
-     <h3 style="margin-top:25px">
+</a>
+<h3 style="margin-top:25px">
       Server rules
      </h3>
-     <ul class="rules">
-      <li>
+<ul class="rules">
+<li>
        No cheating
       </li>
-      <li>
+<li>
        No racism or hate speech
       </li>
-      <li>
+<li>
        No mic spam
       </li>
-      <li>
+<li>
        Respect other players
       </li>
-      <li>
+<li>
        Have fun!
       </li>
-     </ul>
-    </section>
-   </div>
-   <section id="gallery" style="margin-top:36px">
-    <div class="eyebrow">
+</ul>
+</section>
+</div>
+<section id="gallery" style="margin-top:36px">
+<div class="eyebrow">
      GALLERY
     </div>
-    <div class="gallery-block">
-     <h2>
-      Community moments
-     </h2>
-     <div class="photo-grid">
-      <img alt="Community moments screenshot 1" loading="lazy" onerror="this.style.display='none'" src="shot12.jpg"/>
-      <img alt="Community moments screenshot 2" loading="lazy" onerror="this.style.display='none'" src="shot20.jpg"/>
-      <img alt="Community moments screenshot 3" loading="lazy" onerror="this.style.display='none'" src="shot21.jpg"/>
-      <img alt="Community moments screenshot 4" loading="lazy" onerror="this.style.display='none'" src="shot13.jpg"/>
-      <img alt="Community moments screenshot 5" loading="lazy" onerror="this.style.display='none'" src="shot14.jpg"/>
-      <img alt="Community moments screenshot 6" loading="lazy" onerror="this.style.display='none'" src="shot15.jpg"/>
-      <img alt="Community moments screenshot 7" loading="lazy" onerror="this.style.display='none'" src="shot16.jpg"/>
-      <img alt="Community moments screenshot 8" loading="lazy" onerror="this.style.display='none'" src="shot17.jpg"/>
-      <img alt="Community moments screenshot 9" loading="lazy" onerror="this.style.display='none'" src="shot18.jpg"/>
-      <img alt="Community moments screenshot 10" loading="lazy" onerror="this.style.display='none'" src="shot19.jpg"/>
-      <img alt="Community moments screenshot 11" loading="lazy" onerror="this.style.display='none'" src="shot22.jpg"/>
-     </div>
-    </div>
-    <div class="gallery-block">
-     <h2>
+<div class="gallery-block">
+<h2>
       Maps
      </h2>
-     <div class="photo-grid">
-      <img alt="Maps screenshot 1" loading="lazy" onerror="this.style.display='none'" src="shot1.jpg"/>
-      <img alt="Maps screenshot 2" loading="lazy" onerror="this.style.display='none'" src="shot2.jpg"/>
-      <img alt="Maps screenshot 3" loading="lazy" onerror="this.style.display='none'" src="shot3.jpg"/>
-      <img alt="Maps screenshot 4" loading="lazy" onerror="this.style.display='none'" src="shot4.jpg"/>
-      <img alt="Maps screenshot 5" loading="lazy" onerror="this.style.display='none'" src="shot5.jpg"/>
-      <img alt="Maps screenshot 6" loading="lazy" onerror="this.style.display='none'" src="shot6.jpg"/>
-      <img alt="Maps screenshot 7" loading="lazy" onerror="this.style.display='none'" src="shot7.jpg"/>
-      <img alt="Maps screenshot 8" loading="lazy" onerror="this.style.display='none'" src="shot8.jpg"/>
-      <img alt="Maps screenshot 9" loading="lazy" onerror="this.style.display='none'" src="shot9.jpg"/>
-      <img alt="Maps screenshot 10" loading="lazy" onerror="this.style.display='none'" src="shot10.jpg"/>
-      <img alt="Maps screenshot 11" loading="lazy" onerror="this.style.display='none'" src="shot11.jpg"/>
-     </div>
-    </div>
-   </section>
-  </main>
-  <footer>
+<div class="photo-grid">
+<img alt="Maps screenshot 1" loading="lazy" onerror="this.style.display='none'" src="shot1.jpg"/>
+<img alt="Maps screenshot 2" loading="lazy" onerror="this.style.display='none'" src="shot2.jpg"/>
+<img alt="Maps screenshot 3" loading="lazy" onerror="this.style.display='none'" src="shot3.jpg"/>
+<img alt="Maps screenshot 4" loading="lazy" onerror="this.style.display='none'" src="shot4.jpg"/>
+<img alt="Maps screenshot 5" loading="lazy" onerror="this.style.display='none'" src="shot5.jpg"/>
+<img alt="Maps screenshot 6" loading="lazy" onerror="this.style.display='none'" src="shot6.jpg"/>
+<img alt="Maps screenshot 7" loading="lazy" onerror="this.style.display='none'" src="shot7.jpg"/>
+<img alt="Maps screenshot 8" loading="lazy" onerror="this.style.display='none'" src="shot8.jpg"/>
+<img alt="Maps screenshot 9" loading="lazy" onerror="this.style.display='none'" src="shot9.jpg"/>
+<img alt="Maps screenshot 10" loading="lazy" onerror="this.style.display='none'" src="shot10.jpg"/>
+<img alt="Maps screenshot 11" loading="lazy" onerror="this.style.display='none'" src="shot11.jpg"/>
+</div>
+</div><div class="gallery-block">
+<h2>
+      Community moments
+     </h2>
+<div class="photo-grid">
+<img alt="Community moments screenshot 1" loading="lazy" onerror="this.style.display='none'" src="shot12.jpg"/>
+<img alt="Community moments screenshot 2" loading="lazy" onerror="this.style.display='none'" src="shot20.jpg"/>
+<img alt="Community moments screenshot 3" loading="lazy" onerror="this.style.display='none'" src="shot21.jpg"/>
+<img alt="Community moments screenshot 4" loading="lazy" onerror="this.style.display='none'" src="shot13.jpg"/>
+<img alt="Community moments screenshot 5" loading="lazy" onerror="this.style.display='none'" src="shot14.jpg"/>
+<img alt="Community moments screenshot 6" loading="lazy" onerror="this.style.display='none'" src="shot15.jpg"/>
+<img alt="Community moments screenshot 7" loading="lazy" onerror="this.style.display='none'" src="shot16.jpg"/>
+<img alt="Community moments screenshot 8" loading="lazy" onerror="this.style.display='none'" src="shot17.jpg"/>
+<img alt="Community moments screenshot 9" loading="lazy" onerror="this.style.display='none'" src="shot18.jpg"/>
+<img alt="Community moments screenshot 10" loading="lazy" onerror="this.style.display='none'" src="shot19.jpg"/>
+<img alt="Community moments screenshot 11" loading="lazy" onerror="this.style.display='none'" src="shot22.jpg"/>
+</div>
+</div>
+
+</section>
+</main>
+<footer>
    © PICKLES COMMUNITY SERVER
   </footer>
-  <script>
+<script>
    const SERVERS=[{id:1,ip:'168.100.161.99:2462'},{id:2,ip:'168.100.161.119:27065'}];
 const COMMANDS=[['Weapon skins','!ws'],['Knives','!knife'],['Gloves','!gloves'],['Agents','!agents'],['Stickers','!stickers'],['Music kits','!music'],['Refund','!sell'],['Inventory preferences','!inventory'],['Nominate map','!nominate de_map'],['RockTheVote','rtv']];
 document.getElementById('commands-list').innerHTML=COMMANDS.map(([name,cmd])=>`<div class="command"><span>${name}</span><code>${cmd}</code></div>`).join('');
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 async function copyConnect(ip){const command='connect '+ip;try{await navigator.clipboard.writeText(command)}catch(e){const field=document.createElement('textarea');field.value=command;field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();try{document.execCommand('copy')}finally{field.remove()}}}
-function renderCard(s){return `<article class="card" id="server-${s.id}"><h3>Server #${s.id}</h3><div class="ip">${s.ip}</div><div class="rule"></div><span class="status off" id="status-${s.id}">LOADING</span><div class="numbers"><div><small>Players</small><strong id="count-${s.id}">—</strong></div><div><small>Current map</small><strong id="map-${s.id}">—</strong></div></div><div class="check" id="check-${s.id}">Loading latest data…</div><div class="check" id="fresh-${s.id}" aria-live="polite"></div><button class="toggle" id="toggle-${s.id}" onclick="togglePlayers(${s.id})">▸ View player list</button><ul class="players" id="players-${s.id}" hidden></ul><div class="actions"><button class="btn" onclick="loadServer(${s.id})">Refresh display</button><button class="btn primary" onclick="copyConnect('${s.ip}')">Copy connect</button></div></article>`}
+function renderCard(s){return `<article class="card" id="server-${s.id}"><h3>Server #${s.id}</h3><div class="ip">${s.ip}</div><div class="server-features"><span>EU</span><span>128 tick</span><span>10 slots</span><span>Skins</span><span>Knives</span><span>Gloves</span></div><div class="rule"></div><span class="status off" id="status-${s.id}">LOADING</span><div class="numbers"><div><small>Players</small><strong id="count-${s.id}">—</strong></div><div><small>Current map</small><strong id="map-${s.id}">—</strong></div></div><div class="check" id="check-${s.id}">Loading latest data…</div><div class="check" id="fresh-${s.id}" aria-live="polite"></div><button class="toggle" id="toggle-${s.id}" onclick="togglePlayers(${s.id})">▸ View player list</button><ul class="players" id="players-${s.id}" hidden></ul><div class="actions"><button class="btn" onclick="loadServer(${s.id})">Refresh display</button><button class="btn primary" onclick="copyConnect('${s.ip}')">Copy connect</button></div></article>`}
 document.getElementById('server-grid').innerHTML=SERVERS.map(renderCard).join('');
 function togglePlayers(id){const el=document.getElementById('players-'+id);el.hidden=!el.hidden;document.getElementById('toggle-'+id).textContent=(el.hidden?'▸':'▾')+' View player list'}
 async function loadServer(id){const status=document.getElementById('status-'+id),check=document.getElementById('check-'+id);try{const r=await fetch(`data/server${id}.json?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw Error('Could not load stats');const d=await r.json();status.textContent=d.online?'● ONLINE':'● OFFLINE';status.className='status'+(d.online?'':' off');document.getElementById('count-'+id).textContent=d.online?`${d.numplayers??0} / ${d.maxplayers??'?'}`:'—';document.getElementById('map-'+id).textContent=d.online?safe(d.map||'Unknown'):'—';check.textContent=d.checked_at?'Last checked: '+new Date(d.checked_at).toLocaleString():(d.error||'No update time');const age=d.checked_at?(Date.now()-new Date(d.checked_at).getTime()):NaN;document.getElementById('fresh-'+id).textContent=Number.isFinite(age)?(age>600000?'⚠ Data delayed ('+Math.floor(age/60000)+' min old)':'Auto-refresh on · data '+Math.max(0,Math.floor(age/60000))+' min old'):'Auto-refresh on · update time unavailable';document.getElementById('players-'+id).innerHTML=(d.players||[]).filter(p=>!(id===2 && (p.name||'').trim().toUpperCase()==='PICKLES #2')).map(p=>`<li><span>${safe(p.name)}</span><strong>${safe(p.score??0)}</strong></li>`).join('')||'<li>No player data available</li>'}catch(e){status.textContent='STATUS UNAVAILABLE';status.className='status off';check.textContent='Could not load saved stats. Check data/server'+id+'.json';document.getElementById('fresh-'+id).textContent='Will retry automatically';}}
 SERVERS.forEach(s=>loadServer(s.id));setInterval(()=>SERVERS.forEach(s=>loadServer(s.id)),30000);
   </script>
- <div class="photo-lightbox" id="photo-lightbox" onclick="this.classList.remove('open')"><button type="button" aria-label="Close enlarged image">Close ✕</button><img alt="Enlarged gallery image" id="enlarged-photo"></div>
+<div class="photo-lightbox" id="photo-lightbox" onclick="this.classList.remove('open')"><button aria-label="Close enlarged image" type="button">Close ✕</button><img alt="Enlarged gallery image" id="enlarged-photo"/></div>
 <script>document.querySelectorAll('.photo-grid img').forEach(img=>img.addEventListener('click',()=>{document.getElementById('enlarged-photo').src=img.src;document.getElementById('photo-lightbox').classList.add('open')}));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('photo-lightbox').classList.remove('open')});</script>
 </body>
 </html>
