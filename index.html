@@ -245,7 +245,7 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
   </footer>
 <script>
    const LIVE_API = 'https://pickles-live-servers.picklescs.workers.dev';
-const SERVERS=[{id:1,ip:'168.100.161.99:2462'},{id:2,ip:'168.100.161.119:27065'}];
+const SERVERS=[{id:1,ip:'216.39.242.245:2472'},{id:2,ip:'64.40.9.241:27072'}];
 const COMMANDS=[['Weapon skins','!ws'],['Knives','!knife'],['Gloves','!gloves'],['Agents','!agents'],['Stickers','!stickers'],['Music kits','!music'],['Refund','!sell'],['Inventory preferences','!inventory'],['Nominate map','!nominate de_map'],['RockTheVote','rtv']];
 document.getElementById('commands-list').innerHTML=COMMANDS.map(([name,cmd])=>`<div class="command"><span>${name}</span><code>${cmd}</code></div>`).join('');
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
