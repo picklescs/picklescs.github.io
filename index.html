@@ -93,7 +93,13 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
 .secret-trigger { border:0; background:none; color:#617769; cursor:pointer; font-size:15px; padding:4px 9px; opacity:.55; transition:opacity .2s,color .2s; vertical-align:middle; }
 .secret-trigger:hover,.secret-trigger:focus-visible { opacity:1; color:var(--lime); }
 #community-secret { scroll-margin-top:25px; }
-</style></head>
+</style><style>
+/* Borderless Easter egg gallery: show every image at its natural aspect ratio. */
+#community-secret .photo-grid { display:block; columns:4 210px; column-gap:14px; }
+#community-secret .photo-grid img { display:block; width:100%; height:auto; max-width:100%; aspect-ratio:auto; object-fit:contain; border:0; border-radius:0; box-shadow:none; background:transparent; margin:0 0 14px; break-inside:avoid; }
+@media (max-width:720px) { #community-secret .photo-grid { columns:2 135px; } }
+</style>
+</head>
 <body>
 <header class="top">
 <a class="brand" href="#">
