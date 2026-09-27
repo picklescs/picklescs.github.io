@@ -1,14 +1,50 @@
 {
   "online": true,
-  "checked_at": "2026-09-27T07:11:44.349648+00:00",
+  "checked_at": "2026-09-27T13:00:02.887273+00:00",
   "name": "#1 PICKLE'S SERVER !ws !knife !gloves !inventory",
-  "map": "de_mirage",
-  "numplayers": 1,
+  "map": "de_cache",
+  "numplayers": 10,
   "maxplayers": 10,
   "players": [
     {
-      "name": "3nactic",
+      "name": "Jkaaz",
+      "score": 9
+    },
+    {
+      "name": "♡bmw enjoyer♡",
+      "score": 5
+    },
+    {
+      "name": "zoklembe @bandit",
+      "score": 5
+    },
+    {
+      "name": "vzqnz",
+      "score": 0
+    },
+    {
+      "name": "Teddy",
       "score": 4
+    },
+    {
+      "name": "lucio",
+      "score": 2
+    },
+    {
+      "name": "just a noobi :)",
+      "score": 2
+    },
+    {
+      "name": "blax",
+      "score": 2
+    },
+    {
+      "name": "Yosh1",
+      "score": 0
+    },
+    {
+      "name": "𝕊𝕒𝕓𝕒",
+      "score": 2
     }
   ]
 }

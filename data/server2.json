@@ -1,9 +1,58 @@
 {
   "online": true,
-  "checked_at": "2026-09-27T07:11:44.483719+00:00",
+  "checked_at": "2026-09-27T13:00:03.044202+00:00",
   "name": "#2 PICKLE'S SERVER !ws !knife !gloves !inventory",
-  "map": "de_mirage",
-  "numplayers": 0,
+  "map": "de_train",
+  "numplayers": 11,
   "maxplayers": 10,
-  "players": []
+  "players": [
+    {
+      "name": "PICKLES #2",
+      "score": 0
+    },
+    {
+      "name": "crex",
+      "score": 16
+    },
+    {
+      "name": "cactus foreskin",
+      "score": 16
+    },
+    {
+      "name": "≽人≼",
+      "score": 28
+    },
+    {
+      "name": "Twist",
+      "score": 19
+    },
+    {
+      "name": "็",
+      "score": 10
+    },
+    {
+      "name": "♡ xilC.",
+      "score": 6
+    },
+    {
+      "name": "010325",
+      "score": 12
+    },
+    {
+      "name": "pop corn",
+      "score": 9
+    },
+    {
+      "name": "tifaa",
+      "score": 4
+    },
+    {
+      "name": "sky666",
+      "score": 0
+    },
+    {
+      "name": "pumpkin spice latte.",
+      "score": 0
+    }
+  ]
 }
