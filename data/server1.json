@@ -1,18 +1,14 @@
 {
   "online": true,
-  "checked_at": "2026-09-27T01:50:34.308709+00:00",
+  "checked_at": "2026-09-27T07:11:44.349648+00:00",
   "name": "#1 PICKLE'S SERVER !ws !knife !gloves !inventory",
-  "map": "de_train",
-  "numplayers": 2,
+  "map": "de_mirage",
+  "numplayers": 1,
   "maxplayers": 10,
   "players": [
     {
-      "name": "PeteWithAHardR",
-      "score": 22
-    },
-    {
-      "name": "",
-      "score": null
+      "name": "3nactic",
+      "score": 4
     }
   ]
 }

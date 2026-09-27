@@ -1,14 +1,9 @@
 {
   "online": true,
-  "checked_at": "2026-09-27T01:50:34.556473+00:00",
+  "checked_at": "2026-09-27T07:11:44.483719+00:00",
   "name": "#2 PICKLE'S SERVER !ws !knife !gloves !inventory",
-  "map": "de_dust2",
+  "map": "de_mirage",
   "numplayers": 0,
   "maxplayers": 10,
-  "players": [
-    {
-      "name": "PICKLES #2",
-      "score": 0
-    }
-  ]
+  "players": []
 }
