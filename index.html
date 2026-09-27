@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>
-   Pickles Community Server
+   PICKLES Community Server
   </title>
 <style>
    :root{--bg:#101714;--panel:#18211d;--line:#354139;--muted:#a9b5ac;--lime:#a3e568}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#f7f9f5;font:15px/1.55 Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}.top{height:66px;background:#101815;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,5vw);border-bottom:1px solid #344037}.brand{font-weight:900;letter-spacing:2px;font-size:14px}.dot{color:var(--lime)}nav{display:flex;gap:28px;font-size:13px}nav a:hover{color:var(--lime)}.hero{height:350px;background:linear-gradient(90deg,rgba(5,12,9,.52),rgba(5,12,9,.12) 55%,rgba(5,12,9,.7)),url('hero.jpg') center/cover,#202a23;display:flex;align-items:center;justify-content:flex-end;padding:30px max(22px,5vw)}.hero-info{display:grid;gap:12px}.hero-pill{background:#111c18e8;border:1px solid #475649;border-radius:7px;padding:14px 18px;font-size:13px}.hero-pill span{color:var(--lime)}main{max-width:1520px;margin:auto;padding:40px 20px 80px}.eyebrow{font-size:11px;font-weight:800;color:var(--lime);letter-spacing:2px}.heading{font-size:27px;margin:8px 0}.muted{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.server-grid{margin-top:20px}.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px}.card h3{margin:0;font-size:18px}.ip{font:12px monospace;color:var(--muted);margin:4px 0 16px}.rule{border-top:1px solid var(--line);margin:14px 0}.status{display:inline-block;font-size:11px;font-weight:bold;border-radius:4px;padding:3px 8px;background:#29452f;color:#b4f48d}.status.off{background:#40362b;color:#efc694}.numbers{display:grid;grid-template-columns:1fr 1fr;margin-top:14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.numbers>div{padding:12px 0}.numbers>div+div{border-left:1px solid var(--line);padding-left:14px}.numbers small{display:block;color:var(--muted)}.numbers strong{font-size:19px}.check{font-size:11px;color:var(--muted);margin-top:12px}.players{margin:12px 0;padding:0;list-style:none}.players li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;gap:10px}.toggle{background:none;border:0;color:var(--lime);padding:10px 0;font-size:13px}.actions{display:flex;gap:8px;margin-top:10px}.btn{border-radius:5px;border:1px solid #4a5a4b;background:transparent;color:white;padding:11px 14px;text-align:center;flex:1;font-weight:bold;font-size:13px}.btn.primary{background:var(--lime);border-color:var(--lime);color:#ffffff}.btn:hover{filter:brightness(1.1)}.bottom{margin-top:36px}.command{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:#232e27;border-radius:5px;margin:6px 0;font-size:13px}.command code{color:var(--lime)}.community-link{display:flex;justify-content:space-between;padding:13px;margin-top:10px;border:1px solid var(--line);border-radius:5px;font-weight:bold}.community-link.discord{background:#5267e9;border-color:#5267e9}.rules{color:var(--muted);padding-left:19px;font-size:13px}.rules li{padding:3px 0}.rules li::marker{color:var(--lime)}footer{text-align:center;border-top:1px solid var(--line);padding:25px;color:var(--muted);font-size:12px}@media(max-width:720px){.top{padding:0 18px}.brand{font-size:11px}nav{gap:10px;font-size:11px}.hero{height:260px;padding:18px}.grid{grid-template-columns:1fr}main{padding:30px 15px}.card{padding:17px}.hero-pill{font-size:11px}}
@@ -132,7 +132,7 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
      01 / SERVERS
     </div>
 <h1 class="heading">
-     Find your server.
+     Server Status
     </h1>
 <p class="muted">
      Current maps, player counts and who's playing. Live server information refreshes every 30 seconds.
@@ -146,7 +146,7 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
 <div class="grid bottom">
 <section class="card" id="commands">
 <div class="eyebrow">
-      02 / QUICK REFERENCE
+      02 / In-Game Chat Commands
      </div>
 <h2>
       Commands
@@ -162,7 +162,7 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
       COMMUNITY
      </div>
 <h2>
-      Discord &amp; rules
+      Discord &amp; Rules
      </h2>
 <a class="community-link discord" href="https://discord.gg/kJKVhaW4Fr" rel="noopener" target="_blank">
       Join our Discord
@@ -181,13 +181,13 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
        No racism or hate speech
       </li>
 <li>
-       No mic spam
+       No mic spam / chat spam
       </li>
 <li>
-       Respect other players
+       No griefing or intentional throwing
       </li>
 <li>
-       Have fun!
+       No alt accounts
       </li>
 </ul>
 </section>
@@ -243,8 +243,30 @@ const SERVERS=[{id:1,ip:'168.100.161.99:2462'},{id:2,ip:'168.100.161.119:27065'}
 const COMMANDS=[['Weapon skins','!ws'],['Knives','!knife'],['Gloves','!gloves'],['Agents','!agents'],['Stickers','!stickers'],['Music kits','!music'],['Refund','!sell'],['Inventory preferences','!inventory'],['Nominate map','!nominate de_map'],['RockTheVote','rtv']];
 document.getElementById('commands-list').innerHTML=COMMANDS.map(([name,cmd])=>`<div class="command"><span>${name}</span><code>${cmd}</code></div>`).join('');
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-async function copyConnect(ip){const command='connect '+ip;try{await navigator.clipboard.writeText(command)}catch(e){const field=document.createElement('textarea');field.value=command;field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();try{document.execCommand('copy')}finally{field.remove()}}}
-function renderCard(s){return `<article class="card" id="server-${s.id}"><h3>Server #${s.id}</h3><div class="ip">${s.ip}</div><div class="server-features"><span>EU</span><span>128 tick</span><span>10 slots</span><span>Skins</span><span>Knives</span><span>Gloves</span></div><div class="rule"></div><span class="status off" id="status-${s.id}">LOADING</span><div class="numbers"><div><small>Players</small><strong id="count-${s.id}">—</strong></div><div><small>Current map</small><strong id="map-${s.id}">—</strong></div></div><div class="check" id="check-${s.id}">Loading latest data…</div><div class="check" id="fresh-${s.id}" aria-live="polite"></div><button class="toggle" id="toggle-${s.id}" onclick="togglePlayers(${s.id})">▸ View player list</button><ul class="players" id="players-${s.id}" hidden></ul><div class="actions"><button class="btn" onclick="loadServer(${s.id})">Refresh display</button><button class="btn primary" onclick="copyConnect('${s.ip}')">Copy connect</button></div></article>`}
+async function copyConnect(ip, button){
+  const command = 'connect ' + ip;
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(command);
+    copied = true;
+  } catch (e) {
+    const field = document.createElement('textarea');
+    field.value = command;
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.appendChild(field);
+    field.select();
+    try { copied = document.execCommand('copy'); }
+    catch (error) { copied = false; }
+    finally { field.remove(); }
+  }
+  if (button) {
+    clearTimeout(button._resetTimer);
+    button.textContent = copied ? '✓ Copied!' : 'Copy failed';
+    button._resetTimer = setTimeout(() => { button.textContent = 'Copy connect'; }, 2200);
+  }
+}
+function renderCard(s){return `<article class="card" id="server-${s.id}"><h3>Server #${s.id}</h3><div class="ip">${s.ip}</div><div class="server-features"><span>EU</span><span>128 tick</span><span>10 slots</span><span>Skins</span><span>Knives</span><span>Gloves</span></div><div class="rule"></div><span class="status off" id="status-${s.id}">LOADING</span><div class="numbers"><div><small>Players</small><strong id="count-${s.id}">—</strong></div><div><small>Current map</small><strong id="map-${s.id}">—</strong></div></div><div class="check" id="check-${s.id}">Loading latest data…</div><div class="check" id="fresh-${s.id}" aria-live="polite"></div><button class="toggle" id="toggle-${s.id}" onclick="togglePlayers(${s.id})">▸ View player list</button><ul class="players" id="players-${s.id}" hidden></ul><div class="actions"><button class="btn" onclick="loadServer(${s.id})">Refresh display</button><button class="btn primary" onclick="copyConnect('${s.ip}', this)">Copy connect</button></div></article>`}
 document.getElementById('server-grid').innerHTML=SERVERS.map(renderCard).join('');
 function togglePlayers(id){const el=document.getElementById('players-'+id);el.hidden=!el.hidden;document.getElementById('toggle-'+id).textContent=(el.hidden?'▸':'▾')+' View player list'}
 async function loadServer(id){const status=document.getElementById('status-'+id),check=document.getElementById('check-'+id);try{const r=await fetch(`${LIVE_API}/?server=${id}&t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw Error('Could not load stats');const d=await r.json();const stale=d.checked_at && (Date.now()-new Date(d.checked_at).getTime()>120000);status.textContent=stale?'● STATUS OUTDATED':(d.online?'● ONLINE':'● OFFLINE');status.className='status'+(d.online&&!stale?'':' off');document.getElementById('count-'+id).textContent=d.online?`${d.numplayers??0} / ${d.maxplayers??'?'}`:'—';document.getElementById('map-'+id).textContent=d.online?safe(d.map||'Unknown'):'—';check.textContent=d.checked_at?'Last checked: '+new Date(d.checked_at).toLocaleString():(d.error||'No update time');const age=d.checked_at?(Date.now()-new Date(d.checked_at).getTime()):NaN;document.getElementById('fresh-'+id).textContent=Number.isFinite(age)?(age>600000?'⚠ Data delayed ('+Math.floor(age/60000)+' min old)':'Live API · data '+Math.max(0,Math.floor(age/60000))+' min old'):'Live API · update time unavailable';document.getElementById('players-'+id).innerHTML=(d.players||[]).filter(p=>!(id===2 && (p.name||'').trim().toUpperCase()==='PICKLES #2')).map(p=>`<li><span>${safe(p.name)}</span><strong>${safe(p.score??0)}</strong></li>`).join('')||'<li>No player data available</li>'}catch(e){status.textContent='STATUS UNAVAILABLE';status.className='status off';check.textContent='Could not contact the live server API for server '+id;document.getElementById('fresh-'+id).textContent='Will retry automatically';}}
