@@ -308,5 +308,166 @@ secretTrigger.addEventListener('click',()=>{
   if(reveal){secretGallery.querySelectorAll('img').forEach(img=>{img.loading='eager';img.style.display='block';});secretGallery.scrollIntoView({behavior:'smooth',block:'start'});}
 });
 </script>
+ 
+<style>
+  #leaderboard {
+    margin-top: 40px;
+  }
+
+  #playerSearch {
+    width: 100%;
+    max-width: 350px;
+    padding: 12px;
+    margin: 12px 0 18px;
+    background: #18211d;
+    border: 1px solid #354139;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+  }
+
+  .leaderboard-scroll {
+    overflow-x: auto;
+  }
+
+  .rankings-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #18211d;
+    font-size: 13px;
+  }
+
+  .rankings-table th,
+  .rankings-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #354139;
+  }
+
+  .rankings-table th {
+    color: #a3e568;
+    background: #232e27;
+  }
+
+  .rankings-table tr:hover {
+    background: #26352d;
+  }
+
+  .rankings-table td:first-child {
+    color: #a3e568;
+    font-weight: bold;
+  }
+</style>
+
+<script>
+(function () {
+  const API = "https://pickles-rankme.picklescs.workers.dev/rankings";
+
+  const table = document.getElementById("leaderboardTable");
+  const search = document.getElementById("playerSearch");
+
+  let rankings = [];
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[c]));
+  }
+
+  function renderRankings() {
+    const term = search.value.toLowerCase().trim();
+
+    const filtered = rankings.filter(player =>
+      String(player.name ?? "").toLowerCase().includes(term) ||
+      String(player.steam_id ?? "").toLowerCase().includes(term)
+    );
+
+    if (!filtered.length) {
+      table.textContent = "No players found.";
+      return;
+    }
+
+    table.innerHTML = `
+      <div class="leaderboard-scroll">
+        <table class="rankings-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Score</th>
+              <th>Kills</th>
+              <th>Deaths</th>
+              <th>Assists</th>
+              <th>Headshots</th>
+              <th>K/D</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filtered.map(player => {
+              const rank = rankings.indexOf(player) + 1;
+              const kills = Number(player.kills) || 0;
+              const deaths = Number(player.deaths) || 0;
+              const kd = (kills / Math.max(1, deaths)).toFixed(2);
+
+              return `
+                <tr>
+                  <td>#${rank}</td>
+                  <td>${escapeHTML(player.name)}</td>
+                  <td>${Number(player.score) || 0}</td>
+                  <td>${kills}</td>
+                  <td>${deaths}</td>
+                  <td>${Number(player.assists) || 0}</td>
+                  <td>${Number(player.headshots) || 0}</td>
+                  <td>${kd}</td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  async function loadRankings() {
+    try {
+      const response = await fetch(API, { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error("HTTP " + response.status);
+      }
+
+      const data = await response.json();
+
+      if (!Array.isArray(data)) {
+        throw new Error("Unexpected API response");
+      }
+
+      rankings = data.sort((a, b) =>
+        Number(b.score) - Number(a.score)
+      );
+
+      renderRankings();
+
+    } catch (error) {
+      console.error("Leaderboard error:", error);
+
+      if (!rankings.length) {
+        table.textContent = "Unable to load rankings. Please try again later.";
+      }
+    }
+  }
+
+  if (table && search) {
+    search.addEventListener("input", renderRankings);
+    loadRankings();
+    setInterval(loadRankings, 30000);
+  }
+})();
+</script>
+  
 </body>
 </html>
