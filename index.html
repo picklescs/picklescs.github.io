@@ -99,6 +99,34 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
 #community-secret .photo-grid img { display:block; width:100%; height:auto; max-width:100%; aspect-ratio:auto; object-fit:contain; border:0; border-radius:0; box-shadow:none; background:transparent; margin:0 0 14px; break-inside:avoid; }
 @media (max-width:720px) { #community-secret .photo-grid { columns:2 135px; } }
 </style>
+<style>
+
+/* RankMe leaderboard */
+#leaderboard{margin-top:38px;scroll-margin-top:22px}
+.leaderboard-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 12px}
+#playerSearch{width:min(100%,340px);padding:12px 14px;border-radius:7px;border:1px solid var(--line);background:var(--panel);color:#fff;font:inherit;outline:none}
+#playerSearch:focus{border-color:var(--lime)}
+#leaderboardStatus{color:var(--muted);font-size:12px}
+.leaderboard-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.rankings-table{width:100%;border-collapse:collapse;text-align:left;font-size:13px;white-space:nowrap}
+.rankings-table th,.rankings-table td{padding:12px 14px;border-bottom:1px solid var(--line)}
+.rankings-table th{color:var(--lime);font-size:11px;text-transform:uppercase;letter-spacing:.7px;background:#202d25}
+.rankings-table tr:last-child td{border-bottom:0}
+.rankings-table tbody tr:hover{background:#223028}
+.rankings-table td:nth-child(n+3),.rankings-table th:nth-child(n+3){text-align:right}
+.rankings-table .player-name{max-width:290px;overflow:hidden;text-overflow:ellipsis}
+.rankings-empty{padding:22px;color:var(--muted);text-align:center}
+@media(max-width:600px){.rankings-table th,.rankings-table td{padding:10px 11px}.leaderboard-controls{align-items:stretch}#playerSearch{width:100%}}
+
+/* Leaderboard title and page controls */
+.leaderboard-title{color:var(--lime)}
+.leaderboard-pagination{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:18px 0 0;font-size:13px}
+.leaderboard-pagination button{background:var(--panel);color:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 12px;min-width:40px}
+.leaderboard-pagination button:hover:not(:disabled){border-color:var(--lime);color:var(--lime)}
+.leaderboard-pagination button[aria-current="page"]{background:var(--lime);color:#101714;border-color:var(--lime);font-weight:bold}
+.leaderboard-pagination button:disabled{opacity:.4;cursor:default}
+.leaderboard-pagination .page-info{color:var(--muted);padding:0 8px}
+</style>
 </head>
 <body>
 <header class="top">
@@ -195,6 +223,19 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
 </ul>
 </section>
 </div>
+<section id="leaderboard">
+  <div class="eyebrow">PLAYER STATS</div>
+  <h2 class="heading leaderboard-title">PICKLES SERVER Leaderboard</h2>
+  <p class="muted">CS:GO rankings, ordered by RankMe score. Refreshes every 30 seconds while this page is open.</p>
+  <div class="leaderboard-controls">
+    <input type="search" id="playerSearch" placeholder="Search players or Steam ID..." aria-label="Search leaderboard players" autocomplete="off">
+    <span id="leaderboardStatus" role="status" aria-live="polite">Loading rankings...</span>
+  </div>
+  <div id="leaderboardTable" class="leaderboard-scroll">
+    <div class="rankings-empty">Loading rankings...</div>
+  </div>
+  <nav class="leaderboard-pagination" id="leaderboardPagination" aria-label="Leaderboard pages"></nav>
+</section>
 <section id="gallery" style="margin-top:36px">
 <div class="eyebrow">
      GALLERY
@@ -242,20 +283,7 @@ main { width: min(100% - 48px, 1520px); max-width: 1520px; padding: 32px 0 64px;
 </div>
 
 </section>
-<section id="leaderboard">
-  <h2 class="heading">PICKLES SERVER Leaderboard</h2>
-  <p class="muted">CS:GO Rankings</p>
 
-  <input
-    type="text"
-    id="playerSearch"
-    placeholder="Search players..."
-  >
-
-  <div id="leaderboardTable">
-    Loading rankings...
-  </div>
-</section>
 </main>
 <footer>
    © PICKLES COMMUNITY SERVER <button type="button" class="secret-trigger" id="secret-trigger" aria-label="Reveal secret community gallery" aria-controls="community-secret" aria-expanded="false" title="?">✦</button>
@@ -308,166 +336,126 @@ secretTrigger.addEventListener('click',()=>{
   if(reveal){secretGallery.querySelectorAll('img').forEach(img=>{img.loading='eager';img.style.display='block';});secretGallery.scrollIntoView({behavior:'smooth',block:'start'});}
 });
 </script>
- 
-<style>
-  #leaderboard {
-    margin-top: 40px;
-  }
-
-  #playerSearch {
-    width: 100%;
-    max-width: 350px;
-    padding: 12px;
-    margin: 12px 0 18px;
-    background: #18211d;
-    border: 1px solid #354139;
-    border-radius: 6px;
-    color: white;
-    font-size: 14px;
-  }
-
-  .leaderboard-scroll {
-    overflow-x: auto;
-  }
-
-  .rankings-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #18211d;
-    font-size: 13px;
-  }
-
-  .rankings-table th,
-  .rankings-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #354139;
-  }
-
-  .rankings-table th {
-    color: #a3e568;
-    background: #232e27;
-  }
-
-  .rankings-table tr:hover {
-    background: #26352d;
-  }
-
-  .rankings-table td:first-child {
-    color: #a3e568;
-    font-weight: bold;
-  }
-</style>
 
 <script>
-(function () {
-  const API = "https://pickles-rankme.picklescs.workers.dev/rankings";
+// Public read-only RankMe endpoint; never place the upload token in website code.
+const RANKINGS_API = 'https://pickles-rankme.picklescs.workers.dev/rankings';
+const playerSearch = document.getElementById('playerSearch');
+const leaderboardTable = document.getElementById('leaderboardTable');
+const leaderboardStatus = document.getElementById('leaderboardStatus');
+let leaderboardPlayers = [];
+let rankingsLoaded = false;
+let lastRankingsUpdate = null;
+const PAGE_SIZE = 25;
+let currentPage = 1;
+const leaderboardPagination = document.getElementById('leaderboardPagination');
 
-  const table = document.getElementById("leaderboardTable");
-  const search = document.getElementById("playerSearch");
-
-  let rankings = [];
-
-  function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, c => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    }[c]));
+function renderLeaderboard() {
+  const query = playerSearch.value.trim().toLocaleLowerCase();
+  const matching = leaderboardPlayers.filter(p =>
+    String(p.name ?? '').toLocaleLowerCase().includes(query) ||
+    String(p.steam_id ?? '').toLocaleLowerCase().includes(query)
+  );
+  const totalPages = Math.max(1, Math.ceil(matching.length / PAGE_SIZE));
+  currentPage = Math.min(Math.max(1, currentPage), totalPages);
+  const pagePlayers = matching.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  leaderboardTable.replaceChildren();
+  if (!matching.length) {
+    const empty = document.createElement('div');
+    empty.className = 'rankings-empty';
+    empty.textContent = rankingsLoaded ? 'No matching players found.' : 'Loading rankings...';
+    leaderboardTable.appendChild(empty);
+    leaderboardPagination.replaceChildren();
+    return;
   }
+  const table = document.createElement('table');
+  table.className = 'rankings-table';
+  const thead = document.createElement('thead');
+  const headingRow = document.createElement('tr');
+  ['Rank', 'Player', 'Score', 'Kills', 'Deaths', 'Assists', 'Headshots'].forEach(label => {
+    const th = document.createElement('th');
+    th.scope = 'col';
+    th.textContent = label;
+    headingRow.appendChild(th);
+  });
+  thead.appendChild(headingRow);
+  table.appendChild(thead);
+  const tbody = document.createElement('tbody');
+  pagePlayers.forEach(p => {
+    const row = document.createElement('tr');
+    [p.rank, p.name || 'Unknown Player', p.score, p.kills, p.deaths, p.assists, p.headshots].forEach((value, index) => {
+      const td = document.createElement('td');
+      td.textContent = String(value ?? 0);
+      if (index === 1) {
+        td.className = 'player-name';
+        td.title = String(p.name || 'Unknown Player');
+      }
+      row.appendChild(td);
+    });
+    tbody.appendChild(row);
+  });
+  table.appendChild(tbody);
+  leaderboardTable.appendChild(table);
+  renderPagination(totalPages, matching.length);
+}
 
-  function renderRankings() {
-    const term = search.value.toLowerCase().trim();
+function renderPagination(totalPages, totalPlayers) {
+  leaderboardPagination.replaceChildren();
+  if (totalPages <= 1) return;
+  function addButton(label, page, disabled = false, active = false) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = label;
+    button.disabled = disabled;
+    if (active) button.setAttribute('aria-current', 'page');
+    button.addEventListener('click', () => {
+      currentPage = page;
+      renderLeaderboard();
+      document.getElementById('leaderboard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    leaderboardPagination.appendChild(button);
+  }
+  addButton('Previous', currentPage - 1, currentPage === 1);
+  const start = Math.max(1, Math.min(currentPage - 2, totalPages - 4));
+  const end = Math.min(totalPages, start + 4);
+  for (let page = start; page <= end; page++) {
+    addButton(String(page), page, false, page === currentPage);
+  }
+  addButton('Next', currentPage + 1, currentPage === totalPages);
+  const info = document.createElement('span');
+  info.className = 'page-info';
+  info.textContent = `Page ${currentPage} of ${totalPages} · ${totalPlayers} players`;
+  leaderboardPagination.appendChild(info);
+}
 
-    const filtered = rankings.filter(player =>
-      String(player.name ?? "").toLowerCase().includes(term) ||
-      String(player.steam_id ?? "").toLowerCase().includes(term)
-    );
-
-    if (!filtered.length) {
-      table.textContent = "No players found.";
-      return;
+async function loadLeaderboard() {
+  try {
+    const response = await fetch(RANKINGS_API, { cache: 'no-store' });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error('Unexpected leaderboard response');
+    leaderboardPlayers = data
+      .filter(p => p && typeof p === 'object')
+      .sort((a, b) => (Number(b.score) || 0) - (Number(a.score) || 0) || String(a.steam_id ?? '').localeCompare(String(b.steam_id ?? '')))
+      .map((p, i) => ({ ...p, rank: i + 1 }));
+    rankingsLoaded = true;
+    lastRankingsUpdate = new Date();
+    leaderboardStatus.textContent = `${leaderboardPlayers.length} players · Updated ${lastRankingsUpdate.toLocaleTimeString()}`;
+    renderLeaderboard();
+  } catch (error) {
+    console.error('Leaderboard load failed:', error);
+    leaderboardStatus.textContent = rankingsLoaded
+      ? 'Could not refresh rankings · Showing last loaded data'
+      : 'Rankings unavailable · Retrying automatically';
+    if (!rankingsLoaded) {
+      leaderboardTable.innerHTML = '<div class="rankings-empty">Could not load rankings. Please try again shortly.</div>';
     }
-
-    table.innerHTML = `
-      <div class="leaderboard-scroll">
-        <table class="rankings-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Score</th>
-              <th>Kills</th>
-              <th>Deaths</th>
-              <th>Assists</th>
-              <th>Headshots</th>
-              <th>K/D</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${filtered.map(player => {
-              const rank = rankings.indexOf(player) + 1;
-              const kills = Number(player.kills) || 0;
-              const deaths = Number(player.deaths) || 0;
-              const kd = (kills / Math.max(1, deaths)).toFixed(2);
-
-              return `
-                <tr>
-                  <td>#${rank}</td>
-                  <td>${escapeHTML(player.name)}</td>
-                  <td>${Number(player.score) || 0}</td>
-                  <td>${kills}</td>
-                  <td>${deaths}</td>
-                  <td>${Number(player.assists) || 0}</td>
-                  <td>${Number(player.headshots) || 0}</td>
-                  <td>${kd}</td>
-                </tr>
-              `;
-            }).join("")}
-          </tbody>
-        </table>
-      </div>
-    `;
   }
+}
 
-  async function loadRankings() {
-    try {
-      const response = await fetch(API, { cache: "no-store" });
-
-      if (!response.ok) {
-        throw new Error("HTTP " + response.status);
-      }
-
-      const data = await response.json();
-
-      if (!Array.isArray(data)) {
-        throw new Error("Unexpected API response");
-      }
-
-      rankings = data.sort((a, b) =>
-        Number(b.score) - Number(a.score)
-      );
-
-      renderRankings();
-
-    } catch (error) {
-      console.error("Leaderboard error:", error);
-
-      if (!rankings.length) {
-        table.textContent = "Unable to load rankings. Please try again later.";
-      }
-    }
-  }
-
-  if (table && search) {
-    search.addEventListener("input", renderRankings);
-    loadRankings();
-    setInterval(loadRankings, 30000);
-  }
-})();
+playerSearch.addEventListener('input', () => { currentPage = 1; renderLeaderboard(); });
+loadLeaderboard();
+setInterval(loadLeaderboard, 30000);
 </script>
-  
 </body>
 </html>
